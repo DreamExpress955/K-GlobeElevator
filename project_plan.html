@@ -19,7 +19,7 @@
         <li> Complete fully functioning CAN system</li>
         <li> Oral Presentation, Final Report and Video Demonstration</li>
     </ol>
-    <h1> Project Gnatt Chart</h1>
+    <h1> Project Gantt Chart</h1>
     <table border="1" cellspacing="0" cellpadding="6">
   <thead>
     <tr>
@@ -32,12 +32,6 @@
   <tbody>
 
     <tr>
-      <td><b>Project Plan</b></td>
-      <td colspan="14" align="center"></td>
-
-    </tr>
-
-    <tr>
       <td>Complete and submit a Project Plan</td>
       <td colspan="1" align="center"></td>
       <td colspan="1" align="center">ALL</td>
@@ -45,158 +39,229 @@
     </tr>
 
     <tr>
-      <td>Set up Raspberry Pi as a server and confirmed communication</td>
-      <td colspan="14" align="center"></td>
+      <td>Set up Raspberry Pi as a server</td>
+      <td colspan="2" align="center"></td>
+      <td colspan="2" align="center">ALL</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Confirm communication between client computer and server (HTTP/SSH) </td>
+      <td colspan="2" align="center"></td>
+      <td colspan="1" align="center">O</td>
+      <td colspan="9"></td>
     </tr>
 
     <tr>
       <td>Explain CAN messaging protocol</td>
-      <td colspan="1"></td>
-      <td colspan="2" align="center">ALL</td>
+      <td colspan="2"></td>
+      <td colspan="1" align="center">ALL</td>
       <td colspan="9"></td>
     </tr>
 
     <tr>
-      <td>Implement CAN protocol (filters)</td>
-      <td colspan="1"></td>
+      <td>Implement CAN protocol</td>
+      <td colspan="2"></td>
+      <td colspan="1" align="center">L</td>
+      <td colspan="9"></td>
+    </tr>
+
+    <tr>
+      <td>Implement Wiring on STM32, push buttons/LED indicators</td>
+      <td colspan="2"></td>
       <td colspan="2" align="center">L</td>
-      <td colspan="9"></td>
+      <td colspan="8"></td>
     </tr>
 
     <tr>
-      <td>Implement wiring (buttons/LEDs)</td>
-      <td colspan="1"></td>
-      <td colspan="1" align="center">ALL</td>
-      <td colspan="10"></td>
-    </tr>
-
-    <tr>
-      <td>Read CAN messages and detect signals</td>
-      <td colspan="1"></td>
-      <td colspan="1" align="center">L</td>
-      <td colspan="10"></td>
-    </tr>
-
-    <tr>
-      <td>Develop test plan</td>
-      <td colspan="1"></td>
-      <td colspan="1" align="center">O</td>
-      <td colspan="10"></td>
-    </tr>
-
-    <tr>
-      <td>Controls (up/down) in HTML</td>
-      <td colspan="1"></td>
+      <td>Able to read CAN messages placed on the CAN bus (Raspberry Pi) and detect up/down request, floor
+     request, door open/close, location of elevator car</td>
+      <td colspan="3"></td>
       <td colspan="1" align="center">B</td>
-      <td colspan="10"></td>
+      <td colspan="8"></td>
     </tr>
 
     <tr>
-      <td>Elevator controls (HTML)</td>
+      <td>Develop and implement a test plan to confirm functionality of software/hardware</td>
+      <td colspan="2"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Controls (up/down) built in HTML (possibly add CSS if students work ahead)</td>
+      <td colspan="2"></td>
+      <td colspan="2" align="center">B</td>
+      <td colspan="8"></td>
+    </tr>
+    
+    <tr>
+      <td>Elevator Car Controls (up/down/floor number) built in HTML (possibly CSS if students work ahead)</td>
+      <td colspan="2"></td>
+      <td colspan="2" align="center">B</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Develop Finite State Machine Logic for Elevator Operation</td>
+      <td colspan="2"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Fully working and completed front end Graphical User Interface /Webpage to control elevator</td>
+      <td colspan="3"></td>
+      <td colspan="6" align="center">ALL</td>
+      <td colspan="5"></td>
+    </tr>
+
+    <tr>
+      <td>User action buttons/icons implemented</td>
+      <td colspan="4"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Indicators/lights etc. implemented</td>
+      <td colspan="4"></td>
+      <td colspan="2" align="center">L</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>User action buttons developed to make changes to UI that are reflected in the database</td>
+      <td colspan="4"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="8"></td>
+    </tr>
+
+    <tr>
+      <td>Database set up and accepting values/commands from website</td>
+      <td colspan="4"></td>
+      <td colspan="4" align="center">B</td>
+      <td colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td>Database has fields for logging information placed on the CAN bus</td>
+      <td colspan="4"></td>
+      <td colspan="4" align="center">B</td>
+      <td colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td>Produced based on content in database </td>
+      <td colspan="6"></td>
+      <td colspan="1" align="center">L</td>
+      <td colspan="7"></td>
+    </tr>
+
+    <tr>
+      <td>Displayed on webpage</td>
+      <td colspan="7"></td>
+      <td colspan="1" align="center">L</td>
+      <td colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td>Users are authorized/authenticated based on username/password  </td>
+      <td colspan="5"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="7"></td>
+    </tr>
+
+    <tr>
+      <td>Server program provides logging data/accepts commands only from authorized users</td>
+      <td colspan="5"></td>
+      <td colspan="2" align="center">O</td>
+      <td colspan="7"></td>
+    </tr>
+
+    <tr>
+      <td>Implement a Server Program for announcing the floor numbers</td>
+      <td colspan="6"></td>
+      <td colspan="2" align="center">ALL</td>
+      <td colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td>Speaker on elevator used to announce the current/next floor (speaker already connected to system)</td>
+      <td colspan="6"></td>
+      <td colspan="2" align="center">ALL</td>
+      <td colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td>Users may operate the elevator without having to push buttons (e.g. verbally, based on schedule/time) </td>
+      <td colspan="7"></td>
+      <td colspan="1" align="center">ALL</td>
+      <td colspan="6"></td>
+    </tr>
+
+
+    <tr>
+      <td>Research and Implement a CAN/LAN communication bridge</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">L</td>
       <td colspan="1"></td>
-      <td colspan="1" align="center">B</td>
-      <td colspan="10"></td>
     </tr>
 
     <tr>
-      <td>Develop FSM logic</td>
+      <td>Ensure activity in CAN network changes values in database</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">B</td>
       <td colspan="1"></td>
-      <td colspan="1" align="center">L</td>
-      <td colspan="10"></td>
-    </tr>
-
-    <!-- Week 5 -->
-
-    <tr>
-      <td>Complete GUI/Webpage</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">ALL</td>
-      <td colspan="9"></td>
     </tr>
 
     <tr>
-      <td>Buttons implemented</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">O</td>
-      <td colspan="9"></td>
+      <td>Changes in User Interface/Website changes value in database and generate CAN messages</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">O</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>Indicators implemented</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">L</td>
-      <td colspan="9"></td>
+      <td>Changes in User Interface/Website changes value in database and generate CAN messages</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">O</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>UI updates database</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">O</td>
-      <td colspan="9"></td>
+      <td>CAN Messages result in changes to database and GUI/Indicators</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">B/O</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>Database updates UI</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">L</td>
-      <td colspan="9"></td>
+      <td>CAN Messages result in changes to database and GUI/Indicators</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">B/O</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>Database setup</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">B</td>
-      <td colspan="9"></td>
+      <td>Commands from CAN/LAN networks are sent to the controller and move the elevator / indicate floor number</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">ALL</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>CAN logging fields</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">B</td>
-      <td colspan="9"></td>
+      <td>CAN Supervisor (Raspberry Pi) relays messages between CAN/LAN Network (see sample program on Rpi)</td>
+      <td colspan="8"></td>
+      <td colspan="3" align="center">ALL</td>
+      <td colspan="1"></td>
     </tr>
 
     <tr>
-      <td>User authentication</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">O</td>
-      <td colspan="9"></td>
-    </tr>
-
-    <tr>
-      <td>Authorized access only</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">O</td>
-      <td colspan="9"></td>
-    </tr>
-
-    <tr>
-      <td>Announce floor numbers</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">ALL</td>
-      <td colspan="9"></td>
-    </tr>
-
-    <tr>
-      <td>Speaker announcements</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">ALL</td>
-      <td colspan="9"></td>
-    </tr>
-
-    <tr>
-      <td>Sabbath mode</td>
-      <td colspan="2"></td>
-      <td colspan="1" align="center">ALL</td>
-      <td colspan="9"></td>
-    </tr>
-
-    <!-- Week 14 -->
-
-    <tr>
-      <td>Final Presentation & Demonstration</td>
-      <td colspan="11"></td>
-      <td align="center">ALL</td>
+      <td>Develop and Implement a finte state machine (using C/C+, PHP, Python to implement logic)</td>
+      <td colspan="0"></td>
+      <td colspan="14" align="center">L/O</td>
+      <td colspan="0"></td>
     </tr>
 
   </tbody>
