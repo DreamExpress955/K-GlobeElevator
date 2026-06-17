@@ -1,0 +1,48 @@
+body {
+    font-family: Georgia, serif;
+    width: 950px;
+    padding: 10px;
+    border: 2px solid black;
+    overflow: scroll;
+    margin: 0px auto 0px auto;
+}
+
+p,ul,ol {
+    font-size: 100%;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: justify;
+}
+
+h1 {font-size: 160%;}  
+
+h2 {font-size: 125%;}
+
+p {text-indent: 15px;}
+
+img {
+    height: 300px;
+    display: block;
+    margin: 0px auto 0px auto;
+    border: 2px solid blue;
+    box-shadow: 10px 10px 5px gray;
+}
+ 
+figure {
+    border: 2px solid green;
+    border-radius: 25px;
+}
+
+figcaption {
+    margin-top: 10px; /*Added for clarity*/
+    text-align: center;
+    font-style: italic;
+    font-size: 90%;
+    
+}
+
+.mkbold {font-weight: bold;}
+
+.mkunderlined {text-decoration: underline;}
+
+#can, #hcs12, #buttons {font-weight: bold;}
