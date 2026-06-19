@@ -5,11 +5,26 @@ $submitted = !empty($_POST);
 <html>
     <head><title>Form Handler Page</title></head>
     <body>
+        <h1>Request Access Page</h1>
+        <form action="php/req_access.php" method="post">
+            <p>First Name: <input type="text" name = "firstname"/></p>
+            <p>Last Name: <input type="text" name="lastname"/></p>
+
+            <input type ="radio" name="who_are_you" value ="faculty" /> Faculty
+            <input type = "radio" name="who_are_you" value ="student" /> Student
+            <input type = "radio" name="who_are_you" value ="other" /> Other
+
+            <p>I currently ... (check all that apply)</p>
+            <input type ="checkbox" name="involvement" value="none" /> Have no involvment in the project <br/>
+            <input type ="checkbox" name="involvement" value="instructor" /> Am an instructor in this project <br/>
+            <input type ="checkbox" name="involvement" value="instructor_other" /> Am an instructor in a different Project <br/>
+            <input type ="checkbox" name="involvement" value="">
         <p>Form submitted?  <?php echo (int) $submitted; ?> </p>
         <p>Your Login info is</p>
         <ul>
             <li><b>username</b>: <?php echo $_POST['username']; ?></li>
             <li><b>password</b>: <?php echo $_POST['password']; ?></li>
         </ul>
+        </form>
     </body>
 </html>
