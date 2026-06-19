@@ -2,26 +2,30 @@
 <!DOCTYPE html>
 <html>
     <head><title>Form Handler Page</title></head>
+    <meta name="description" content="This is the Request acess page to allow the creation of a login" />
+	<meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
+	<meta http-equiv="author" content="Blake Gergely" />
+	<meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
+  
+
     <body>
         <h1>Request Access Page</h1>
         <fieldset>
         <legend>Details</legend>
-        <form action="php/req_access.php" method="post">
+        <form action="php/req_access.php" method="post", id="access">
             <label><p>First Name: <input type="text" name = "firstname"/></label></p>
             <label><p>Last Name: <input type="text" name="lastname"/></label></p>
 
             <label><input type ="radio" name="who_are_you" value ="faculty member" /> Faculty </label>
             <label><input type = "radio" name="who_are_you" value ="student" /> Student </label>
-            <label><input type = "radio" name="who_are_you" value ="other" /> Other </label>
 
-            <p>I currently ... (check all that apply)</p>
-            <label><input type ="checkbox" name="involvement" value="none" /> Have no involvment in the project </label><br/>
-            <label><input type ="checkbox" name="involvement" value="instructor" /> Am an instructor in this project </label><br/>
-            <label><input type ="checkbox" name="involvement" value="instructor_other" /> Am an instructor in a different Project </label><br/>
-            <label><input type ="checkbox" name="involvement" value="student" /> Am a student in this Project </label><br/>
-            <label><input type ="checkbox" name="involvement" value="student_other" /> Am a student in a different Project </label><br />
-            <label><input type ="checkbox" name="involvement" value="admin" /> Am a College Administrator </label><br/>
+            <p><label>Email: <input type="eamil" name="email" /></label></p>
+            <p><label>Birth date: <input type="date" name="brithday" /></label></p>
             
+            </br>
+            <p>Any information we missed?</p>
+            <label><textarea></textarea></label>
+
             </br>
             <input type="submit" value="Submit Request" />
         </form>
