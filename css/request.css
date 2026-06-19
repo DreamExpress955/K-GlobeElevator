@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+fieldset{
+    background: white;
+    padding: 25px;
+    border-radius: #ccc;
+    border: 1px solid #ccc;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+
+}
+
+from p, form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+input[type="text"],
+input[type="email"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 5px;
+    margin-top: 5px;
+    box-sizing: border-boxl
+}
+
+text area {
+    resize: vertial;
+}
+
+.radio-group{
+    margin: 10px 0;
+}
+.radio-group label{
+    font-weight: normal;
+    margin-right: 15px;
+}
+
+#submit{
+    width: 100%;
+    padding:12px;
+    background: #4a7bd8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+
+}
+
+#submit:hover {
+    background: #3a66b5;
+}
+
+/*feedback message*/
+a {
+    display: block;
+    color:red;
+    font-size: 14px;
+    margin-bottom: 10px;
+
+}
+/*character counter*/
+#charactersLeft{
+    font-size: 14px;
+    margin-top: 5px;
+}

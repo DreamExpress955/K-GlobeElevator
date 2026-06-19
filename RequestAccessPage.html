@@ -1,34 +1,42 @@
-
 <!DOCTYPE html>
 <html>
     <head><title>Form Handler Page</title>
     <meta name="description" content="This is the Request acess page to allow the creation of a login" />
-	<meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
-	<meta http-equiv="author" content="Blake Gergely" />
-	<meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
-  </head>
+    <meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
+    <meta http-equiv="author" content="Blake Gergely" />
+    <meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
+    <link rel="stylesheet" href="css/Request.css">
+</head>
 
     <body>
         <h1>Request Access Page</h1>
         <fieldset>
         <legend>Details</legend>
         <form action="php/req_access.php" method="post" id="access">
-            <label><p>First Name: <input type="text" name = "firstname"/></label></p>
-            <label><p>Last Name: <input type="text" name="lastname"/></label></p>
+           
+            <label><p>First Name: <input type="text" name = "firstname" id ="firstname"/></label></p>
+            <a id ="firstnamefeedback"></a>
 
-            <label><input type ="radio" name="who_are_you" value ="faculty member" /> Faculty </label>
-            <label><input type = "radio" name="who_are_you" value ="student" /> Student </label>
+            <label><p>Last Name: <input type="text" name="lastname" id="lastname"/></label></p>
+            <a id ="lastnamefeedback"></a>
 
-            <p><label>Email: <input type="eamil" name="email" /></label></p>
-            <p><label>Birth date: <input type="date" name="brithday" /></label></p>
-            
+            <div class = "radio-group">
+            <label><input type ="radio" name="who_are_you" value ="faculty member" id ="who_faculty" /> Faculty </label>
+            <label><input type = "radio" name="who_are_you" value ="student" id = "who_student"/> Student </label>
+            </div>
+            <a id ="whofeedback"></a>
+
+            <p><label>Email: <input type="email" name="email" id="email"/></label></p>
+            <a id ="emailfeedback"></a>
+
+            <p><label>Birth date: <input type="date" name="brithday" id="brithday"/></label></p>
             
             <p>Any information we missed?</p>
             <label><textarea id = "message" rows ="10" cols = "50"></textarea></label>
             <p></p>
             <p id="charactersLeft"></p>
             
-            <input type="submit" value="Submit Request" />
+            <input id="submit" type="submit" value="Submit Request" />
         </form>
         </fieldset>
         <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
