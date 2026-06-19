@@ -1,4 +1,4 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Forms: Login Page</title>
@@ -17,22 +17,31 @@
         <a class="navbar-brand" href="index.html">K-Globe</a>
         <a href="index.html" class="btn btn-outline-light">
         Home
-        </a>
+        </a>s
         </div>
-</nav>
+        </nav>
+        
         <form action="php/login.php" method="post" id="login">
             <h1>Please Login</h1>
             <fieldset>
             <p><label>Username:
-                <input type="text" name="username"/>
+                <input type="text" name="username" id = "username"/>
             </label></p>
             <p><label>Password:
-                <input type="password" name="password" required/>
+                <input type="password" name="password" id = "password" required/>
             </label></p>
-            <input type="submit" value="Log in"/>
+            
+            <div><input type="submit" value="Log in" id ="submit"/><div>
             <p><a href="RequestAccessPage.html">Request Access</a></p>
         </fieldset>
+        <div>
+            <p>ERROR Messages:</p>
+            <p id="feedback"></p>
+            <p id="feedback2"></p>
+        </div>
         </form>
-  <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
+        <script src="js/UsercheckObjectModel.js"></script>
+        
+    <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
     </body>
 </html>
