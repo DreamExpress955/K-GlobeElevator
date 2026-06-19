@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
 <html>
-    <head><title>Form Handler Page</title></head>
+    <head><title>Form Handler Page</title>
     <meta name="description" content="This is the Request acess page to allow the creation of a login" />
 	<meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
 	<meta http-equiv="author" content="Blake Gergely" />
 	<meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
-  
+  </head>
 
     <body>
         <h1>Request Access Page</h1>
         <fieldset>
         <legend>Details</legend>
-        <form action="php/req_access.php" method="post", id="access">
+        <form action="php/req_access.php" method="post" id="access">
             <label><p>First Name: <input type="text" name = "firstname"/></label></p>
             <label><p>Last Name: <input type="text" name="lastname"/></label></p>
 
@@ -22,14 +22,17 @@
             <p><label>Email: <input type="eamil" name="email" /></label></p>
             <p><label>Birth date: <input type="date" name="brithday" /></label></p>
             
-            </br>
+            
             <p>Any information we missed?</p>
-            <label><textarea></textarea></label>
-
-            </br>
+            <label><textarea id = "message" rows ="10" cols = "50"></textarea></label>
+            <p></p>
+            <p id="charactersLeft"></p>
+            
             <input type="submit" value="Submit Request" />
         </form>
         </fieldset>
         <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
+
+        <script src = "js/Request.js"></script>
     </body>
 </html>
