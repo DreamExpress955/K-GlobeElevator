@@ -1,31 +1,35 @@
-<?php
-$submitted = !empty($_POST);
-?>
+
 <!DOCTYPE html>
 <html>
     <head><title>Form Handler Page</title></head>
+    <meta name="description" content="This is the Request acess page to allow the creation of a login" />
+	<meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
+	<meta http-equiv="author" content="Blake Gergely" />
+	<meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
+  
+
     <body>
         <h1>Request Access Page</h1>
-        <form action="php/req_access.php" method="post">
-            <p>First Name: <input type="text" name = "firstname"/></p>
-            <p>Last Name: <input type="text" name="lastname"/></p>
+        <fieldset>
+        <legend>Details</legend>
+        <form action="php/req_access.php" method="post", id="access">
+            <label><p>First Name: <input type="text" name = "firstname"/></label></p>
+            <label><p>Last Name: <input type="text" name="lastname"/></label></p>
 
-            <input type ="radio" name="who_are_you" value ="faculty" /> Faculty
-            <input type = "radio" name="who_are_you" value ="student" /> Student
-            <input type = "radio" name="who_are_you" value ="other" /> Other
+            <label><input type ="radio" name="who_are_you" value ="faculty member" /> Faculty </label>
+            <label><input type = "radio" name="who_are_you" value ="student" /> Student </label>
 
-            <p>I currently ... (check all that apply)</p>
-            <input type ="checkbox" name="involvement" value="none" /> Have no involvment in the project <br/>
-            <input type ="checkbox" name="involvement" value="instructor" /> Am an instructor in this project <br/>
-            <input type ="checkbox" name="involvement" value="instructor_other" /> Am an instructor in a different Project <br/>
-            <input type ="checkbox" name="involvement" value="">
-        <p>Form submitted?  <?php echo (int) $submitted; ?> </p>
-        <p>Your Login info is</p>
-        <ul>
-            <li><b>username</b>: <?php echo $_POST['username']; ?></li>
-            <li><b>password</b>: <?php echo $_POST['password']; ?></li>
-        </ul>
-        <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
+            <p><label>Email: <input type="eamil" name="email" /></label></p>
+            <p><label>Birth date: <input type="date" name="brithday" /></label></p>
+            
+            </br>
+            <p>Any information we missed?</p>
+            <label><textarea></textarea></label>
+
+            </br>
+            <input type="submit" value="Submit Request" />
         </form>
+        </fieldset>
+        <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
     </body>
 </html>
