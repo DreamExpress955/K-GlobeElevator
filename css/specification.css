@@ -1,6 +1,37 @@
+/* CSS Courtesy of Leighton Ebert */
+
 body {font-family: Georgia, 'Times New Roman', Times, serif;}
 
-img {
-    height: 300px;
+p,ol,ul {
+    font-size: 100%;
+    line-height: 25px;
+}
+
+h1 {font-size: 180%;}
+
+h2 {font-size: 130%;}
+
+figcaption {
+    font-style: italic;
+}
+
+
+.smallPic{
+    width: auto;
+    height: 200px;
+}
+
+.medPic{
+    width: auto;
+    height: 400px;
+}
+
+.lrgPic{
+    width: auto;
+    height: 700px;
+}
+
+.rounded{
     border-radius: 8px;
 }
+
