@@ -1,4 +1,5 @@
 //the character cap for the text area
+//created by Blake Gergely
 var el;
 var maxChars = 180;
 
@@ -28,6 +29,7 @@ el = document.getElementById('message');
 el.addEventListener('input', charCount, false);
 
 //the Form validation
+//created Blake Gergey
 var elForm;
 var firstnamefeedback, lastnamefeedback, emailfeedback;
 var firstNameinput, lastNameinput, emailinput;
