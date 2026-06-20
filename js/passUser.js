@@ -1,4 +1,5 @@
 //THis is the java script to check if the username and password are longer than 7 characters long
+//created by Blake Gergely
 
 var elUsername = document.getElementById('username');
 var elPassword = document.getElementById('password');
