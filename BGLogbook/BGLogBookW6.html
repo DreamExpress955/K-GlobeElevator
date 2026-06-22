@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
     <title> Weekly Log Book 6 - Blake Gergely</title>
+
+    <link href="../css/specification.css" rel="stylesheet">
 </head>
 <body> 
     <h1> Weekly Log Book 6 - Blake Gergely</h1>
@@ -8,6 +10,32 @@
     <a href="../about.html">About</a>
           <a href="BGLogBookW5.html">Prev Pg</a>
                 <a href="BGLogBookW7.html">Next Pg</a>
+    <div>        
+    <ul>
+        <li>implemented the supervisor code to read the Can bus and translate the IDs and data</li>
+        <li>implemented CAN filters for the supervisor controller</li>
+        <li>
+        Attempted to implent multi threading to account for the door shutting <br>
+        it would allow the CAN messages to be stored in a Queue and receive while waiting <br>
+        for the "door" to be shut (3-5 second sleep after reaching desired floor)
+        </li>
+        <li>integrated all the CAN code for the supervisor controller</li>
+    </ul>
+    </div>
 
+    <h2 class="mb-3">Integration Testing</h2>
+    <div class="row text-center mb-4">
+        <div>
+      <video class="w-100 rounded shadow" style="max-width:600px;" controls>
+        <source src="../Videos/NodeTesting.mp4" type="video/mp4">
+      </video>
+      <h3>Valitation Testing</h3>
+      </div>
+      <div>
+        <img src="../Pics/Terminal_NodeTesting.png" class="img-fluid rounded shadow mb-2">
+        <h3>The results of integration testing from the terminal</h3>
+    </div>
+    </div>
+    
     <p>Copyright &copy; Blake G.</p>
 </body>
