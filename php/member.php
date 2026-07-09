@@ -19,6 +19,7 @@ if (!isset($_SESSION['username']))
 <h2>Welcome <?php echo $_SESSION['username']; ?>!</h2>
 
 <p>This page contains information for authorized users only.</p>
+<p> THis is where we will hide all of the admin stuff </p>
 
 logout.phpLogout</a>
 

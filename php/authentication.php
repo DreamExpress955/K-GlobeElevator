@@ -24,7 +24,7 @@
     {
         // If the credentials are invalid, redirect back to the login page with an error message
         $_SESSION['error'] = "Invalid username or password.";
-        header("Location: login.php");
+        header("Location: ../RequestAccessPage.html");
         exit();
     }
 ?>
