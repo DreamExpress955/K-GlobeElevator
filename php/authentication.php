@@ -2,8 +2,8 @@
     session_start();
 
     // Hardcoded valid credentials
-    $validUser = "Admin";
-    $validPassword = "Password";
+    $validUser = "OwenKipp";
+    $validPassword = "OwenKipp";
 
     // Get the submitted username and password from the POST request
     $username = $_POST['username'];
@@ -17,7 +17,7 @@
         $_SESSION['username'] = $username;
 
         // Redirect to a protected page 
-        header("Location: member.php");
+        header("Location: ../elevatorNetworkForm.html");
         exit();
     } 
     else 
