@@ -1,4 +1,5 @@
 <?php $submitted = !empty ($_POST);?>
+// this is where we will add users into data base
 
 <!DOCTYPE html>
 
