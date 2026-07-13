@@ -78,6 +78,8 @@ int main() {
 			case 6:
 
 				printf("\nK-Globe's Mode - Receive and Transmit\n");
+				pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				db_setFloorNum(1);
 				TPCANMsg rxmsg;
 				while(1) {
 					// receive a message
@@ -85,17 +87,27 @@ int main() {
 
 					if (rxmsg.ID == 0x0201 && rxmsg.DATA[0] == 0x01) {
 						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+						floorNumber = 1;
 					} else if (rxmsg.ID == 0x0202 && rxmsg.DATA[0] == 0x01) {
 						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
+						floorNumber = 2;
 					} else if (rxmsg.ID == 0x0203 && rxmsg.DATA[0] == 0x01) {
 						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
+						floorNumber = 3;
 					}
 					if(elev2 == 1){
 						printf("Door Open\n");
-						sleep(3);
+						sleep(2);
 						printf("Door Close\n");
 						elev2 = 0;
 					}
+					floorNumber = db_getFloorNum();
+					if (prev_floorNumber != floorNumber) {								// If floor number changes in database
+						printf("test compare");
+						pcanTx(ID_SC_TO_EC, HexFromFloor(floorNumber));					// change floor number in elevator - send command over CAN
+					}
+					prev_floorNumber = floorNumber; 
+					sleep(1);
 				}
 				
 				break;
