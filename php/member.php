@@ -36,17 +36,17 @@ if (!isset($_SESSION['username']))
     echo "<h1>Welcome, " . $_SESSION['username'] . "</h1>";
     require 'elevatorNetworkForm.html';
 
-    if(isset($_POST['insert'])) 
+    if(isset($_POST['Insert'])) 
         {
             echo "You pressed INSERT <br>";
             insert($path, $user, $password, $current_date, $current_time, $status, $currentFloor, $requestedFloor, $otherInfo);
         }
-    else if(isset($_POST['update'])) 
+    else if(isset($_POST['Update'])) 
         {
             echo "You pressed UPDATE <br>";
             update($path, $user, $password, $tablename, $nodeID, $status, $currentFloor, $requestedFloor, $otherInfo);
         }
-    else if(isset($_POST['delete'])) 
+    else if(isset($_POST['Delete'])) 
     {
     echo "You pressed DELETE <br>";
     delete($path, $user, $password, $tablename, $nodeID);

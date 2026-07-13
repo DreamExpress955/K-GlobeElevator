@@ -1,7 +1,7 @@
 <?php
 // CRUD functions for database operations
 
-function connect(stromg $path, string $user, string $password)
+function connect(string $path, string $user, string $password)
 {
     $db = new pdo($path, $user, $password);
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -42,18 +42,35 @@ function readData(string $path, string $user, string $password, $tablename)
         }
 }
 // Update
-function updateData(string $path, string $user, string $password,string $tablename,int $node_ID, int new_status, int $new_currentFloor,int $new_requestedFloor, string $new_OtherInfo)
-: void
-{
-$db = connect($path, $user, $password);
-$query = "UPDATE $tablename SET status = :new_status, currentFloor = :new_currentFloor, requestedFloor = :new_requestedFloor, OtherInfo = :new_OtherInfo WHERE nodeID = :node_ID";
-$statement = $db->prepare($query);
-$statement->bindValue(':new_status', $new_status);
-$statement->bindValue(':new_currentFloor', $new_currentFloor);
-$statement->bindValue(':new_requestedFloor', $new_requestedFloor);
-$statement->bindValue(':new_OtherInfo', $new_OtherInfo);
-$statement->bindValue(':node_ID', $node_ID);
-$statement->execute();
+function updateData(
+    string $path,
+    string $user,
+    string $password,
+    string $tablename,
+    int $node_ID,
+    int $new_status,
+    int $new_currentFloor,
+    int $new_requestedFloor,
+    string $new_OtherInfo
+): void {
+    $db = connect($path, $user, $password);
+
+    $query = "UPDATE $tablename
+              SET status = :new_status,
+                  currentFloor = :new_currentFloor,
+                  requestedFloor = :new_requestedFloor,
+                  OtherInfo = :new_OtherInfo
+              WHERE nodeID = :node_ID";
+
+    $statement = $db->prepare($query);
+
+    $statement->bindValue(':new_status', $new_status, PDO::PARAM_INT);
+    $statement->bindValue(':new_currentFloor', $new_currentFloor, PDO::PARAM_INT);
+    $statement->bindValue(':new_requestedFloor', $new_requestedFloor, PDO::PARAM_INT);
+    $statement->bindValue(':new_OtherInfo', $new_OtherInfo, PDO::PARAM_STR);
+    $statement->bindValue(':node_ID', $node_ID, PDO::PARAM_INT);
+
+    $statement->execute();
 }
 // Delete
 function deleteData(string $path, string $user, string $password, string $tablename, int $node_ID):void
