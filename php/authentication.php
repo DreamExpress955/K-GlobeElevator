@@ -1,30 +1,30 @@
 <<?php
+    // authenticate.php
+    // start session
     session_start();
-
-    // Hardcoded valid credentials
-    $validUser = "OwenKipp";
-    $validPassword = "OwenKipp";
 
     // Get the submitted username and password from the POST request
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Check if the submitted credentials match the valid credentials
-    if ($username === $validUser && $password === $validPassword) 
-    {
-        // If the credentials are valid, set a session variable to indicate the user is logged in
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
+    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
+    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        // Redirect to a protected page 
-        header("Location: ../elevatorNetworkForm.html");
-        exit();
-    } 
-    else 
-    {
-        // If the credentials are invalid, redirect back to the login page with an error message
-        $_SESSION['error'] = "Invalid username or password.";
-        header("Location: ../RequestAccessPage.html");
-        exit();
+     // Authenticate against the database
+    $query = "SELECT * FROM authorizedUsers WHERE username = '$username'";
+    $rows = $db->query($query);
+    foreach ($rows as $row) {
+        echo $row['username'];
+        if($username === $row['username'] && $password === $row['password']) {
+            $authenticated = TRUE;
+        }
+    }
+
+    if($authenticated) {
+        $_SESSION['username'] = $username;  
+        echo "<p>Congrats, you a logged in</p>"; 
+        echo "<p>Click <a href='member.php'> here </a> to goto the members only page</p>";
+    } else {
+        echo "<p>You are not authenticated!!!!</p>"; 
     }
 ?>
