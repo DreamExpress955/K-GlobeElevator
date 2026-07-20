@@ -1,0 +1,59 @@
+<?php
+	function update_elevatorNetwork(int $node_ID, int $new_floor =1): int {
+		$db1 = new PDO('mysql:host=127.0.0.1;dbname=elevator','ese','ese');
+		$query = 'UPDATE elevatorNetwork 
+				SET currentFloor = :floor
+				WHERE nodeID = :id';
+		$statement = $db1->prepare($query);
+		$statement->bindvalue('floor', $new_floor);
+		$statement->bindvalue('id', $node_ID);
+		$statement->execute();	
+		
+		return $new_floor;
+	}
+?>
+<?php 
+	function get_currentFloor(): int {
+		try { $db = new PDO('mysql:host=127.0.0.1;dbname=elevator','ese','ese');}
+		catch (PDOException $e){echo $e->getMessage();}
+
+			// Query the database to display current floor
+			$rows = $db->query('SELECT currentFloor FROM elevatorNetwork');
+			foreach ($rows as $row) {
+				$current_floor = $row[0];
+			}
+			return $current_floor;
+	}
+?>
+
+
+<html>
+	<head><title>Trouble Shooting</title>
+    <meta name="description" content="This is the Request acess page to allow the creation of a login" />
+    <meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
+    <meta http-equiv="author" content="Blake Gergely" />
+    <meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
+    <link rel="stylesheet" href="css/Request.css">
+	</head>
+	<h1>K-Globe</h1> 
+	
+		<?php 
+			if(isset($_POST['newfloor'])) {
+				$curFlr = update_elevatorNetwork(1, $_POST['newfloor']); 
+				header('Refresh:0; url=index.php');	
+			} 
+			$curFlr = get_currentFloor();
+			echo "<h2>Current floor # $curFlr </h2>";			
+		?>		
+		
+		<h2> 	
+			<form action="index.php" method="POST">
+				Request floor # <input type="number" style="width:50px; height:40px" name="newfloor" max=3 min=1 required />
+				<input type="submit" value="Go"/>
+			</form>
+		</h2>
+		  
+		
+</html>
+ 
+ 
