@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             /*
              * Floor-controller requests:
              */
-            $nodeID = $requestedFloor;
+            $nodeID = 4;
         } elseif ($requestType === 'car_controller') {
             /*
              * All three car buttons update the car-controller node.
@@ -105,22 +105,44 @@ try {
     <link rel="stylesheet" href="../css/request.css">
 	</head>
 	<h1>K-Globe</h1> 
-	
+	<fieldset>
+        <legend>Elevator Control</legend>
 		<?php 
-			if(isset($_POST['newfloor'])) {
-				$curFlr = update_elevatorNetwork(1, $_POST['newfloor']); 
-				header('Refresh:0; url=index.php');	
-			} 
 			$curFlr = get_currentFloor();
-            
-			echo "<h2>Current floor # $curFlr </h2>";			
+            if($curFlr == 1){
+                echo '<div class ="img-grid">
+                    <img src ="../Pics/GREEN.png" alt = "floor 1" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 2" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 3" width = "50px" height="50px">
+                    </div>';
+            }
+            elseif($curFlr == 2){
+                echo'<div class ="img-grid"> 
+                    <img src ="../Pics/RED.png" alt = "floor 1" width = "50px" height="50px">
+                    <img src ="../Pics/GREEN.png" alt = "floor 2" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 3" width = "50px" height="50px ">
+                    </div>';
+            }
+            elseif($curFlr == 3){
+                echo'<div class ="img-grid"> 
+                    <img src ="../Pics/RED.png" alt = "floor 1" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 2" width = "50px" height="50px">
+                    <img src ="../Pics/GREEN.png" alt = "floor 3" width = "50px" height="50px">
+                    </div>';
+            }
+            else{
+                echo'<div class ="img-grid"> 
+                    <img src ="../Pics/RED.png" alt = "floor 1" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 2" width = "50px" height="50px">
+                    <img src ="../Pics/RED.png" alt = "floor 3" width = "50px" height="50px">
+                    </div>';
+            }		
 		?>		
 		
 		<h2> 
-			<feildset>
-				<legend>Remote Control</legend>
-				<div>
-			<feildset>
+			
+			<div display ="flex">
+			<fieldset>
 				<legend>Request a floor</legend>
 			<form action="" method="POST" class="button-grid">
                 <input type="hidden" name="request_type" value="floor_controller">
@@ -131,10 +153,10 @@ try {
 
 			</form>
 				
-			</feildset>
-                </div>
-                <div>
-			<feildset>
+			</fieldset>
+            </div>
+                
+			<fieldset>
 				<legend>Car Controller</legend>
 			<form action="" method="POST" class="button-grid">
 				<input type="hidden" name="request_type" value="car_controller">
@@ -143,12 +165,19 @@ try {
 				<button type="submit" name="floor" value="2">Floor 2</button>
 				<button type="submit" name="floor" value="3">Floor 3</button>
 			</form>
-			</feildset>
-            </div>
-			</feildset>
+			</fieldset>
+
+            <fieldset>
+                <legend>Queue</legend>
+                <ol>
+                    <li>TEMP</li>
+                </ol>
+            </fieldset>
+            
+			
 
 		</h2>
-		  
+</fieldset>
 		
 </html>
  
