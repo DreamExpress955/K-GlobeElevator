@@ -1,21 +1,37 @@
-IDIR =../include
-LDIR =-L/usr/lib/arm-linux-gnueabihf
-CC=g++
-CFLAGS=-I$(IDIR)
-ODIR=obj
+IDIR = ../include
+ODIR = obj
 
-LIBS=-l:libmysqlcppconn.so -lpcan
+CXX = g++
 
-_OBJ = main.o mainFunctions.o pcanFunctions.o databaseFunctions.o
+CXXFLAGS = -I$(IDIR) -std=c++11 -Wall -Wextra -pthread
+LDFLAGS = -pthread
+LIBS = -lmysqlcppconn -lpcan
+
+_OBJ = main.o mainFunctions.o databaseFunctions.o pcanFunctions_multithreaded.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+TARGET = main
+
+
+all: $(TARGET)
+
+
 $(ODIR)/%.o: %.cpp
-	$(CC) -c -o $@ $< $(CFLAGS)
+	mkdir -p $(ODIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-main: $(OBJ)
-	g++ -o $@ $^ $(CFLAGS) $(LDIR) $(LIBS)
 
-.PHONY: clean
+$(TARGET): $(OBJ)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
+
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+	rm -rf $(ODIR)
+	rm -f $(TARGET)
+	rm -f *.o
+
+
+rebuild: clean all
+
+
+.PHONY: all clean rebuild

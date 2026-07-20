@@ -96,7 +96,7 @@ int pcanRx(int num_msgs){
 	//printf("\nEnd Rx\n");
 	return ((int)Rxmsg.DATA[0]);						// Return the last value received
 }
-
+/*
 TPCANMsg pcanRxWithDetails() {
 	int i = 0;
 	TPCANMsg msg;
@@ -214,5 +214,5 @@ TPCANMsg pcanRxWithDetails() {
 	//printf("\nEnd Rx\n");
 	return (msg);						// Return the last value received
 }
-
+*/
 

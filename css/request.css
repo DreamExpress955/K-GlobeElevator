@@ -81,3 +81,37 @@ a {
     font-size: 14px;
     margin-top: 5px;
 }
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    width: 90%;
+    max-width: 700px;
+    margin: 30px auto;
+}
+
+.controls-grid form {
+    margin: 0;
+}
+
+.controls-grid button {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+.controls-grid img {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
