@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <libpcan.h>   					// PCAN library
+#include <queue>
 
 
 // Globals
@@ -22,6 +23,7 @@ TPCANMsg Rxmsg;
 DWORD status;
 int elev = 0; //this is ths flag for the elevator controller, so that it only prints once
 int elev2 = 0;
+std::queue<TPCANMsg> canQueue;
 // Code
 // ***********************************************************************************************************
 
@@ -97,6 +99,7 @@ int pcanRx(int num_msgs){
 
 TPCANMsg pcanRxWithDetails() {
 	int i = 0;
+	TPCANMsg msg;
 	
 	// Open a CAN channel 
 	h2 = LINUX_CAN_Open("/dev/pcanusb32", O_RDWR);
@@ -124,12 +127,14 @@ TPCANMsg pcanRxWithDetails() {
 		}
 										
 		if(Rxmsg.ID != 0x01 && Rxmsg.LEN != 0x04) {		// Ignore status message on bus	
-			
-			switch (Rxmsg.ID) {
+			canQueue.push(Rxmsg);						//add message to the queue
+			msg = canQueue.front();
+
+			switch (msg.ID) {
 				case 0x0100:
 					printf("Supervisoury Controller requested floor ");
 					elev = 0;
-					switch (Rxmsg.DATA[0]) {
+					switch (msg.DATA[0]) {
 						case 0x5:
 							printf("1");
 							break;
@@ -146,7 +151,7 @@ TPCANMsg pcanRxWithDetails() {
 						printf("Elevator Controller announces the elevator is at floor ");
 						elev = 1;
 						elev2 =1;
-						switch (Rxmsg.DATA[0]) {
+						switch (msg.DATA[0]) {
 							case 0x5:
 								printf("1");
 								break;
@@ -158,15 +163,15 @@ TPCANMsg pcanRxWithDetails() {
 								break;
 							}
 							printf("  - R ID:%4x LEN:%1x DATA:%02x \n",	// Display the CAN message
-					(int)Rxmsg.ID, 
-					(int)Rxmsg.LEN,
-					(int)Rxmsg.DATA[0]);
+					(int)msg.ID, 
+					(int)msg.LEN,
+					(int)msg.DATA[0]);
 						}
 					break;
 				case 0x0200:
 					printf("Car Controller requested floor ");
 					elev = 0;
-					switch (Rxmsg.DATA[0]) {
+					switch (msg.DATA[0]) {
 						case 0x5:
 							printf("1");
 							break;
@@ -193,10 +198,12 @@ TPCANMsg pcanRxWithDetails() {
 			}
 			if (elev == 0){
 			printf("  - R ID:%4x LEN:%1x DATA:%02x \n",	// Display the CAN message
-				(int)Rxmsg.ID, 
-				(int)Rxmsg.LEN,
-				(int)Rxmsg.DATA[0]);
+				(int)msg.ID, 
+				(int)msg.LEN,
+				(int)msg.DATA[0]);
 			}
+
+		canQueue.pop();					//remove the message from the queue	
 		i++;
 		}
 	}
@@ -205,7 +212,7 @@ TPCANMsg pcanRxWithDetails() {
 	// Close CAN 2.0 channel and exit	
 	CAN_Close(h2);
 	//printf("\nEnd Rx\n");
-	return (Rxmsg);						// Return the last value received
+	return (msg);						// Return the last value received
 }
 
 
