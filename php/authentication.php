@@ -21,10 +21,10 @@
     }
 
     if($authenticated) {
-        $_SESSION['username'] = $username;  
-        echo "<p>Congrats, you a logged in</p>"; 
-        echo "<p>Click <a href='member.php'> here </a> to goto the members only page</p>";
+        $_SESSION['username'] = $username;
+        // Redirect immediately
+        header("Location: member.php");
     } else {
-        echo "<p>You are not authenticated!!!!</p>"; 
+        header("Location: req_access.php"); 
     }
 ?>

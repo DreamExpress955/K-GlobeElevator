@@ -6,16 +6,15 @@
 <html>
     <head><title>Form Handler Page</title></head>
     <body>
-        <p>Form submitted? <?php echo (int) $submitted; ?> </p>
-        <p>your information is</p>
-        <ul>
-            <li><b>First Name</b>: <?php echo $_POST['firstname']; ?></li>
-            <li><b>Last Name</b>: <?php echo $_POST['lastname']; ?></li>
-            <li><b>Who They Are </b>: <?php echo $_POST['who_are_you']; ?></li>
-            <li><b>Email</b>: <?php echo $_POST['eamil']; ?></li>
-            <li><b>Birth date</b>: <?php echo $_POST['email']; ?></li>
-        </ul>
-        </b>
+        <form action="php/authentication.php" method="post" id="login">
+            <h1>You arent authenticated please input infromation below. </h1>
+            <fieldset>
+            <p><label>Username:
+                <input type="text" name="username" id = "username"/>
+            </label></p>
+            <p><label>Password:
+                <input type="password" name="password" id = "password" required/>
+            </label></p>
         <p><a href="../index.html"> Home Page</a></p>
         <p>Copyright &copy; Owen K., Leighton E., Blake G.</p>
     </body>

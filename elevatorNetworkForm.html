@@ -1,16 +1,57 @@
-<html>
-    <body>
-        <h2>Update, delete or add data to the database</h2>
+<div class="card shadow-lg mb-4">
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Update, Delete, or Add Data</h3>
+    </div>
+
+    <div class="card-body">
         <form action="member.php" method="post">
-            node ID: <input type='text' name='nodeID' /><em> - Use this to select a row for update/delete</em><br/>
-            status: <input type='text' name='status' /><br/>
-            currentFloor: <input type='text' name="currentFloor" /><br/>
-            requestedFloor: <input type="text" name="requestedFloor" /><br/>
-            otherInfo: <input type="text" name="otherInfo" /><br />
-            <input type="submit" value="INSERT" name="insert" />
-            <input type="submit" value="DELETE" name="delete" />
-            <input type="submit" value="UPDATE" name="update" />
-            
+
+            <div class="mb-3">
+                <label for="nodeID" class="form-label">
+                    Node ID
+                </label>
+                <input type="text" class="form-control" id="nodeID" name="nodeID">
+                <div class="form-text">
+                    Use this to select a row for update/delete.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="status" class="form-label">
+                    Status
+                </label>
+                <input type="text" class="form-control" id="status" name="status">
+            </div>
+
+            <div class="mb-3">
+                <label for="currentFloor" class="form-label">
+                    Current Floor
+                </label>
+                <input type="text" class="form-control" id="currentFloor" name="currentFloor">
+            </div>
+
+            <div class="mb-3">
+                <label for="requestedFloor" class="form-label">
+                    Requested Floor
+                </label>
+                <input type="text" class="form-control" id="requestedFloor" name="requestedFloor">
+            </div>
+
+            <div class="mb-3">
+                <label for="otherInfo" class="form-label">
+                    Other Information
+                </label>
+                <input type="text" class="form-control" id="otherInfo" name="otherInfo">
+            </div>
+
+            <div class="d-flex gap-2">
+                <input type="submit" value="INSERT" name="insert" class="btn btn-success">
+
+                <input type="submit" value="UPDATE" name="update" class="btn btn-warning">
+
+                <input type="submit" value="DELETE" name="delete" class="btn btn-danger">
+            </div>
+
         </form>
-    </body>
-</html>
+    </div>
+</div>
