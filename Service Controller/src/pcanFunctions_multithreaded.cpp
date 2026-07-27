@@ -351,7 +351,7 @@ static void canReceiverThread()
             std::lock_guard<std::mutex> lock(queueMutex);
             canPriorityQueue.push(queuedMessage);
         }
-
+        
         printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",
                static_cast<unsigned int>(receivedMessage.ID),
                static_cast<unsigned int>(receivedMessage.DATA[0]));
@@ -377,7 +377,7 @@ static void canReceiverThread()
 static void canProcessorThread()
 {
     int floorNumber = 1;
-
+    bool requestWasTransmitted = false;
     printf("CAN processing thread started\n");
 
     while (true)
@@ -419,6 +419,7 @@ static void canProcessorThread()
                     printf("Supervisory Controller sent unknown data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                sleep(3);
                 break;
             }
 
@@ -437,6 +438,7 @@ static void canProcessorThread()
                     printf("Elevator Controller sent unknown floor data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                
                 elev = true;
             }
                 break;
@@ -452,9 +454,20 @@ static void canProcessorThread()
 
                     printf("Car Controller requested floor %d\n",
                            floorNumber);
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, msg.DATA[0]);
 
-                    pcanTx(ID_SC_TO_EC, msg.DATA[0]);
-                    db_setFloorNum(floorNumber);
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit car Controller request\n"
+                        );
+                    }
                 }
                 else
                 {
@@ -474,8 +487,20 @@ static void canProcessorThread()
 
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
-                    pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
-                    db_setFloorNum(floorNumber);
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit car Controller request\n"
+                        );
+                    }
                 }
                 else
                 {
@@ -495,8 +520,20 @@ static void canProcessorThread()
 
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
-                    pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
-                    db_setFloorNum(floorNumber);
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit Floor 2 request\n"
+                        );
+                    }
                 }
                 else
                 {
@@ -516,8 +553,20 @@ static void canProcessorThread()
 
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");
-                    pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
-                    db_setFloorNum(floorNumber);
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit car Controller request\n"
+                        );
+                    }
                 }
                 else
                 {
@@ -534,8 +583,11 @@ static void canProcessorThread()
                        static_cast<unsigned int>(msg.ID));
                 break;
             }
-            printf("Sleep\n");
-            sleep(30); // Delay between processing messages
+            
+        }
+        if(requestWasTransmitted){
+            sleep(3);
+            requestWasTransmitted = false;
         }
     }
 
@@ -549,6 +601,7 @@ void pcanRxWithDetailsMultithreaded()
         printf("Multithreaded CAN mode is already running\n");
         return;
     }
+    stopRequested = 0;
     std::signal(SIGINT, signalHandler);
     std::signal(SIGTERM, signalHandler);
 
