@@ -16,14 +16,37 @@
 #include <queue>
 #include <thread>
 #include <vector>
+#include <csignal>
 
 // Existing globals used by the rest of the project.
 HANDLE h;
 HANDLE h2;
 TPCANMsg Txmsg;
 DWORD status;
-int elev = 0;
-int elev2 = 0;
+//floor confirmation flag
+std::atomic<bool> elev(false);
+
+//CAN handle and synchronization primitives for multithreaded operation.
+static HANDLE sharedCANHandle = NULL;
+static std::mutex canWriteMutex;
+static std::mutex canHandleMutex;
+static std::condition_variable canReadyCondition;
+static bool canDeviceReady = false;
+
+//Flags for open and closed evelvator doors
+static std::atomic<bool> doorOpenReceived(false);
+static std::atomic<bool> doorCloseReceived(false);
+
+//signal handler to stop the program gracefully
+static volatile std::sig_atomic_t stopRequested =0;
+
+static void signalHandler(int signalNumber)
+{
+    if (signalNumber == SIGINT || signalNumber == SIGTERM)
+    {
+        stopRequested = 1;
+    }
+}
 
 struct QueuedCANMessage
 {
@@ -98,42 +121,70 @@ static void printCANMessage(const TPCANMsg& msg)
 
 int pcanTx(int id, int data)
 {
-    h = LINUX_CAN_Open("/dev/pcanusb32", O_RDWR);
+   HANDLE transmitHandle = NULL;
 
-    if (h == NULL)
     {
-        printf("Unable to open PCAN transmit channel\n");
+        std::unique_lock<std::mutex> handleLock(canHandleMutex);
+
+        printf("Waiting for CAN device initialization...\n");
+
+        canReadyCondition.wait(
+            handleLock,
+            []()
+            {
+                return canDeviceReady ||
+                !receiverRunning ||
+                stopRequested;
+            }
+        );
+        //check if everything is set correctly to transmit the message
+        if (!canDeviceReady ||
+            !receiverRunning ||
+            stopRequested ||
+            sharedCANHandle == NULL)
+        {
+            printf("CAN device is unavailable or shutting down\n");
+            return -1;
+        }
+
+        transmitHandle = sharedCANHandle;
+    }
+    if(transmitHandle == NULL){
+        printf("CAN device is not ready for transmission\n");
         return -1;
     }
 
-    status = CAN_Init(h, CAN_BAUD_125K, CAN_INIT_TYPE_ST);
+    std::lock_guard<std::mutex> writeLock(canWriteMutex);
 
-    if (status != PCAN_NO_ERROR)
+    TPCANMsg txMessage;
+    memset(&txMessage, 0, sizeof(txMessage));
+
+    txMessage.ID = static_cast<DWORD>(id);
+    txMessage.MSGTYPE = MSGTYPE_STANDARD;
+    txMessage.LEN = 1;
+    txMessage.DATA[0] = static_cast<BYTE>(data);
+
+    DWORD writeStatus = CAN_Write(transmitHandle, &txMessage);
+
+    if (writeStatus != PCAN_NO_ERROR)
     {
-        printf("CAN_Init transmit error: 0x%x\n",
-               static_cast<unsigned int>(status));
-        CAN_Close(h);
-        return static_cast<int>(status);
+        printf(
+            "CAN_Write error: 0x%x ID:0x%04x DATA:0x%02x\n",
+            static_cast<unsigned int>(writeStatus),
+            static_cast<unsigned int>(txMessage.ID),
+            static_cast<unsigned int>(txMessage.DATA[0])
+        );
+
+        return static_cast<int>(writeStatus);
     }
 
-    status = CAN_Status(h);
+    printf(
+        "CAN transmitted ID:0x%04x DATA:0x%02x\n",
+        static_cast<unsigned int>(txMessage.ID),
+        static_cast<unsigned int>(txMessage.DATA[0])
+    );
 
-    Txmsg.ID = id;
-    Txmsg.MSGTYPE = MSGTYPE_STANDARD;
-    Txmsg.LEN = 1;
-    Txmsg.DATA[0] = data;
-
-    sleep(1);
-    status = CAN_Write(h, &Txmsg);
-
-    if (status != PCAN_NO_ERROR)
-    {
-        printf("CAN_Write error: 0x%x\n",
-               static_cast<unsigned int>(status));
-    }
-
-    CAN_Close(h);
-    return static_cast<int>(status);
+    return 0;
 }
 
 
@@ -191,16 +242,34 @@ TPCANMsg pcanRxWithDetails()
 
 static void canReceiverThread()
 {
-    HANDLE receiveHandle =
-        LINUX_CAN_Open("/dev/pcanusb32", O_RDWR);
+    const char* devicePath = "/dev/pcanusb32";
+    HANDLE receiveHandle = NULL;
 
-    if (receiveHandle == NULL)
+    printf("Waiting for %s to become available...\n", devicePath);
+
+    while (receiverRunning && receiveHandle == NULL)
     {
-        printf("Receiver thread could not open /dev/pcanusb32\n");
-        receiverRunning = false;
+        receiveHandle = LINUX_CAN_Open(devicePath, O_RDWR);
+
+        if (receiveHandle == NULL)
+        {
+            printf(
+                "%s is unavailable. Retrying in 1 second...\n",
+                devicePath
+            );
+
+            sleep(1);
+        }
+    }
+
+    if (!receiverRunning || stopRequested)
+    {
+        printf("CAN startup cancelled\n");
         queueCondition.notify_all();
         return;
     }
+
+    printf("%s opened successfully\n", devicePath);
 
     DWORD receiveStatus =
         CAN_Init(receiveHandle, CAN_BAUD_125K, CAN_INIT_TYPE_ST);
@@ -215,12 +284,20 @@ static void canReceiverThread()
         queueCondition.notify_all();
         return;
     }
+    else {
+    std::lock_guard<std::mutex> lock(canHandleMutex);
 
-    receiveStatus = CAN_Status(receiveHandle);
+    sharedCANHandle = receiveHandle;
+    canDeviceReady = true;
+    }
+
+    canReadyCondition.notify_all();
+    
+    
 
     printf("CAN receiver thread started\n");
 
-    while (receiverRunning)
+    while (receiverRunning && !stopRequested)
     {
         TPCANMsg receivedMessage;
         memset(&receivedMessage, 0, sizeof(receivedMessage));
@@ -246,7 +323,26 @@ static void canReceiverThread()
         {
             continue;
         }
+        if (receivedMessage.ID == 0x08)
+        {
+            doorOpenReceived = true;
 
+            printf("Door OPEN message received, ID: 0x08\n");
+
+            continue;
+        }
+
+        else if (receivedMessage.ID == 0x09)
+        {
+            doorCloseReceived = true;
+
+            printf("Door CLOSE message received, ID: 0x09\n");
+
+                printf("Both door OPEN and door CLOSE messages received\n");
+
+            continue;
+        }
+        else{
         QueuedCANMessage queuedMessage;
         queuedMessage.message = receivedMessage;
         queuedMessage.sequenceNumber = nextSequenceNumber++;
@@ -256,15 +352,26 @@ static void canReceiverThread()
             canPriorityQueue.push(queuedMessage);
         }
 
-        printf("Queued CAN message ID 0x%04x\n",
-               static_cast<unsigned int>(receivedMessage.ID));
+        printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",
+               static_cast<unsigned int>(receivedMessage.ID),
+               static_cast<unsigned int>(receivedMessage.DATA[0]));
 
         queueCondition.notify_one();
+        }
     }
+    {
+    std::lock_guard<std::mutex> writeLock(canWriteMutex);
+    std::lock_guard<std::mutex> handleLock(canHandleMutex);
+
+    canDeviceReady = false;
+    sharedCANHandle = NULL;
 
     CAN_Close(receiveHandle);
-    printf("CAN receiver thread stopped\n");
+    }
     queueCondition.notify_all();
+    canReadyCondition.notify_all();
+    printf("CAN receiver thread stopped\n");
+    
 }
 
 static void canProcessorThread()
@@ -273,7 +380,7 @@ static void canProcessorThread()
 
     printf("CAN processing thread started\n");
 
-    while (receiverRunning || !canPriorityQueue.empty())
+    while (true)
     {
         TPCANMsg msg;
         memset(&msg, 0, sizeof(msg));
@@ -298,9 +405,6 @@ static void canProcessorThread()
             canPriorityQueue.pop();
         }
 
-        printf("\nProcessing CAN message\n");
-        printCANMessage(msg);
-
         switch (msg.ID)
         {
             case ID_SC_TO_EC:
@@ -320,22 +424,21 @@ static void canProcessorThread()
 
             case ID_EC_TO_ALL:
             {
+                if (elev == false){
                 if (getFloorFromMessageData(msg.DATA[0], floorNumber))
                 {
                     printf("Elevator Controller announces elevator is at floor %d\n",
                            floorNumber);
 
                     db_setFloorNum(floorNumber);
-
-                    printf("Door Open\n");
-                    sleep(2);
-                    printf("Door Close\n");
                 }
                 else
                 {
                     printf("Elevator Controller sent unknown floor data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                elev = true;
+            }
                 break;
             }
 
@@ -343,6 +446,10 @@ static void canProcessorThread()
             {
                 if (getFloorFromMessageData(msg.DATA[0], floorNumber))
                 {
+                    doorOpenReceived = false;
+                    doorCloseReceived = false;
+
+
                     printf("Car Controller requested floor %d\n",
                            floorNumber);
 
@@ -354,6 +461,7 @@ static void canProcessorThread()
                     printf("Car Controller sent unknown floor data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                elev = false;
                 break;
             }
 
@@ -361,6 +469,9 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
+                    doorOpenReceived = false;
+                    doorCloseReceived = false;
+
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
                     pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
@@ -371,6 +482,7 @@ static void canProcessorThread()
                     printf("Floor 1 Controller sent unexpected data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                elev = false;
                 break;
             }
 
@@ -378,6 +490,9 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
+                    doorOpenReceived = false;
+                    doorCloseReceived = false;
+
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
                     pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
@@ -388,6 +503,7 @@ static void canProcessorThread()
                     printf("Floor 2 Controller sent unexpected data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                elev = false;
                 break;
             }
 
@@ -395,6 +511,9 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
+                    doorOpenReceived = false;
+                    doorCloseReceived = false;
+
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");
                     pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
@@ -405,6 +524,7 @@ static void canProcessorThread()
                     printf("Floor 3 Controller sent unexpected data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
+                elev = false;
                 break;
             }
 
@@ -414,6 +534,8 @@ static void canProcessorThread()
                        static_cast<unsigned int>(msg.ID));
                 break;
             }
+            printf("Sleep\n");
+            sleep(30); // Delay between processing messages
         }
     }
 
@@ -427,14 +549,27 @@ void pcanRxWithDetailsMultithreaded()
         printf("Multithreaded CAN mode is already running\n");
         return;
     }
+    std::signal(SIGINT, signalHandler);
+    std::signal(SIGTERM, signalHandler);
 
+    // Clear old queued messages.
     {
-        std::lock_guard<std::mutex> lock(queueMutex);
+        std::lock_guard<std::mutex> queueLock(queueMutex);
 
         while (!canPriorityQueue.empty())
         {
             canPriorityQueue.pop();
         }
+    }
+
+    // Reset the shared CAN state.
+    // The braces are essential so the mutex is released
+    // before the receiver thread starts.
+    {
+        std::lock_guard<std::mutex> handleLock(canHandleMutex);
+
+        sharedCANHandle = NULL;
+        canDeviceReady = false;
     }
 
     nextSequenceNumber = 0;
@@ -445,17 +580,41 @@ void pcanRxWithDetailsMultithreaded()
 
     std::thread receiverThread(canReceiverThread);
     std::thread processorThread(canProcessorThread);
+    while (receiverRunning && !stopRequested)
+    {
+        usleep(10000);
+    }
+    printf("\nStopping CAN threads...\n");
 
-    receiverThread.join();
 
     receiverRunning = false;
     queueCondition.notify_all();
+    canReadyCondition.notify_all();
 
-    processorThread.join();
+    if(receiverThread.joinable()){
+        receiverThread.join();
+    }
+    if (processorThread.joinable()){
+        processorThread.join();
+    }
+
+    {
+        std::lock_guard<std::mutex> handleLock(canHandleMutex);
+
+        sharedCANHandle = NULL;
+        canDeviceReady = false;
+    }
+
+    printf("Multithreaded CAN mode stopped\n");
+    
+
 }
 
 void stopPcanMultithreaded()
 {
+    stopRequested = 1;
     receiverRunning = false;
+
     queueCondition.notify_all();
+    canReadyCondition.notify_all();
 }

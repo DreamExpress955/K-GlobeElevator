@@ -8,6 +8,7 @@
 #include <unistd.h> 
 #include <iostream>
 #include <libpcan.h>   					// PCAN library
+#include <thread>
 
 
 
@@ -19,9 +20,9 @@ extern int elev2;
 int main() {
 
 	int choice; 
-	int ID; 
-	int data; 
-	int numRx;
+	//int ID; 
+	//int data; 
+	//int numRx;
 	int floorNumber = 1, prev_floorNumber = 1;
 
 	while(1) {
@@ -79,15 +80,24 @@ int main() {
 				return(0);
 
 			case 6:
-
+			{
 				printf("\nK-Globe's Mode - Receive and Transmit\n");
+				std::thread canThread(
+        		[]()
+        		{
+            		pcanRxWithDetailsMultithreaded();
+        		}
+    			);
 
-				pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				int result = pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				if (result != 0){
+					printf("Initial CAN tranmission failed: 0x%x\n", result);
+				}
 				db_setFloorNum(1);
 
-				pcanRxWithDetailsMultithreaded();
+				canThread.join();
 				break;
-
+			}
 			default:
 				printf("Error on input values");
 				sleep(3);

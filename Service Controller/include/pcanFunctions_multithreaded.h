@@ -21,5 +21,6 @@ int pcanTx(int id, int data);
 void pcanRxWithDetailsMultithreaded();
 void stopPcanRxThreads();
 void stopPcanMultithreaded();
+bool isPCANBusy();
 
 #endif
