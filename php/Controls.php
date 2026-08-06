@@ -98,9 +98,7 @@ try {
 
 <html>
 	<head><title>Trouble Shooting</title>
-    <meta name="description" content="This is the Request acess page to allow the creation of a login" />
-    <meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
-    <meta http-equiv="author" content="Blake Gergely" />
+    <meta http-equiv="author" content="Owen Kipp" />
     <meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
     <link rel="stylesheet" href="../css/request.css">
 	</head>
