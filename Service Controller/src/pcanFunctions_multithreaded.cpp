@@ -36,7 +36,7 @@ static bool canDeviceReady = false;
 
 //Flags for open and closed evelvator doors
 static std::atomic<bool> doorOpenReceived(false);
-static std::atomic<bool> doorCloseReceived(false);
+
 
 //signal handler to stop the program gracefully
 static volatile std::sig_atomic_t stopRequested =0;
@@ -106,19 +106,7 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
     }
 }
 
-static void printCANMessage(const TPCANMsg& msg)
-{
-    printf("  - ID:%04x LEN:%01x DATA:",
-           static_cast<unsigned int>(msg.ID),
-           static_cast<unsigned int>(msg.LEN));
 
-    for (int i = 0; i < msg.LEN; ++i)
-    {
-        printf("%02x ", static_cast<unsigned int>(msg.DATA[i]));
-    }
-
-    printf("\n");
-}
 
 int pcanTx(int id, int data)
 {
@@ -328,18 +316,17 @@ static void canReceiverThread()
         {
             doorOpenReceived = true;
 
-            printf("Door OPEN message received, ID: 0x08\n");
+            printf("Door OPEN\n");
 
             continue;
         }
 
         else if (receivedMessage.ID == 0x09)
         {
-            doorCloseReceived = true;
+            doorOpenReceived = false;
 
-            printf("Door CLOSE message received, ID: 0x09\n");
+            printf("Door CLOSE\n");
 
-                printf("Both door OPEN and door CLOSE messages received\n");
 
             continue;
         }
@@ -383,6 +370,9 @@ static void canProcessorThread()
 
     while (true)
     {
+        while(doorOpenReceived && !stopRequested){
+            //infinte loop until door is closed or the thread is stopped
+        }
         TPCANMsg msg;
         memset(&msg, 0, sizeof(msg));
 
