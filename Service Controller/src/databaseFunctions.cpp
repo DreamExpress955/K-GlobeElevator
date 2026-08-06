@@ -20,7 +20,7 @@ int db_getFloorNum() {
 	
 	// Create a connection 
 	driver = get_driver_instance();
-	con = driver->connect("tcp://127.0.0.1:3306", "ese", "ese");	
+	con = driver->connect("host=127.0.0.1", "phpmyadmin", "ese1");	
 	con->setSchema("elevator");		
 	
 	// Query database
@@ -43,13 +43,13 @@ int db_getFloorNum() {
 int db_setFloorNum(int floorNum) {
 	sql::Driver *driver; 				// Create a pointer to a MySQL driver object
 	sql::Connection *con; 				// Create a pointer to a database connection object
-	sql::Statement *stmt;				// Crealte a pointer to a Statement object to hold statements 
+	sql::Statement *stmt;				// Create a pointer to a Statement object to hold statements 
 	sql::ResultSet *res;				// Create a pointer to a ResultSet object to hold results 
 	sql::PreparedStatement *pstmt; 		// Create a pointer to a prepared statement	
 	
 	// Create a connection 
 	driver = get_driver_instance();
-	con = driver->connect("tcp://127.0.0.1:3306", "ese", "ese");	
+	con = driver->connect("host=127.0.0.1", "myphpadmin", "ese1");	
 	con->setSchema("elevator");										
 	
 	// Query database (possibly not necessary)

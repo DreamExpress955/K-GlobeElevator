@@ -1,12 +1,14 @@
 #include "../include/pcanFunctions.h"
 #include "../include/databaseFunctions.h"
 #include "../include/mainFunctions.h"
+#include "../include/pcanFunctions_multithreaded.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> 
 #include <iostream>
 #include <libpcan.h>   					// PCAN library
+#include <thread>
 
 
 
@@ -18,9 +20,9 @@ extern int elev2;
 int main() {
 
 	int choice; 
-	int ID; 
-	int data; 
-	int numRx;
+	//int ID; 
+	//int data; 
+	//int numRx;
 	int floorNumber = 1, prev_floorNumber = 1;
 
 	while(1) {
@@ -29,18 +31,20 @@ int main() {
 		
 		switch (choice) {
 			case 1: 
+			/* 
 				ID = chooseID();		// user to select ID depending on intended recipient
 				data = chooseMsg();		// user to select message data
 				pcanTx(ID, data);		// transmit ID and data 
 				db_setFloorNum(FloorFromHex(data)); 		// change floor number in database ** NEW **
 				break; 
-				
+			*/	
 			case 2:
+			/*
 				printf("\nHow many messages to receive? ");
 				scanf("%d", &numRx);
 				pcanRx(numRx);
 				break;
-				
+			*/	
 			case 3:
 				printf("\nNow listening to commands from the website - press ctrl-z to cancel\n");
 				// Synchronize elevator db and CAN (start at 1st floor)
@@ -76,42 +80,24 @@ int main() {
 				return(0);
 
 			case 6:
-
+			{
 				printf("\nK-Globe's Mode - Receive and Transmit\n");
-				pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
-				db_setFloorNum(1);
-				TPCANMsg rxmsg;
-				while(1) {
-					// receive a message
-					rxmsg = pcanRxWithDetails();
+				std::thread canThread(
+        		[]()
+        		{
+            		pcanRxWithDetailsMultithreaded();
+        		}
+    			);
 
-					if (rxmsg.ID == 0x0201 && rxmsg.DATA[0] == 0x01) {
-						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
-						floorNumber = 1;
-					} else if (rxmsg.ID == 0x0202 && rxmsg.DATA[0] == 0x01) {
-						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
-						floorNumber = 2;
-					} else if (rxmsg.ID == 0x0203 && rxmsg.DATA[0] == 0x01) {
-						pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
-						floorNumber = 3;
-					}
-					if(elev2 == 1){
-						printf("Door Open\n");
-						sleep(2);
-						printf("Door Close\n");
-						elev2 = 0;
-					}
-					floorNumber = db_getFloorNum();
-					if (prev_floorNumber != floorNumber) {								// If floor number changes in database
-						printf("test compare");
-						pcanTx(ID_SC_TO_EC, HexFromFloor(floorNumber));					// change floor number in elevator - send command over CAN
-					}
-					prev_floorNumber = floorNumber; 
-					sleep(1);
+				int result = pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				if (result != 0){
+					printf("Initial CAN tranmission failed: 0x%x\n", result);
 				}
-				
+				db_setFloorNum(1);
+
+				canThread.join();
 				break;
-			
+			}
 			default:
 				printf("Error on input values");
 				sleep(3);
