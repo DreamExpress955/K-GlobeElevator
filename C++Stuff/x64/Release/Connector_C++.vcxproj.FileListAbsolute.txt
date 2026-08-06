@@ -1,0 +1,4 @@
+C:\Users\micha\Desktop\ConnectorExample\Connector_C++\x64\Release\Connector_C++.exe
+C:\Users\micha\Desktop\ConnectorExample (2021 in class)\Connector_C++\x64\Release\Connector_C++.exe
+C:\Users\mgalle\Desktop\3 Back-End Development 9 - Program\x64\Release\Connector_C++.exe
+C:\Users\Mgalle\Desktop\3 Back-End Development 9 - Program\3 Back-End Development 9 - Program\x64\Release\Connector_C++.exe

@@ -1,6 +1,6 @@
 <?php
 	function update_elevatorNetwork(int $node_ID, int $new_floor =1): int {
-		$db1 = new PDO('mysql:host=127.0.0.1;dbname=elevator','ese','ese');
+		$db1 = new PDO('mysql:host=127.0.0.1;dbname=elevator','root','');
 		$query = 'UPDATE elevatorNetwork 
 				SET currentFloor = :floor
 				WHERE nodeID = :id';
@@ -29,9 +29,7 @@
 
 <html>
 	<head><title>Trouble Shooting</title>
-    <meta name="description" content="This is the Request acess page to allow the creation of a login" />
-    <meta name="robots" content="noindex nofollow" />  <!-- do not want page or any of its links to be indexed -->
-    <meta http-equiv="author" content="Blake Gergely" />
+    <meta http-equiv="author" content="Owen Kipp" />
     <meta http-equiv="pragma" content="no-cache" /> <!-- want browser to reload this page every time -->
     <link rel="stylesheet" href="css/Request.css">
 	</head>
