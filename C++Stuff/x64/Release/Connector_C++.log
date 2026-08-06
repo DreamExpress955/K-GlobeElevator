@@ -1,0 +1,7 @@
+﻿  Connector_C++.cpp
+  databaseFunctions.cpp
+  Generating code
+  Previous IPDB was built with incompatible compiler, fall back to full compilation.
+  All 120 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Connector_C++.vcxproj -> C:\Users\Mgalle\Desktop\3 Back-End Development 9 - Program\3 Back-End Development 9 - Program\x64\Release\Connector_C++.exe
