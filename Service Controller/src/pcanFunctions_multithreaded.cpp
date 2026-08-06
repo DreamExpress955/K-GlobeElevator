@@ -1,5 +1,6 @@
 #include "../include/pcanFunctions_multithreaded.h"
 #include "../include/databaseFunctions.h"
+#include "../include/audio.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -430,7 +431,7 @@ static void canProcessorThread()
                 {
                     printf("Elevator Controller announces elevator is at floor %d\n",
                            floorNumber);
-
+                    playFloor(floorNumber);
                     db_setFloorNum(floorNumber);
                 }
                 else
@@ -449,7 +450,6 @@ static void canProcessorThread()
                 if (getFloorFromMessageData(msg.DATA[0], floorNumber))
                 {
                     doorOpenReceived = false;
-                    doorCloseReceived = false;
 
 
                     printf("Car Controller requested floor %d\n",
@@ -468,13 +468,14 @@ static void canProcessorThread()
                             "Failed to transmit car Controller request\n"
                         );
                     }
+                    elev = false;
                 }
                 else
                 {
                     printf("Car Controller sent unknown floor data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
-                elev = false;
+                
                 break;
             }
 
@@ -482,8 +483,6 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
-                    doorOpenReceived = false;
-                    doorCloseReceived = false;
 
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
@@ -515,8 +514,7 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
-                    doorOpenReceived = false;
-                    doorCloseReceived = false;
+
 
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
@@ -548,8 +546,6 @@ static void canProcessorThread()
             {
                 if (msg.DATA[0] == 0x01)
                 {
-                    doorOpenReceived = false;
-                    doorCloseReceived = false;
 
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");

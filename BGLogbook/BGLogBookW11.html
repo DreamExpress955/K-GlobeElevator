@@ -8,7 +8,40 @@
     <a href="../about.html">About</a>
           <a href="BGLogBookW10.html">Prev Pg</a>
                 <a href="BGLogBookW12.html">Next Pg</a>
+    <ul>
+        <li>Added floor anouncments to the main code.</li>
+        <li>updated logic for repeated floor confirmation from the elevator controller <br> 
+            The door open and close messages from the control car were raising the flag to say a<br>
+            new floor request has been made. I moved the flag reset for the elevator controller if statment<br>
+            from after the if statement to in the if statment since theres a default case where an unknown message was sent</li>
+        <li>sabbath mode as added to the example GUI, was working and adding a floor request message to the queue in this order <br>
+            foor 1, floor 2, floor 3, then back to floor 3. Though somewher my implementation caused issues with the recieving thread</li>
+        <li>maintanence mode was added but not fully implemented<br>
+        the button currently doesn't toggle the data base variable, so if you put maintanence mode on the only way to take it of is to <br>
+        restart (since on startup the resets the flag to 0)<bar>
+        as of now has been fixes but still need to integrate all of the GUI into the main code.
+        </li>
+/
 
+    </ul>
+    <div>
+        <h2 class="mb-3">Sabbath Mode</h2>
+        <video class="w-100 rounded shadow" style="max-width:600px;" controls>
+            <source src="../Videos/SabbathMode.mp4" type="video/mp4">
+        </video>
+    </div>
+    <h4 class="mb-3">Floor Announcements</h4>
+    <div class="row text-center mb-4">
+        <div>
+      <video class="w-100 rounded shadow" style="max-width:600px;" controls>
+        <source src="../Videos/FloorAnnouncements.mp4" type="video/mp4">
+      </video>
+      <h5 class="mb-3">Queueing</h5>
+    <div class="row text-center mb-4">
+        <div>
+      <video class="w-100 rounded shadow" style="max-width:600px;" controls>
+        <source src="../Videos/QueuesDemo.mp4" type="video/mp4">
+      </video>
 
     <p>Copyright &copy; Blake G.</p>
 </body>

@@ -7,7 +7,7 @@ CXXFLAGS = -I$(IDIR) -std=c++11 -Wall -Wextra -pthread
 LDFLAGS = -pthread
 LIBS = -lmysqlcppconn -lpcan
 
-_OBJ = main.o mainFunctions.o databaseFunctions.o pcanFunctions_multithreaded.o
+_OBJ = main.o mainFunctions.o databaseFunctions.o pcanFunctions_multithreaded.o audio.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 TARGET = main
