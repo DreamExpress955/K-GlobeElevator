@@ -45,21 +45,95 @@ $status = $_POST['status'] ?? '';
 $currentFloor = $_POST['currentFloor'] ?? '';
 $requestedFloor = $_POST['requestedFloor'] ?? '';
 $otherInfo = $_POST['otherInfo'] ?? '';
+$canID = $_POST['canID'] ?? 0;
+$canNodeID = $_POST['can_nodeID'] ?? 0;
+$messageID = $_POST['messageID'] ?? 0;
+$baudRate = $_POST['baudRate'] ?? 0;
+$lastMessage = $_POST['lastMessage'] ?? '';
 
 $message = "";
 
 if (isset($_POST['insert'])) {
-    insert($path, $user, $password, $nodeID, $current_date, $current_time, $status, $currentFloor, $requestedFloor, $otherInfo);
+    insert(
+    $path,
+    $user,
+    $password,
+    $current_date,
+    $current_time,
+    (int)$status,
+    (int)$currentFloor,
+    (int)$requestedFloor,
+    $otherInfo
+);
     $message = "<div class='alert alert-success'>Record inserted successfully.</div>";
+}
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+if (isset($_POST['insertCAN'])) {
+
+    insertCAN(
+        $path,
+        $user,
+        $password,
+        (int)$canNodeID,
+        (int)$messageID,
+        (int)$baudRate,
+        $lastMessage
+    );
+
+    $message = "<div class='alert alert-success'>CAN record inserted successfully.</div>";
+}
+
+if (isset($_POST['updateCAN'])) {
+
+    updateCAN(
+        $path,
+        $user,
+        $password,
+        (int)$canID,
+        (int)$messageID,
+        (int)$baudRate,
+        $lastMessage
+    );
+
+    $message = "<div class='alert alert-warning'>CAN record updated successfully.</div>";
+}
+
+if (isset($_POST['deleteCAN'])) {
+
+    deleteCAN(
+        $path,
+        $user,
+        $password,
+        (int)$canID
+    );
+
+    $message = "<div class='alert alert-danger'>CAN record deleted successfully.</div>";
 }
 
 if (isset($_POST['update'])) {
-    update($path, $user, $password, $tablename, $nodeID, $status, $currentFloor, $requestedFloor, $otherInfo);
+    update(
+        $path,
+        $user,
+        $password,
+        (int)$nodeID,
+        (int)$status,
+        (int)$currentFloor,
+        (int)$requestedFloor,
+        $otherInfo
+    );
     $message = "<div class='alert alert-warning'>Record updated successfully.</div>";
 }
 
+
 if (isset($_POST['delete'])) {
-    delete($path, $user, $password, $tablename, $nodeID);
+    delete(
+        $path,
+        $user,
+        $password,
+        (int)$nodeID
+    );
     $message = "<div class='alert alert-danger'>Record deleted successfully.</div>";
 }
 ?>
@@ -102,9 +176,78 @@ if (isset($_POST['delete'])) {
 
         <?= $message ?>
 
-        <!-- FORM -->
-        <?php require '../elevatorNetworkForm.html'; ?>
+<!-- ELEVATOR FORM -->
+<div class="card mb-4">
 
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Elevator Network Controls</h3>
+    </div>
+
+    <div class="card-body">
+        <?php require '../elevatorNetworkForm.html'; ?>
+    </div>
+
+</div>
+
+<!-- CAN FORM -->
+<div class="card mb-4">
+
+    <div class="card-header bg-success text-white">
+        <h3 class="mb-0">CAN Network Controls</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            <input type="number"
+                   name="canID"
+                   class="form-control mb-2"
+                   placeholder="CAN ID">
+
+            <input type="number"
+                   name="can_nodeID"
+                   class="form-control mb-2"
+                   placeholder="Node ID">
+
+            <input type="number"
+                   name="messageID"
+                   class="form-control mb-2"
+                   placeholder="Message ID">
+
+            <input type="number"
+                   name="baudRate"
+                   class="form-control mb-2"
+                   placeholder="Baud Rate">
+
+            <input type="text"
+                   name="lastMessage"
+                   class="form-control mb-3"
+                   placeholder="Last Message">
+
+            <button type="submit"
+                    name="insertCAN"
+                    class="btn btn-success">
+                Insert CAN
+            </button>
+
+            <button type="submit"
+                    name="updateCAN"
+                    class="btn btn-warning">
+                Update CAN
+            </button>
+
+            <button type="submit"
+                    name="deleteCAN"
+                    class="btn btn-danger">
+                Delete CAN
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
         <hr class="my-4">
 
         <!-- DATABASE RECORDS -->
