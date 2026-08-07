@@ -119,7 +119,7 @@ LEFT JOIN canNetwork c
     echo "</tbody>";
     echo "</table>";
 }
-
+/*
 // Update
 function update(
     string $path,
@@ -153,6 +153,80 @@ function update(
         'nodeID' => $nodeID
     ]);
 }
+*/
+// Update using Transactions and Exceptions
+function update(
+    string $path,
+    string $user,
+    string $password,
+    int $nodeID,
+    int $newStatus,
+    int $newCurrentFloor,
+    int $newRequestedFloor,
+    string $newOtherInfo
+): void {
+
+    // Input Validation
+    if ($nodeID <= 0) {
+        throw new Exception("Invalid Node ID.");
+    }
+
+    if ($newCurrentFloor < 1 || $newCurrentFloor > 3) {
+        throw new Exception("Current floor must be between 1 and 3.");
+    }
+
+    if ($newRequestedFloor < 1 || $newRequestedFloor > 3) {
+        throw new Exception("Requested floor must be between 1 and 3.");
+    }
+
+    $db = connect($path, $user, $password);
+    try {
+        // Start Transaction
+        $db->beginTransaction();
+
+        $query = "
+            UPDATE elevatorNetwork
+            SET
+                Status = :status,
+                CurrentFloor = :currentFloor,
+                RequestedFloor = :requestedFloor,
+                OtherInfo = :otherInfo
+            WHERE nodeID = :nodeID
+        ";
+
+        $statement = $db->prepare($query);
+
+        $statement->execute([
+            'status' => $newStatus,
+            'currentFloor' => $newCurrentFloor,
+            'requestedFloor' => $newRequestedFloor,
+            'otherInfo' => $newOtherInfo,
+            'nodeID' => $nodeID
+        ]);
+
+        // Verify a record was actually updated
+        if ($statement->rowCount() === 0) {
+            throw new Exception(
+                "Update failed. Node ID {$nodeID} was not found."
+            );
+        }
+
+        // Commit Transaction
+        $db->commit();
+
+        echo "Update successful.";
+
+    } catch (Exception $e) {
+
+        // Rollback on Error
+        $db->rollBack();
+
+        throw new Exception(
+            "Transaction Failed: " . $e->getMessage()
+        );
+    }
+}
+
 // Delete
 function delete(
     string $path,
