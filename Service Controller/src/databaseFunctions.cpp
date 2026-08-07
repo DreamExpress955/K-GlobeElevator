@@ -75,3 +75,57 @@ int db_setFloorNum(int floorNum) {
 	return 0;
 } 
  
+void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
+    const char* description)
+{
+    sql::Driver* driver;
+    sql::Connection* con;
+    sql::Statement* stmt;
+
+    driver = get_driver_instance();
+
+    con = driver->connect(
+        "tcp://127.0.0.1:3306",
+        "root",
+        ""
+    );
+
+    con->setSchema("Elevator");
+
+    stmt = con->createStatement();
+
+    char payload[50];
+
+    sprintf(
+        payload,
+        "%02X %02X %02X %02X %02X %02X %02X %02X",
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4],
+        data[5],
+        data[6],
+        data[7]
+    );
+
+    char query[512];
+
+    sprintf(
+        query,
+        "INSERT INTO CANNetwork "
+        "(nodeID,messageID,dataLength,messageData,description) "
+        "VALUES "
+        "(%d,%d,%d,'%s','%s')",
+        nodeID,
+        messageID,
+        dataLength,
+        payload,
+        description
+    );
+
+    stmt->execute(query);
+
+    delete stmt;
+    delete con;
+}

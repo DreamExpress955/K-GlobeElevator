@@ -219,10 +219,29 @@ TPCANMsg pcanRxWithDetails()
             continue;
         }
 
+        if (status == PCAN_NO_ERROR)
+        {
+            db_logCANMessage(
+                0, // nodeID
+                receivedMessage.ID,
+                receivedMessage.LEN,
+                receivedMessage.DATA,
+                "Received CAN message"
+            );
+        }
+        
+
         if (!isIgnoredStatusMessage(receivedMessage))
         {
             break;
         }
+        db_logCANMessage(
+            0, // nodeID
+            receivedMessage.ID,
+            receivedMessage.LEN,
+            receivedMessage.DATA,
+            "Received CAN message"
+        );
     }
 
     CAN_Close(h2);

@@ -257,6 +257,7 @@ if (isset($_POST['delete'])) {
 
 <div class="table-responsive">
     <?php showtable($path, $user, $password, $tablename); ?>
+    <?php showCANtable($path, $user, $password); ?>
 </div>
 
 </div>

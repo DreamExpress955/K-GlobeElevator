@@ -350,53 +350,6 @@ function deleteCAN(
     ]);
 }
 
-function showCANTable(
-    string $path,
-    string $user,
-    string $password
-): void {
-
-    $db = connect($path, $user, $password);
-
-    $query = "SELECT * FROM can";
-
-    $statement = $db->query($query);
-
-    $results = $statement->fetchAll();
-
-    echo "<h4 class='mb-3'>CAN Network Table</h4>";
-
-    echo "<table class='table table-striped table-hover table-bordered'>";
-
-    echo "<thead class='table-dark'>";
-    echo "<tr>";
-    echo "<th>CAN ID</th>";
-    echo "<th>Node ID</th>";
-    echo "<th>Message ID</th>";
-    echo "<th>Baud Rate</th>";
-    echo "<th>Last Message</th>";
-    echo "</tr>";
-    echo "</thead>";
-
-    echo "<tbody>";
-
-    foreach ($results as $row) {
-
-        echo "<tr>";
-
-        echo "<td>" . htmlspecialchars($row['canID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['nodeID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['messageID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['baudRate']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['lastMessage']) . "</td>";
-
-        echo "</tr>";
-    }
-
-    echo "</tbody>";
-
-}
-
 function showCombinedTable(
     string $path,
     string $user,
@@ -422,6 +375,54 @@ function showCombinedTable(
         LEFT JOIN can c ON e.nodeID = c.nodeID
     ";
 }
+function showCANTable(
+    string $path,
+    string $user,
+    string $password
+): void
+{
+    $db = connect($path, $user, $password);
 
+    $query = "
+        SELECT *
+        FROM CANNetwork
+        ORDER BY timestamp DESC
+        LIMIT 50
+    ";
+
+    $statement = $db->query($query);
+
+    $results = $statement->fetchAll();
+
+    echo "<h5>CAN Message Log</h5>";
+
+    echo "<table border='1'>";
+    echo "<tr>";
+    echo "<th>Log ID</th>";
+    echo "<th>Timestamp</th>";
+    echo "<th>Node ID</th>";
+    echo "<th>Message ID</th>";
+    echo "<th>Length</th>";
+    echo "<th>Data</th>";
+    echo "<th>Description</th>";
+    echo "</tr>";
+
+    foreach ($results as $row)
+    {
+        echo "<tr>";
+
+        echo "<td>" . htmlspecialchars($row['logID']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['timestamp']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['nodeID']) . "</td>";
+        echo "<td>0x" . strtoupper(dechex($row['messageID'])) . "</td>";
+        echo "<td>" . htmlspecialchars($row['dataLength']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['messageData']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+
+        echo "</tr>";
+    }
+
+    echo "</table>";
+}
 
 ?>
