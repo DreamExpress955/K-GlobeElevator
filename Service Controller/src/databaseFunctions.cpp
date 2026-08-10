@@ -51,7 +51,7 @@ int db_setFloorNum(int floorNum) {
 	// Create a connection 
 	driver = get_driver_instance();
 	con = driver->connect("host=127.0.0.1", "myphpadmin", "ese1");	
-	con->setSchema("elevator");										
+	con->setSchema("Elevator");										
 	
 	// Query database (possibly not necessary)
 	// ***************************** 
