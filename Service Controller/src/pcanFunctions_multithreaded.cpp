@@ -9,8 +9,10 @@
 #include <fcntl.h>
 #include <libpcan.h>
 #include <cstring>
+#include <iostream>
 
 #include <atomic>
+#include <chrono>
 #include <condition_variable>
 #include <cstdint>
 #include <mutex>
@@ -37,6 +39,8 @@ static bool canDeviceReady = false;
 //Flags for open and closed evelvator doors
 static std::atomic<bool> doorOpenReceived(false);
 
+//Website Stop Flag
+static std::atomic<bool> systemPaused(false);
 
 //signal handler to stop the program gracefully
 static volatile std::sig_atomic_t stopRequested =0;
@@ -105,7 +109,65 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
             return false;
     }
 }
+static int getFloorMessageData(int floorNumber)
+{
+    switch (floorNumber)
+    {
+        case 1:
+            return GO_TO_FLOOR1;
 
+        case 2:
+            return GO_TO_FLOOR2;
+
+        case 3:
+            return GO_TO_FLOOR3;
+
+        default:
+            return -1;
+    }
+}
+
+static void clearCANQueue()
+{
+    std::lock_guard<std::mutex> queueLock(queueMutex);
+
+    while (!canPriorityQueue.empty())
+    {
+        canPriorityQueue.pop();
+    }
+}
+
+static void addFloorRequestToQueue(int floorNumber)
+{
+    int floorData = getFloorMessageData(floorNumber);
+
+    if (floorData < 0)
+    {
+        printf("Invalid floor request: %d\n", floorNumber);
+        return;
+    }
+
+    TPCANMsg floorRequest;
+    memset(&floorRequest, 0, sizeof(floorRequest));
+
+    floorRequest.ID = ID_SC_TO_EC;
+    floorRequest.MSGTYPE = MSGTYPE_STANDARD;
+    floorRequest.LEN = 1;
+    floorRequest.DATA[0] = static_cast<BYTE>(floorData);
+
+    QueuedCANMessage queuedMessage;
+    queuedMessage.message = floorRequest;
+    queuedMessage.sequenceNumber = nextSequenceNumber++;
+
+    {
+        std::lock_guard<std::mutex> lock(queueMutex);
+        canPriorityQueue.push(queuedMessage);
+    }
+
+    printf("Floor %d request added to CAN queue\n", floorNumber);
+
+    queueCondition.notify_one();
+}
 
 
 int pcanTx(int id, int data)
@@ -284,10 +346,104 @@ static void canReceiverThread()
     
     
 
+    const std::chrono::milliseconds databaseCheckInterval(100);
+
+    std::chrono::steady_clock::time_point lastDatabaseCheck =
+        std::chrono::steady_clock::now();
+
     printf("CAN receiver thread started\n");
 
     while (receiverRunning && !stopRequested)
     {
+        std::chrono::steady_clock::time_point currentTime =
+            std::chrono::steady_clock::now();
+
+        // Read website commands in the existing CAN receiver thread.
+        if (currentTime - lastDatabaseCheck >= databaseCheckInterval)
+        {
+            int stopFlag = db_getStopFlag();
+
+            if (stopFlag == 1)
+            {
+                if (!systemPaused)
+                {
+                    systemPaused = true;
+                    clearCANQueue();
+
+                    printf(
+                        "Stop flag is high. "
+                        "CAN reading and queue processing stopped\n"
+                    );
+
+                    queueCondition.notify_all();
+                }
+            }
+            else
+            {
+                if (systemPaused)
+                {
+                    systemPaused = false;
+
+                    printf(
+                        "Stop flag is low. "
+                        "CAN reading and queue processing resumed\n"
+                    );
+
+                    queueCondition.notify_all();
+                }
+
+                int sabbathFlag = db_getSequenceFlag();
+
+                if (sabbathFlag == 1)
+                {
+                    // Clear first so the same request is not added repeatedly.
+                    //db_clearSequenceFlag();
+
+                    printf(
+                        "Sabbath mode received. "
+                        "Adding floors 1, 2 and 3 to the queue\n"
+                    );
+
+                    // These functions only add requests to the queue.
+                    // They do not transmit CAN messages here.
+                    while(sabbathFlag == 1){
+                        addFloorRequestToQueue(1);
+                        addFloorRequestToQueue(2);
+                        addFloorRequestToQueue(3);
+                        sabbathFlag = db_getSequenceFlag();    
+                    }
+                    //addFloorRequestToQueue(1);
+                }
+
+                int requestedFloor = db_getRequestedFloor();
+                int requestType = db_getRequestType();
+
+                if (requestedFloor >= 1 &&
+                    requestedFloor <= 3 &&
+                    (requestType == 1 || requestType == 2))
+                {
+                    if (requestType == 1)
+                    {
+                        printf(
+                            "Website floor controller requested floor %d\n",
+                            requestedFloor
+                        );
+                    }
+                    else
+                    {
+                        printf(
+                            "Website car controller requested floor %d\n",
+                            requestedFloor
+                        );
+                    }
+
+                    addFloorRequestToQueue(requestedFloor);
+                    db_clearWebsiteRequest();
+                }
+            }
+
+            lastDatabaseCheck = currentTime;
+        }
         TPCANMsg receivedMessage;
         memset(&receivedMessage, 0, sizeof(receivedMessage));
 
@@ -339,12 +495,13 @@ static void canReceiverThread()
             std::lock_guard<std::mutex> lock(queueMutex);
             canPriorityQueue.push(queuedMessage);
         }
-        
+        /*
         printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",
                static_cast<unsigned int>(receivedMessage.ID),
                static_cast<unsigned int>(receivedMessage.DATA[0]));
 
         queueCondition.notify_one();
+        */
         }
     }
     {
