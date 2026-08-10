@@ -30,10 +30,10 @@ require '../php/databaseFunctions.php';
 
 $host = '127.0.0.1';
 $database = 'Elevator';
-$tablename = 'elevatorNetwork';
+$tablename = 'CANLogs';
 $path = "mysql:host=$host;dbname=$database";
-$user = 'root';
-$password = '';
+$user = 'myphpadmin';
+$password = 'ese1';
 
 $db = connect($path, $user, $password);
 
@@ -256,7 +256,7 @@ if (isset($_POST['delete'])) {
 </div>
 
 <div class="table-responsive">
-    <?php showtable($path, $user, $password, $tablename); ?>
+    
     <?php showCANtable($path, $user, $password); ?>
 </div>
 

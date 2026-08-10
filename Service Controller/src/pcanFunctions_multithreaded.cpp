@@ -108,7 +108,7 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
 
 
 
-int pcanTx(int id, int data)
+int pcanTx(int id, int data, std::string description)
 {
    HANDLE transmitHandle = NULL;
 
@@ -173,7 +173,7 @@ int pcanTx(int id, int data)
         static_cast<unsigned int>(txMessage.DATA[0])
     );
 
-    db_logCANMessage(0,txMessage.ID,txMessage.LEN,txMessage.DATA,"Received CAN message");
+    db_logCANMessage(0,txMessage.ID,txMessage.LEN,txMessage.DATA,description.c_str());
     return 0;
 }
 
@@ -463,7 +463,7 @@ static void canProcessorThread()
                     printf("Car Controller requested floor %d\n",
                            floorNumber);
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, msg.DATA[0]);
+                        pcanTx(ID_SC_TO_EC, msg.DATA[0], "From Car Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -495,7 +495,7 @@ static void canProcessorThread()
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "From Floor 1 Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -527,7 +527,7 @@ static void canProcessorThread()
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2, "From Floor 2 Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -558,7 +558,7 @@ static void canProcessorThread()
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3, "From Floor 3 Controller");
 
                     if (transmitStatus == 0)
                     {

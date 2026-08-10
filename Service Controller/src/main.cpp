@@ -47,13 +47,13 @@ int main() {
 			case 3:
 				printf("\nNow listening to commands from the website - press ctrl-z to cancel\n");
 				// Synchronize elevator db and CAN (start at 1st floor)
-				pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				//pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
 				db_setFloorNum(1);
 				
 				while(1){			
 					floorNumber = db_getFloorNum();
 					if (prev_floorNumber != floorNumber) {								// If floor number changes in database
-						pcanTx(ID_SC_TO_EC, HexFromFloor(floorNumber));					// change floor number in elevator - send command over CAN
+						pcanTx(ID_SC_TO_EC, HexFromFloor(floorNumber), "From Database");					// change floor number in elevator - send command over CAN
 					}
 					prev_floorNumber = floorNumber; 
 					sleep(1);															// poll database once every second to check for change in floor number
@@ -63,13 +63,13 @@ int main() {
 			case 4:
 				printf("\nDemo Mode - loop from floor to floor - press ctrl-z to cancel\n");
 				while(1) {
-					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "Demo: Floor 1");
 					db_setFloorNum(1);
 					sleep(20);
-					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
+					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2, "Demo: Floor 2");
 					db_setFloorNum(2);
 					sleep(20);
-					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
+					pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3, "Demo: Floor 3");
 					db_setFloorNum(3);
 					sleep(20);
 				}
@@ -88,7 +88,7 @@ int main() {
         		}
     			);
 
-				int result = pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+				int result = pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "Initial CAN transmission (reset to floor 1)");
 				if (result != 0){
 					printf("Initial CAN tranmission failed: 0x%x\n", result);
 				}

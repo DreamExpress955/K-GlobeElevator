@@ -2,6 +2,7 @@
 #define PCAN_FUNCTIONS_MULTITHREADED_H
 
 #include <libpcan.h>
+#include <string>
 
 #define PCAN_RECEIVE_QUEUE_EMPTY 0x00020U
 #define PCAN_NO_ERROR            0x00000U
@@ -17,7 +18,7 @@
 #define GO_TO_FLOOR2 0x06
 #define GO_TO_FLOOR3 0x07
 
-int pcanTx(int id, int data);
+int pcanTx(int id, int data, std::string description);
 void pcanRxWithDetailsMultithreaded();
 void stopPcanRxThreads();
 void stopPcanMultithreaded();
