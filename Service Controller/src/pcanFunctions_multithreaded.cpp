@@ -163,7 +163,7 @@ int pcanTx(int id, int data)
             static_cast<unsigned int>(txMessage.ID),
             static_cast<unsigned int>(txMessage.DATA[0])
         );
-
+        
         return static_cast<int>(writeStatus);
     }
 
@@ -173,6 +173,7 @@ int pcanTx(int id, int data)
         static_cast<unsigned int>(txMessage.DATA[0])
     );
 
+    db_logCANMessage(0,txMessage.ID,txMessage.LEN,txMessage.DATA,"Received CAN message");
     return 0;
 }
 
@@ -359,9 +360,7 @@ static void canReceiverThread()
             canPriorityQueue.push(queuedMessage);
         }
         
-        printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",
-               static_cast<unsigned int>(receivedMessage.ID),
-               static_cast<unsigned int>(receivedMessage.DATA[0]));
+        //printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",static_cast<unsigned int>(receivedMessage.ID),static_cast<unsigned int>(receivedMessage.DATA[0]));
 
         queueCondition.notify_one();
         }

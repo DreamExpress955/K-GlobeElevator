@@ -1,4 +1,5 @@
 #ifndef DB_FUNCTIONS
+#include <cstdint>
 
 #define DB_FUNCTIONS
 int db_getFloorNum();

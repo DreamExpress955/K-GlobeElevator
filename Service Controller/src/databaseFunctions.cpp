@@ -8,6 +8,7 @@
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
+
  
 using namespace std; 
  
@@ -85,13 +86,13 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
     driver = get_driver_instance();
 
     con = driver->connect(
-        "tcp://127.0.0.1:3306",
-        "root",
-        ""
+        "host=127.0.0.1",
+        "myphpadmin",
+        "ese1"
     );
-
+	//printf("1\n");
     con->setSchema("Elevator");
-
+	//printf("2\n");
     stmt = con->createStatement();
 
     char payload[50];
@@ -108,12 +109,18 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         data[6],
         data[7]
     );
-
+	//printf("3\n");
     char query[512];
-
+	//printf("Logging CAN message to database: nodeID=%d, messageID=0x%04x, dataLength=%d, payload=%s, description=%s\n",
+	//	nodeID,
+	//	messageID,
+	//	dataLength,
+	//	payload,
+	//	description
+	//);
     sprintf(
         query,
-        "INSERT INTO CANNetwork "
+        "INSERT INTO CANLogs "
         "(nodeID,messageID,dataLength,messageData,description) "
         "VALUES "
         "(%d,%d,%d,'%s','%s')",
@@ -128,4 +135,5 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
 
     delete stmt;
     delete con;
+	return;
 }
