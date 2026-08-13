@@ -12,6 +12,26 @@
  
 using namespace std; 
  
+static sql::Connection* db_openConnection()
+{
+    sql::Driver *driver;
+    sql::Connection *con;
+
+    driver = get_driver_instance();
+
+    con = driver->connect(
+        "tcp://127.0.0.1:3306",
+        "myphpadmin",
+        "ese1"
+    );
+
+    con->setSchema("Elevator");
+
+    return con;
+}
+
+
+
 int db_getFloorNum() {
 	sql::Driver *driver; 			// Create a pointer to a MySQL driver object
 	sql::Connection *con; 			// Create a pointer to a database connection object
@@ -137,3 +157,173 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
     delete con;
 	return;
 }
+
+int db_getRequestedFloor()
+{
+    sql::Connection *con = NULL;
+    sql::Statement *stmt = NULL;
+    sql::ResultSet *res = NULL;
+
+    int requestedFloor = 0;
+
+    try
+    {
+        // Create a connection
+        con = db_openConnection();
+
+        // Query database
+        // *****************************
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery(
+            "SELECT requestedFloor "
+            "FROM elevatorNetwork "
+            "WHERE nodeID = 1"
+        );
+
+        while (res->next())
+        {
+            requestedFloor = res->getInt("requestedFloor");
+        }
+    }
+    catch (sql::SQLException& error)
+    {
+        cerr << "db_getRequestedFloor error: "
+             << error.what()
+             << endl;
+    }
+
+    // Clean up pointers
+    delete res;
+    delete stmt;
+    delete con;
+
+    return requestedFloor;
+}
+
+int db_getRequestType()
+{
+    sql::Connection *con = NULL;
+    sql::Statement *stmt = NULL;
+    sql::ResultSet *res = NULL;
+
+    int requestType = 0;
+
+    try
+    {
+        // Create a connection
+        con = db_openConnection();
+
+        // Query database
+        // *****************************
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery(
+            "SELECT requestedType "
+            "FROM elevatorNetwork "
+            "WHERE nodeID = 1"
+        );
+
+        while (res->next())
+        {
+            requestType = res->getInt("requestedType");
+        }
+    }
+    catch (sql::SQLException& error)
+    {
+        cerr << "db_getRequestType error: "
+             << error.what()
+             << endl;
+    }
+
+    // Clean up pointers
+    delete res;
+    delete stmt;
+    delete con;
+
+    return requestType;
+}
+
+int db_clearWebsiteRequest()
+{
+    sql::Connection *con = NULL;
+    sql::PreparedStatement *pstmt = NULL;
+
+    try
+    {
+        // Create a connection
+        con = db_openConnection();
+
+        // Clear request
+        // *****************************
+        pstmt = con->prepareStatement(
+            "UPDATE elevatorNetwork "
+            "SET requestedFloor = 0, "
+            "requestedType = 0 "
+            "WHERE nodeID = 1"
+        );
+
+        pstmt->executeUpdate();
+    }
+    catch (sql::SQLException& error)
+    {
+        cerr << "db_clearWebsiteRequest error: "
+             << error.what()
+             << endl;
+
+        delete pstmt;
+        delete con;
+
+        return -1;
+    }
+
+    // Clean up pointers
+    delete pstmt;
+    delete con;
+
+    return 0;
+}
+
+int db_getStopFlag()
+{
+    sql::Connection *con = NULL;
+    sql::Statement *stmt = NULL;
+    sql::ResultSet *res = NULL;
+
+    int stopFlag = 0;
+
+    try
+    {
+        // Create a connection
+        con = db_openConnection();
+
+        // Query database
+        // *****************************
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery(
+            "SELECT stopFlag "
+            "FROM elevatorNetwork "
+            "WHERE nodeID = 1"
+        );
+
+        while (res->next())
+        {
+            stopFlag = res->getInt("stopFlag");
+        }
+    }
+    catch (sql::SQLException& error)
+    {
+        cerr << "db_getStopFlag error: "
+             << error.what()
+             << endl;
+    }
+
+    // Clean up pointers
+    delete res;
+    delete stmt;
+    delete con;
+
+    return stopFlag;
+}
+

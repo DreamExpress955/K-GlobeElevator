@@ -18,6 +18,7 @@
 #include <thread>
 #include <vector>
 #include <csignal>
+#include <chrono>
 
 // Existing globals used by the rest of the project.
 HANDLE h;
@@ -36,6 +37,12 @@ static bool canDeviceReady = false;
 
 //Flags for open and closed evelvator doors
 static std::atomic<bool> doorOpenReceived(false);
+
+//website flag 0 = normal operation, 1 = stop operation 2 = sabbath mode
+static std::atomic<int> websiteFlag(0);
+
+//flag to pause the system when the website flag is 1 or 2
+static std::atomic<bool> systemPaused(false);
 
 
 //signal handler to stop the program gracefully
@@ -106,7 +113,65 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
     }
 }
 
+static int getFloorMessageData(int floorNumber)
+{
+    switch (floorNumber)
+    {
+        case 1:
+            return GO_TO_FLOOR1;
 
+        case 2:
+            return GO_TO_FLOOR2;
+
+        case 3:
+            return GO_TO_FLOOR3;
+
+        default:
+            return -1;
+    }
+}
+
+static void clearCANQueue()
+{
+    std::lock_guard<std::mutex> queueLock(queueMutex);
+
+    while (!canPriorityQueue.empty())
+    {
+        canPriorityQueue.pop();
+    }
+}
+
+static void addFloorRequestToQueue(int floorNumber, int ID)
+{
+    int floorData = getFloorMessageData(floorNumber);
+
+    if (floorData < 0)
+    {
+        printf("Invalid floor request: %d\n", floorNumber);
+        return;
+    }
+
+    TPCANMsg floorRequest;
+    memset(&floorRequest, 0, sizeof(floorRequest));
+
+    floorRequest.ID = ID;
+    floorRequest.MSGTYPE = MSGTYPE_STANDARD;
+    floorRequest.LEN = 1;
+    floorRequest.DATA[0] = static_cast<BYTE>(floorData);
+
+    QueuedCANMessage queuedMessage;
+    queuedMessage.message = floorRequest;
+    queuedMessage.sequenceNumber = nextSequenceNumber++;
+
+    {
+        std::lock_guard<std::mutex> lock(queueMutex);
+        canPriorityQueue.push(queuedMessage);
+    }
+
+    printf("Floor %d request added to CAN queue\n", floorNumber);
+
+    queueCondition.notify_one();
+}
 
 int pcanTx(int id, int data, std::string description)
 {
@@ -254,6 +319,11 @@ static void canReceiverThread()
     const char* devicePath = "/dev/pcanusb32";
     HANDLE receiveHandle = NULL;
 
+    std::chrono::steady_clock::time_point lastDatabaseCheck =
+        std::chrono::steady_clock::now();
+
+    const std::chrono::milliseconds databaseCheckInterval(250);
+
     printf("Waiting for %s to become available...\n", devicePath);
 
     while (receiverRunning && receiveHandle == NULL)
@@ -308,6 +378,91 @@ static void canReceiverThread()
 
     while (receiverRunning && !stopRequested)
     {
+        std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+
+        // read the ebsite commands
+        if(currentTime - lastDatabaseCheck >= databaseCheckInterval)
+        {
+            int currentWebsiteFlag = db_getStopFlag();
+            websiteFlag.store(currentWebsiteFlag);
+
+            lastDatabaseCheck = currentTime;
+
+
+            //maintanence mode (stop all physical CAN readings)
+            if (websiteFlag.load() == 1){
+                if (!systemPaused.load())
+                {
+                    systemPaused.store(true);
+                    clearCANQueue();
+
+                    printf(
+                        "Stop flag is high. "
+                        "CAN reading and queue processing stopped\n"
+                    );
+
+                    queueCondition.notify_all();
+                }
+            }
+            //sabbath mode (stop all physical CAN readings and ignore all requests)
+            else if (websiteFlag.load() == 2){
+                if (!systemPaused.load())
+                {
+                    systemPaused.store(true);
+                    clearCANQueue();
+
+                    printf(
+                        "Sabbath mode is active. "
+                        "CAN reading and queue processing stopped\n"
+                    );
+                    int floor = 0;
+                    queueCondition.notify_all();
+                    while(websiteFlag.load() == 2 && !stopRequested){
+                        //add floor request to the queue (1 then 2, then 3 then back to 1)
+                        addFloorRequestToQueue((floor++ % 3) + 1, ID_CC_TO_SC);
+                        
+                        //check database if the flag is changed 
+                        currentWebsiteFlag = db_getStopFlag();
+                        websiteFlag.store(currentWebsiteFlag);
+                        sleep(3);
+                    }
+                }
+            }
+            //normal mode
+            else {
+                systemPaused.store(false);
+                queueCondition.notify_all();
+            }
+
+            //check if there is a flor request from the website
+            int requestedFloor = db_getRequestedFloor();
+            int requestType = db_getRequestType();
+            if (requestedFloor >= 1 &&
+                requestedFloor <= 3 &&
+                (requestType == 1 || requestType == 2))
+            {
+                if (requestType == 1)
+                {
+                    printf(
+                        "Website floor controller requested floor %d\n",
+                        requestedFloor
+                    );
+                }
+                else
+                {
+                    printf(
+                        "Website car controller requested floor %d\n",
+                        requestedFloor
+                    );
+                }
+
+                addFloorRequestToQueue(requestedFloor, ID_WEBSITE);
+                //clear the request so it doesn't add it again
+                db_clearWebsiteRequest();
+            }
+
+        }
+
         TPCANMsg receivedMessage;
         memset(&receivedMessage, 0, sizeof(receivedMessage));
 
@@ -332,39 +487,50 @@ static void canReceiverThread()
         {
             continue;
         }
-        if (receivedMessage.ID == 0x08)
-        {
-            doorOpenReceived = true;
-
-            printf("Door OPEN\n");
-
-            continue;
-        }
-
-        else if (receivedMessage.ID == 0x09)
+        if (receivedMessage.DATA[0] == 0x08)
         {
             doorOpenReceived = false;
 
             printf("Door CLOSE\n");
 
+            continue;
+        }
+
+        else if (receivedMessage.DATA[0]== 0x09)
+        {
+            doorOpenReceived = true;
+
+            printf("Door OPEN\n");
+
 
             continue;
         }
         else{
-        QueuedCANMessage queuedMessage;
-        queuedMessage.message = receivedMessage;
-        queuedMessage.sequenceNumber = nextSequenceNumber++;
+            if (!systemPaused.load()){
+                QueuedCANMessage queuedMessage;
+                queuedMessage.message = receivedMessage;
+                queuedMessage.sequenceNumber = nextSequenceNumber++;
 
-        {
-            std::lock_guard<std::mutex> lock(queueMutex);
-            canPriorityQueue.push(queuedMessage);
+                //this if statement is to prevent the terminal from being cluttered with the elevator confirmations.
+                if(!(receivedMessage.ID == ID_EC_TO_ALL && elev == false)){
+                    printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",static_cast<unsigned int>(receivedMessage.ID),static_cast<unsigned int>(receivedMessage.DATA[0]));
+                }
+
+                
+                std::lock_guard<std::mutex> lock(queueMutex);
+                canPriorityQueue.push(queuedMessage);
+                
+                queueCondition.notify_one();
+            }
         }
         
-        //printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",static_cast<unsigned int>(receivedMessage.ID),static_cast<unsigned int>(receivedMessage.DATA[0]));
+            
+        
+        
 
         queueCondition.notify_one();
         }
-    }
+    
     {
     std::lock_guard<std::mutex> writeLock(canWriteMutex);
     std::lock_guard<std::mutex> handleLock(canHandleMutex);
@@ -428,25 +594,27 @@ static void canProcessorThread()
                     printf("Supervisory Controller sent unknown data: 0x%02x\n",
                            static_cast<unsigned int>(msg.DATA[0]));
                 }
-                sleep(3);
                 break;
             }
 
             case ID_EC_TO_ALL:
             {
-                if (elev == false){
-                if (getFloorFromMessageData(msg.DATA[0], floorNumber))
-                {
-                    printf("Elevator Controller announces elevator is at floor %d\n",
-                           floorNumber);
-                    playFloor(floorNumber);
-                    db_setFloorNum(floorNumber);
-                }
-                else
-                {
-                    printf("Elevator Controller sent unknown floor data: 0x%02x\n",
-                           static_cast<unsigned int>(msg.DATA[0]));
-                }
+                if (elev == false && msg.DATA[0] == 0){
+                    if (getFloorFromMessageData(msg.DATA[0], floorNumber))
+                    {
+                        printf("Elevator Controller announces elevator is at floor %d\n",
+                            floorNumber);
+                        playFloor(floorNumber);
+                        db_setFloorNum(floorNumber);
+
+                        std::string info = "Elevator Controller announces elevator is at floor:" + std::to_string(floorNumber);
+                        db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+                    }
+                    else
+                    {
+                        printf("Elevator Controller sent unknown floor data: 0x%02x\n",
+                            static_cast<unsigned int>(msg.DATA[0]));
+                    }
                 
                 elev = true;
             }
@@ -462,6 +630,10 @@ static void canProcessorThread()
 
                     printf("Car Controller requested floor %d\n",
                            floorNumber);
+                    //upload to data base
+                    std::string info = "Car Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
                     int transmitStatus =
                         pcanTx(ID_SC_TO_EC, msg.DATA[0], "From Car Controller");
 
@@ -494,6 +666,10 @@ static void canProcessorThread()
 
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
+                    //upload to data base
+                    std::string info = "Floor 1 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+                        
                     int transmitStatus =
                         pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "From Floor 1 Controller");
 
@@ -505,7 +681,7 @@ static void canProcessorThread()
                     else
                     {
                         printf(
-                            "Failed to transmit car Controller request\n"
+                            "Failed to transmit Floor 1 Controller request\n"
                         );
                     }
                 }
@@ -526,6 +702,11 @@ static void canProcessorThread()
 
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
+
+                    //upload to data base
+                    std::string info = "Floor 2 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
                     int transmitStatus =
                         pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2, "From Floor 2 Controller");
 
@@ -557,6 +738,11 @@ static void canProcessorThread()
 
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");
+
+                    //upload to data base
+                    std::string info = "Floor 3 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
                     int transmitStatus =
                         pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3, "From Floor 3 Controller");
 
@@ -568,7 +754,7 @@ static void canProcessorThread()
                     else
                     {
                         printf(
-                            "Failed to transmit car Controller request\n"
+                            "Failed to transmit Floor 3 Controller request\n"
                         );
                     }
                 }
@@ -589,10 +775,12 @@ static void canProcessorThread()
             }
             
         }
-        if(requestWasTransmitted){
-            sleep(3);
+        if (requestWasTransmitted)
+        {
             requestWasTransmitted = false;
+            sleep(3); //this sleep is need so that the service controller waits for the door open message.
         }
+
     }
 
     printf("CAN processing thread stopped\n");
