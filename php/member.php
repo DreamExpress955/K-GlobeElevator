@@ -1,8 +1,12 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+require '../php/databaseFunctions.php';
 session_start();
+
+if (!isset($_SESSION['mode'])) {
+    $_SESSION['mode'] = 'Normal';
+}
 
 if (!isset($_SESSION['username'])) {
     die("
@@ -13,29 +17,48 @@ if (!isset($_SESSION['username'])) {
     </div>
     ");
 }
-$currentMode = "Normal";
-
-if (isset($_POST['mode'])) {
-
-    if ($_POST['mode'] == 'sabbath') {
-        $currentMode = "Sabbath";
-    }
-
-    if ($_POST['mode'] == 'maintenance') {
-        $currentMode = "Maintenance";
-    }
-}
-
-require '../php/databaseFunctions.php';
-
 $host = '127.0.0.1';
 $database = 'Elevator';
 $tablename = 'CANLogs';
 $path = "mysql:host=$host;dbname=$database";
-$user = 'myphpadmin';
-$password = 'ese1';
+//Blakes PiConnect database connection
+//$user = 'myphpadmin';
+//$password = 'ese1';
+$user = 'root';
+$password = '';
+$currentMode = "Normal";
 
 $db = connect($path, $user, $password);
+
+$logCount = getLogCount($path, $user, $password);
+
+$maintenanceState = getMaintenanceStatus($logCount);
+
+// Handle mode button clicks
+if (isset($_POST['mode'])) {
+
+    switch ($_POST['mode']) {
+
+        case 'normal':
+            $_SESSION['mode'] = 'Normal';
+            break;
+
+        case 'sabbath':
+            $_SESSION['mode'] = 'Sabbath';
+            break;
+
+        case 'maintenance':
+            $_SESSION['mode'] = 'Maintenance';
+            break;
+    }
+}
+
+// Automatic maintenance override
+if ($maintenanceState['maintenance']) {
+    $_SESSION['mode'] = 'Maintenance';
+}
+
+$currentMode = $_SESSION['mode'];
 
 $current_date = $db->query('SELECT CURRENT_DATE()')->fetchColumn();
 $current_time = $db->query('SELECT CURRENT_TIME()')->fetchColumn();
@@ -141,7 +164,7 @@ if (isset($_POST['delete'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Elevator Network Dashboard</title>
+<title>Elevator Network Dashboard</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -176,79 +199,16 @@ if (isset($_POST['delete'])) {
 
         <?= $message ?>
 
+
+
 <!-- ELEVATOR FORM -->
 <div class="card mb-4">
-
-    <div class="card-header bg-primary text-white">
-        <h3 class="mb-0">Elevator Network Controls</h3>
-    </div>
 
     <div class="card-body">
         <?php require '../elevatorNetworkForm.html'; ?>
     </div>
 
 </div>
-
-<!-- CAN FORM -->
-<div class="card mb-4">
-
-    <div class="card-header bg-success text-white">
-        <h3 class="mb-0">CAN Network Controls</h3>
-    </div>
-
-    <div class="card-body">
-
-        <form method="POST">
-
-            <input type="number"
-                   name="canID"
-                   class="form-control mb-2"
-                   placeholder="CAN ID">
-
-            <input type="number"
-                   name="can_nodeID"
-                   class="form-control mb-2"
-                   placeholder="Node ID">
-
-            <input type="number"
-                   name="messageID"
-                   class="form-control mb-2"
-                   placeholder="Message ID">
-
-            <input type="number"
-                   name="baudRate"
-                   class="form-control mb-2"
-                   placeholder="Baud Rate">
-
-            <input type="text"
-                   name="lastMessage"
-                   class="form-control mb-3"
-                   placeholder="Last Message">
-
-            <button type="submit"
-                    name="insertCAN"
-                    class="btn btn-success">
-                Insert CAN
-            </button>
-
-            <button type="submit"
-                    name="updateCAN"
-                    class="btn btn-warning">
-                Update CAN
-            </button>
-
-            <button type="submit"
-                    name="deleteCAN"
-                    class="btn btn-danger">
-                Delete CAN
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-        <hr class="my-4">
 
         <!-- DATABASE RECORDS -->
 <div class="card-header bg-primary text-white">
@@ -270,10 +230,43 @@ if (isset($_POST['delete'])) {
     </div>
 
     <h5 class="mb-3">
-    Current Mode:
-    <span class="badge bg-success">
-        <?= $currentMode ?>
-    </span>
+
+<div class="alert alert-info">
+    <strong>Total Database Records:</strong>
+    <?= $logCount ?>
+    <br>
+    <strong>Status:</strong>
+    <?= htmlspecialchars($maintenanceState['message']) ?>
+</div>
+
+<span class="badge
+<?php
+switch ($currentMode) {
+
+    case 'Maintenance':
+        echo 'bg-danger';
+        break;
+
+    case 'Sabbath':
+        echo 'bg-secondary';
+        break;
+
+    case 'Warning':
+        echo 'bg-warning text-dark';
+        break;
+
+    case 'Inspection':
+        echo 'bg-info text-dark';
+        break;
+
+    default:
+        echo 'bg-success';
+}
+?>
+">
+    <?= htmlspecialchars($currentMode) ?>
+</span>
+
 </h5>
 
     <div class="card-body">
@@ -409,6 +402,7 @@ echo "</div>";
 
     </div>
 </div>
+
 
 <div class="text-center mt-4">
     <a href="logout.php" class="btn btn-outline-danger">
