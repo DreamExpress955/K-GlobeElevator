@@ -22,10 +22,10 @@ $database = 'Elevator';
 $tablename = 'CANLogs';
 $path = "mysql:host=$host;dbname=$database";
 //Blakes PiConnect database connection
-//$user = 'myphpadmin';
-//$password = 'ese1';
-$user = 'root';
-$password = '';
+$user = 'myphpadmin';
+$password = 'ese1';
+//$user = 'root';
+//$password = '';
 $currentMode = "Normal";
 
 $db = connect($path, $user, $password);
