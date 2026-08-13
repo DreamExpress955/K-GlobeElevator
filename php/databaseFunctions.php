@@ -364,8 +364,6 @@ function showCombinedTable(
             e.Date,
             e.Time,
             e.Status,
-            e.CurrentFloor,
-            e.RequestedFloor,
             e.OtherInfo,
             c.canID,
             c.messageID,
