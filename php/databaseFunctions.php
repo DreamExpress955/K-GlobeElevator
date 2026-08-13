@@ -251,8 +251,8 @@ function get_currentFloor(string $path, string $user, string $password): int
     $db = connect($path, $user, $password);
 
     $query = "
-        SELECT CurrentFloor
-        FROM CANLogs
+        SELECT currentFloor
+        FROM elevatorNetwork
         ORDER BY nodeID DESC
         LIMIT 1";
 
@@ -260,7 +260,7 @@ function get_currentFloor(string $path, string $user, string $password): int
 
     $result = $statement->fetch();
 
-    return $result ? (int)$result['CurrentFloor'] : 0;
+    return $result ? (int)$result['currentFloor'] : 0;
 }
 
 function insertCAN(
@@ -423,4 +423,92 @@ function showCANTable(
     echo "</table>";
 }
 
-?>
+function getLogCount(
+    string $path,
+    string $user,
+    string $password
+): int {
+
+    $db = connect($path, $user, $password);
+
+    return (int)$db
+        ->query("SELECT COUNT(*) FROM CANLogs")
+        ->fetchColumn();
+}
+
+function getMaintenanceStatus(int $recordCount): array
+{
+    $status = [
+        'inspection' => false,
+        'warning' => false,
+        'maintenance' => false,
+        'message' => 'Normal Operation'
+    ];
+
+    if ($recordCount >= 30000) {
+
+        $status['maintenance'] = true;
+        $status['message'] =
+            "Maintenance Mode Activated Automatically";
+
+    } elseif ($recordCount >= 20000) {
+
+        $status['warning'] = true;
+        $status['message'] =
+            "WARNING: Elevator approaching maintenance interval";
+
+    } elseif ($recordCount >= 10000) {
+
+        $status['inspection'] = true;
+        $status['message'] =
+            "Inspection Required";
+    }
+
+    return $status;
+}
+
+function getMode(
+    string $path,
+    string $user,
+    string $password
+): int {
+
+    $db = connect($path, $user, $password);
+
+    $query = "
+        SELECT stopFlag
+        FROM elevatorNetwork
+        ORDER BY nodeID DESC
+        LIMIT 1
+    ";
+
+    $stmt = $db->query($query);
+
+    $result = $stmt->fetch();
+
+    return $result ? (int)$result['stopFlag'] : 0;
+}
+
+function setMode(
+    string $path,
+    string $user,
+    string $password,
+    int $mode
+): void {
+
+    $db = connect($path, $user, $password);
+
+    $query = "
+        UPDATE elevatorNetwork
+        SET stopFlag = :mode
+        ORDER BY nodeID DESC
+        LIMIT 1
+    ";
+
+    $stmt = $db->prepare($query);
+
+    $stmt->execute([
+        'mode' => $mode
+    ]);
+
+}
