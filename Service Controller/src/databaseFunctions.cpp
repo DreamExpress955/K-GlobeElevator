@@ -22,7 +22,7 @@ int db_getFloorNum() {
 	// Create a connection 
 	driver = get_driver_instance();
 	con = driver->connect("host=127.0.0.1", "phpmyadmin", "ese1");	
-	con->setSchema("elevator");		
+	con->setSchema("Elevator");		
 	
 	// Query database
 	// ***************************** 
