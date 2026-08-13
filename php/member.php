@@ -224,183 +224,289 @@ if (isset($_POST['delete'])) {
 </div>
 
 <!-- ELEVATOR CONTROL PANEL -->
-<div class="card shadow mt-4">
-    <div class="card-header bg-primary text-white">
-        <h3 class="mb-0">Elevator Control Panel</h3>
-    </div>
+<div class="container-fluid mt-4">
 
-    <h5 class="mb-3">
+    <div class="card shadow border-0">
 
-<div class="alert alert-info">
-    <strong>Total Database Records:</strong>
-    <?= $logCount ?>
-    <br>
-    <strong>Status:</strong>
-    <?= htmlspecialchars($maintenanceState['message']) ?>
-</div>
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Elevator Control Panel</h3>
+        </div>
 
-<span class="badge
-<?php
-switch ($currentMode) {
+        <div class="card-body">
 
-    case 'Maintenance':
-        echo 'bg-danger';
-        break;
+            <!-- STATUS -->
+            <div class="row mb-4">
 
-    case 'Sabbath':
-        echo 'bg-secondary';
-        break;
+                <div class="col-md-6">
 
-    case 'Warning':
-        echo 'bg-warning text-dark';
-        break;
+                    <div class="card border-0 bg-light">
+                        <div class="card-body text-center">
 
-    case 'Inspection':
-        echo 'bg-info text-dark';
-        break;
+                            <h6 class="text-muted">
+                                Database Records
+                            </h6>
 
-    default:
-        echo 'bg-success';
-}
-?>
-">
-    <?= htmlspecialchars($currentMode) ?>
-</span>
+                            <h2 class="fw-bold">
+                                <?= $logCount ?>
+                            </h2>
 
-</h5>
-
-    <div class="card-body">
-
-        <form method="POST">
-
-            <button type="submit"
-                    name="mode"
-                    value="normal"
-                    class="btn btn-secondary">
-                Normal Mode
-            </button>
-
-            <button type="submit"
-                    name="mode"
-                    value="sabbath"
-                    class="btn btn-secondary">
-                Sabbath Mode
-            </button>
-
-            <button type="submit"
-                    name="mode"
-                    value="maintenance"
-                    class="btn btn-secondary">
-                Maintenance Mode
-            </button>
-
-        </form>
-
-    </div>
-</div>
-    <div class="card-body">
-
-        <h5>Current Elevator Position</h5>
-
-        <?php
-        $curFlr = get_currentFloor($path, $user, $password);
-
-echo "<div class='d-flex gap-3'>";
-
-for ($i = 1; $i <= 3; $i++) {
-
-    $color = ($i == $curFlr) ? "green" : "red";
-
-    echo "
-    <div style='
-        width:50px;
-        height:50px;
-        border-radius:50%;
-        background:$color;
-        border:2px solid black;
-    '></div>";
-}
-
-echo "</div>";
-
-echo "</div>";
-
-echo "</div>";
-
-echo "</div>";
-
-        echo "</div>";
-        ?>
-
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Request a Floor</div>
-
-                    <div class="card-body">
-                        <form method="POST">
-
-                            <input type="hidden" name="request_type" value="floor_controller">
-
-                            <button class="btn btn-primary w-100 mb-2" name="floor" value="1">
-                                Floor 1
-                            </button>
-
-                            <button class="btn btn-primary w-100 mb-2" name="floor" value="2">
-                                Floor 2
-                            </button>
-
-                            <button class="btn btn-primary w-100" name="floor" value="3">
-                                Floor 3
-                            </button>
-
-                        </form>
+                        </div>
                     </div>
+
                 </div>
+
+                <div class="col-md-6">
+
+                    <div class="card border-0 bg-light">
+                        <div class="card-body text-center">
+
+                            <h6 class="text-muted">
+                                Current Mode
+                            </h6>
+
+                            <span class="badge fs-5 px-3 py-2
+                            <?php
+                            switch ($currentMode) {
+
+                                case 'Maintenance':
+                                    echo 'bg-danger';
+                                    break;
+
+                                case 'Sabbath':
+                                    echo 'bg-secondary';
+                                    break;
+
+                                default:
+                                    echo 'bg-success';
+                            }
+                            ?>">
+                                <?= htmlspecialchars($currentMode) ?>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Car Controller</div>
+            <!-- MAINTENANCE STATUS -->
+            <div class="alert
+            <?php
 
-                    <div class="card-body">
-                        <form method="POST">
+            if ($maintenanceState['maintenance']) {
+                echo "alert-danger";
+            }
+            elseif ($maintenanceState['warning']) {
+                echo "alert-warning";
+            }
+            elseif ($maintenanceState['inspection']) {
+                echo "alert-info";
+            }
+            else {
+                echo "alert-success";
+            }
 
-                            <input type="hidden" name="request_type" value="car_controller">
-
-                            <button class="btn btn-success w-100 mb-2" name="floor" value="1">
-                                Floor 1
-                            </button>
-
-                            <button class="btn btn-success w-100 mb-2" name="floor" value="2">
-                                Floor 2
-                            </button>
-
-                            <button class="btn btn-success w-100" name="floor" value="3">
-                                Floor 3
-                            </button>
-
-                        </form>
-                    </div>
-                </div>
+            ?>">
+                <strong>Status:</strong>
+                <?= htmlspecialchars($maintenanceState['message']) ?>
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Queue</div>
+            <!-- MODE BUTTONS -->
+            <div class="card mb-4">
 
-                    <div class="card-body">
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item">TEMP</li>
-                        </ol>
-                    </div>
+                <div class="card-header bg-dark text-white">
+                    Mode Controls
                 </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="row g-2">
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="normal"
+                                    class="btn btn-success w-100">
+                                    Normal Mode
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="sabbath"
+                                    class="btn btn-secondary w-100">
+                                    Sabbath Mode
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="maintenance"
+                                    class="btn btn-danger w-100">
+                                    Maintenance Mode
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- ELEVATOR POSITION -->
+            <div class="card mb-4">
+
+                <div class="card-header bg-info text-white">
+                    Elevator Position
+                </div>
+
+                <div class="card-body text-center">
+
+                    <?php $curFlr = get_currentFloor($path, $user, $password); ?>
+
+                    <div class="d-flex justify-content-center gap-5">
+
+                        <?php for ($i = 1; $i <= 3; $i++): ?>
+
+                            <div>
+
+                                <div
+                                    class="rounded-circle border border-dark mx-auto mb-2"
+                                    style="
+                                        width:80px;
+                                        height:80px;
+                                        background:
+                                        <?= ($i == $curFlr)
+                                            ? '#198754'
+                                            : '#dc3545' ?>;
+                                    ">
+                                </div>
+
+                                <strong>Floor <?= $i ?></strong>
+
+                            </div>
+
+                        <?php endfor; ?>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FLOOR CONTROLS -->
+            <div class="row">
+
+                <!-- FLOOR CONTROLLER -->
+                <div class="col-lg-6 mb-3">
+
+                    <div class="card h-100">
+
+                        <div class="card-header bg-primary text-white">
+                            Floor Controller
+                        </div>
+
+                        <div class="card-body">
+
+                            <form method="POST">
+
+                                <input
+                                    type="hidden"
+                                    name="request_type"
+                                    value="floor_controller">
+
+                                <button
+                                    class="btn btn-primary w-100 mb-2"
+                                    name="floor"
+                                    value="1">
+                                    Floor 1
+                                </button>
+
+                                <button
+                                    class="btn btn-primary w-100 mb-2"
+                                    name="floor"
+                                    value="2">
+                                    Floor 2
+                                </button>
+
+                                <button
+                                    class="btn btn-primary w-100"
+                                    name="floor"
+                                    value="3">
+                                    Floor 3
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR CONTROLLER -->
+                <div class="col-lg-6 mb-3">
+
+                    <div class="card h-100">
+
+                        <div class="card-header bg-success text-white">
+                            Car Controller
+                        </div>
+
+                        <div class="card-body">
+
+                            <form method="POST">
+
+                                <input
+                                    type="hidden"
+                                    name="request_type"
+                                    value="car_controller">
+
+                                <button
+                                    class="btn btn-success w-100 mb-2"
+                                    name="floor"
+                                    value="1">
+                                    Floor 1
+                                </button>
+
+                                <button
+                                    class="btn btn-success w-100 mb-2"
+                                    name="floor"
+                                    value="2">
+                                    Floor 2
+                                </button>
+
+                                <button
+                                    class="btn btn-success w-100"
+                                    name="floor"
+                                    value="3">
+                                    Floor 3
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
+
 </div>
 
 
