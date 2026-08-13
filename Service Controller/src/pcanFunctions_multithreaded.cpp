@@ -108,7 +108,7 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
 
 
 
-int pcanTx(int id, int data)
+int pcanTx(int id, int data, std::string description)
 {
    HANDLE transmitHandle = NULL;
 
@@ -163,7 +163,7 @@ int pcanTx(int id, int data)
             static_cast<unsigned int>(txMessage.ID),
             static_cast<unsigned int>(txMessage.DATA[0])
         );
-
+        
         return static_cast<int>(writeStatus);
     }
 
@@ -173,6 +173,7 @@ int pcanTx(int id, int data)
         static_cast<unsigned int>(txMessage.DATA[0])
     );
 
+    db_logCANMessage(0,txMessage.ID,txMessage.LEN,txMessage.DATA,description.c_str());
     return 0;
 }
 
@@ -219,10 +220,29 @@ TPCANMsg pcanRxWithDetails()
             continue;
         }
 
+        if (status == PCAN_NO_ERROR)
+        {
+            db_logCANMessage(
+                0, // nodeID
+                receivedMessage.ID,
+                receivedMessage.LEN,
+                receivedMessage.DATA,
+                "Received CAN message"
+            );
+        }
+        
+
         if (!isIgnoredStatusMessage(receivedMessage))
         {
             break;
         }
+        db_logCANMessage(
+            0, // nodeID
+            receivedMessage.ID,
+            receivedMessage.LEN,
+            receivedMessage.DATA,
+            "Received CAN message"
+        );
     }
 
     CAN_Close(h2);
@@ -340,9 +360,7 @@ static void canReceiverThread()
             canPriorityQueue.push(queuedMessage);
         }
         
-        printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",
-               static_cast<unsigned int>(receivedMessage.ID),
-               static_cast<unsigned int>(receivedMessage.DATA[0]));
+        //printf("Queued CAN message ID 0x%04x\n DATA: 0x%02x\n",static_cast<unsigned int>(receivedMessage.ID),static_cast<unsigned int>(receivedMessage.DATA[0]));
 
         queueCondition.notify_one();
         }
@@ -445,7 +463,7 @@ static void canProcessorThread()
                     printf("Car Controller requested floor %d\n",
                            floorNumber);
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, msg.DATA[0]);
+                        pcanTx(ID_SC_TO_EC, msg.DATA[0], "From Car Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -477,7 +495,7 @@ static void canProcessorThread()
                     floorNumber = 1;
                     printf("Floor 1 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "From Floor 1 Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -509,7 +527,7 @@ static void canProcessorThread()
                     floorNumber = 2;
                     printf("Floor 2 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2, "From Floor 2 Controller");
 
                     if (transmitStatus == 0)
                     {
@@ -540,7 +558,7 @@ static void canProcessorThread()
                     floorNumber = 3;
                     printf("Floor 3 Controller made a request\n");
                     int transmitStatus =
-                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3);
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3, "From Floor 3 Controller");
 
                     if (transmitStatus == 0)
                     {

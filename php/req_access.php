@@ -6,8 +6,8 @@ require '../php/databaseFunctions.php';
 
 $host = '127.0.0.1';
 $database = 'authorizedUsers';
-$user = 'root';
-$password = '';
+$user = 'myphpadmin';
+$password = 'ese1';
 
 $path = "mysql:host=$host;dbname=$database";
 

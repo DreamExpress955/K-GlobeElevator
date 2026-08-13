@@ -2,12 +2,12 @@
     // authenticate.php
     // start session
     session_start();
-
     // Get the submitted username and password from the POST request
     $username = $_POST['username'];
     $password = $_POST['password'];
+    
 
-    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
+    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'myphpadmin', 'ese1');
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
      // Authenticate against the database

@@ -24,7 +24,7 @@ function insert(
     $db = connect($path, $user, $password);
 
     $query = "
-        INSERT INTO elevatorNetwork (
+        INSERT INTO CANLogs (
             Date,
             Time,
             Status,
@@ -69,15 +69,15 @@ SELECT
     c.messageID,
     c.baudRate,
     c.lastMessage
-FROM elevatorNetwork e
-LEFT JOIN canNetwork c
+FROM CANLogs e
+LEFT JOIN CANLogs c
     ON e.nodeID = c.nodeID
 ";
     $statement = $db->query($query);
 
     $results = $statement->fetchAll();
 
-    echo "<h4 class='mb-3'>Content of ElevatorNetwork Table</h4>";
+    echo "<h4 class='mb-3'>Content of CANLogs Table</h4>";
 
     echo "<table class='table table-striped table-hover table-bordered'>";
 
@@ -135,7 +135,7 @@ function update(
     $db = connect($path, $user, $password);
 
     $query = "
-        UPDATE elevatorNetwork
+        UPDATE CANLogs
         SET
             Status = :status,
             CurrentFloor = :currentFloor,
@@ -185,7 +185,7 @@ function update(
         $db->beginTransaction();
 
         $query = "
-            UPDATE elevatorNetwork
+            UPDATE CANLogs
             SET
                 Status = :status,
                 CurrentFloor = :currentFloor,
@@ -237,7 +237,7 @@ function delete(
 
     $db = connect($path, $user, $password);
 
-    $query = "DELETE FROM elevatorNetwork WHERE nodeID = :nodeID";
+    $query = "DELETE FROM CANLogs WHERE nodeID = :nodeID";
 
     $statement = $db->prepare($query);
 
@@ -252,7 +252,7 @@ function get_currentFloor(string $path, string $user, string $password): int
 
     $query = "
         SELECT CurrentFloor
-        FROM elevatorNetwork
+        FROM CANLogs
         ORDER BY nodeID DESC
         LIMIT 1";
 
@@ -276,7 +276,7 @@ function insertCAN(
     $db = connect($path, $user, $password);
 
     $query = "
-    INSERT INTO canNetwork (
+    INSERT INTO CANLogs (
         nodeID,
         messageID,
         baudRate,
@@ -312,7 +312,7 @@ function updateCAN(
     $db = connect($path, $user, $password);
 
     $query = "
-    UPDATE canNetwork
+    UPDATE CANLogs
     SET
         messageID = :messageID,
         baudRate = :baudRate,
@@ -340,7 +340,7 @@ function deleteCAN(
     $db = connect($path, $user, $password);
 
     $query = "
-    DELETE FROM canNetwork
+    DELETE FROM CANLogs
     WHERE canID = :canID";
 
     $stmt = $db->prepare($query);
@@ -348,53 +348,6 @@ function deleteCAN(
     $stmt->execute([
         'canID' => $canID
     ]);
-}
-
-function showCANTable(
-    string $path,
-    string $user,
-    string $password
-): void {
-
-    $db = connect($path, $user, $password);
-
-    $query = "SELECT * FROM can";
-
-    $statement = $db->query($query);
-
-    $results = $statement->fetchAll();
-
-    echo "<h4 class='mb-3'>CAN Network Table</h4>";
-
-    echo "<table class='table table-striped table-hover table-bordered'>";
-
-    echo "<thead class='table-dark'>";
-    echo "<tr>";
-    echo "<th>CAN ID</th>";
-    echo "<th>Node ID</th>";
-    echo "<th>Message ID</th>";
-    echo "<th>Baud Rate</th>";
-    echo "<th>Last Message</th>";
-    echo "</tr>";
-    echo "</thead>";
-
-    echo "<tbody>";
-
-    foreach ($results as $row) {
-
-        echo "<tr>";
-
-        echo "<td>" . htmlspecialchars($row['canID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['nodeID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['messageID']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['baudRate']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['lastMessage']) . "</td>";
-
-        echo "</tr>";
-    }
-
-    echo "</tbody>";
-
 }
 
 function showCombinedTable(
@@ -418,10 +371,58 @@ function showCombinedTable(
             c.messageID,
             c.baudRate,
             c.lastMessage
-        FROM elevatorNetwork e
+        FROM CANLogs e
         LEFT JOIN can c ON e.nodeID = c.nodeID
     ";
 }
+function showCANTable(
+    string $path,
+    string $user,
+    string $password
+): void
+{
+    $db = connect($path, $user, $password);
 
+    $query = "
+        SELECT *
+        FROM CANLogs
+        ORDER BY timestamp DESC
+        LIMIT 50
+    ";
+
+    $statement = $db->query($query);
+
+    $results = $statement->fetchAll();
+
+    echo "<h5>CAN Message Log</h5>";
+
+    echo "<table border='1'>";
+    echo "<tr>";
+    echo "<th>Log ID</th>";
+    echo "<th>Timestamp</th>";
+    echo "<th>Node ID</th>";
+    echo "<th>Message ID</th>";
+    echo "<th>Length</th>";
+    echo "<th>Data</th>";
+    echo "<th>Description</th>";
+    echo "</tr>";
+
+    foreach ($results as $row)
+    {
+        echo "<tr>";
+
+        echo "<td>" . htmlspecialchars($row['logID']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['timestamp']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['nodeID']) . "</td>";
+        echo "<td>0x" . strtoupper(dechex($row['messageID'])) . "</td>";
+        echo "<td>" . htmlspecialchars($row['dataLength']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['messageData']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+
+        echo "</tr>";
+    }
+
+    echo "</table>";
+}
 
 ?>
