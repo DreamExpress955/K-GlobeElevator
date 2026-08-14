@@ -1,4 +1,38 @@
 <?php
+//update elevator network current floor
+function update_elevatorNetwork(int $node_ID, int $new_floor =1, int $requestType): int {
+		$db = get_database();
+
+    $query = '
+        UPDATE elevatorNetwork
+        SET requestedType = :floorT,
+            requestedFloor = :floor
+        WHERE nodeID = :id
+    ';
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':floor', $new_floor, PDO::PARAM_INT);
+    $statement->bindValue(':id', $node_ID, PDO::PARAM_INT);
+    $statement->bindValue(':floorT', $requestType, PDO::PARAM_INT);
+    $statement->execute();
+
+    return $new_floor;
+		
+	}
+function get_database(): PDO
+{
+    return new PDO(
+        'mysql:host=127.0.0.1;dbname=Elevator;charset=utf8mb4',
+        'myphpadmin',
+        'ese1',
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
+    );
+}
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require '../php/databaseFunctions.php';
@@ -24,6 +58,7 @@ $path = "mysql:host=$host;dbname=$database";
 //Blakes PiConnect database connection
 $user = 'myphpadmin';
 $password = 'ese1';
+//Oen's local database connection
 //$user = 'root';
 //$password = '';
 $currentMode = "Normal";
@@ -159,6 +194,57 @@ if (isset($_POST['delete'])) {
     );
     $message = "<div class='alert alert-danger'>Record deleted successfully.</div>";
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['floor'])) {
+    try {
+        $requestType = $_POST['request_type'] ?? '';
+        $requestedFloor = filter_input(
+            INPUT_POST,
+            'floor',
+            FILTER_VALIDATE_INT,
+            [
+                'options' => [
+                    'min_range' => 1,
+                    'max_range' => 3
+                ]
+            ]
+        );
+
+        if ($requestedFloor === false || $requestedFloor === null) {
+            throw new InvalidArgumentException('The selected floor is invalid.');
+        }
+        $request = 0;
+        $nodeID = 1;
+        if ($requestType === 'floor_controller') {
+            /*
+             * Floor-controller requests:
+             */
+            $request = 0;
+        } elseif ($requestType === 'car_controller') {
+            /*
+             * All three car buttons update the car-controller node.
+             */
+            $request = 1;
+        } else {
+            throw new InvalidArgumentException('The request type is invalid.');
+        }
+
+        update_elevatorNetwork($nodeID, $requestedFloor, $request);
+
+        // Prevent duplicate form submission when the page is refreshed.
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    } catch (Throwable $error) {
+        $errorMessage = $error->getMessage();
+    }
+}
+
+try {
+    $curFlr = get_currentFloor();
+} catch (Throwable $error) {
+    $curFlr = 1;
+    $errorMessage = $error->getMessage();
+}
+
 ?>
 
 <!DOCTYPE html>

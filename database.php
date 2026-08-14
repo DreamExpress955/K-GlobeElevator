@@ -1,7 +1,7 @@
 <?php
 // Query a database and print results slide 2
 $db = new pdo(
-    'mysql:host=127.0.0.1;dbname=elevator',
+    'mysql:host=127.0.0.1;dbname=Elevator',
     'root',
     'ese'
 );
@@ -19,7 +19,7 @@ $db = new pdo(
 <?php
 // Formatted Query slide 2
 $db = new pdo(
-    'mysql:host=127.0.0.1;dbname=elevator',
+    'mysql:host=127.0.0.1;dbname=Elevator',
     'root',
     'ese'
 );
@@ -44,7 +44,7 @@ $db = new pdo(
 <?php
 // Insert static data slide 2
 $db = new pdo(
-    'mysql:host=127.0.0.1;dbname=elevator',
+    'mysql:host=127.0.0.1;dbname=Elevator',
     'root',
     'ese'
 );
@@ -81,7 +81,7 @@ $db = new pdo(
 <?php
 // Insert dynamic with live dates & time data slide 2
 $db = new pdo(
-    'mysql:host=127.0.0.1;dbname=elevator',
+    'mysql:host=127.0.0.1;dbname=Elevator',
     'root',
     'ese'
 );
@@ -127,7 +127,7 @@ $db = new pdo(
 <?php
 // Joining tables slide 3
 $db = new pdo(
-    'mysql:host=127.0.0.1;dbname=elevator',
+    'mysql:host=127.0.0.1;dbname=Elevator',
     'root',
     'ese'
 );
