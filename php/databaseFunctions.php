@@ -501,8 +501,15 @@ function setMode(
     $query = "
         UPDATE elevatorNetwork
         SET stopFlag = :mode
-        ORDER BY nodeID DESC
-        LIMIT 1
+        WHERE nodeID = (
+            SELECT nodeID
+            FROM (
+                SELECT nodeID
+                FROM elevatorNetwork
+                ORDER BY nodeID DESC
+                LIMIT 1
+            ) latest
+        )
     ";
 
     $stmt = $db->prepare($query);
@@ -510,5 +517,25 @@ function setMode(
     $stmt->execute([
         'mode' => $mode
     ]);
+}
+function getDoorStatus(
+    string $path,
+    string $user,
+    string $password
+): int {
 
+    $db = connect($path, $user, $password);
+
+    $query = "
+        SELECT doorOpen
+        FROM elevatorNetwork
+        ORDER BY nodeID DESC
+        LIMIT 1
+    ";
+
+    $stmt = $db->query($query);
+
+    $result = $stmt->fetch();
+
+    return $result ? (int)$result['doorOpen'] : 0;
 }

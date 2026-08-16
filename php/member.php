@@ -40,24 +40,58 @@ if (isset($_POST['mode'])) {
     switch ($_POST['mode']) {
 
         case 'normal':
+
             $_SESSION['mode'] = 'Normal';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                0
+            );
+
             break;
 
         case 'sabbath':
+
             $_SESSION['mode'] = 'Sabbath';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                1
+            );
+
             break;
 
         case 'maintenance':
+
             $_SESSION['mode'] = 'Maintenance';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                2
+            );
+
             break;
     }
 }
 
 // Automatic maintenance override
 if ($maintenanceState['maintenance']) {
-    $_SESSION['mode'] = 'Maintenance';
-}
 
+    $_SESSION['mode'] = 'Maintenance';
+
+    setMode(
+        $path,
+        $user,
+        $password,
+        2
+    );
+}
 $currentMode = $_SESSION['mode'];
 
 $current_date = $db->query('SELECT CURRENT_DATE()')->fetchColumn();
@@ -215,13 +249,14 @@ if (isset($_POST['delete'])) {
     <h3 class="mb-0">Database Records</h3>
 </div>
 
-<div class="table-responsive">
-    
+<div id="canTableContainer" class="table-responsive">
     <?php showCANtable($path, $user, $password); ?>
 </div>
 
 </div>
 </div>
+
+
 
 <!-- ELEVATOR CONTROL PANEL -->
 <div class="container-fluid mt-4">
@@ -246,9 +281,13 @@ if (isset($_POST['delete'])) {
                                 Database Records
                             </h6>
 
+                            <div id="logCount">
                             <h2 class="fw-bold">
-                                <?= $logCount ?>
+                            <?= $logCount ?>
                             </h2>
+
+
+                            </div>
 
                         </div>
                     </div>
@@ -288,28 +327,6 @@ if (isset($_POST['delete'])) {
 
                 </div>
 
-            </div>
-
-            <!-- MAINTENANCE STATUS -->
-            <div class="alert
-            <?php
-
-            if ($maintenanceState['maintenance']) {
-                echo "alert-danger";
-            }
-            elseif ($maintenanceState['warning']) {
-                echo "alert-warning";
-            }
-            elseif ($maintenanceState['inspection']) {
-                echo "alert-info";
-            }
-            else {
-                echo "alert-success";
-            }
-
-            ?>">
-                <strong>Status:</strong>
-                <?= htmlspecialchars($maintenanceState['message']) ?>
             </div>
 
             <!-- MODE BUTTONS -->
@@ -363,14 +380,25 @@ if (isset($_POST['delete'])) {
 
             </div>
 
-            <!-- ELEVATOR POSITION -->
-            <div class="card mb-4">
+<!-- ELEVATOR POSITION -->
+<div class="card mb-4">
 
-                <div class="card-header bg-info text-white">
+    <div class="card-header bg-info text-white">
+        Elevator Status
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- FLOOR POSITION -->
+            <div class="col-md-8">
+
+                <h5 class="text-center mb-3">
                     Elevator Position
-                </div>
+                </h5>
 
-                <div class="card-body text-center">
+                <div id="elevatorPosition">
 
                     <?php $curFlr = get_currentFloor($path, $user, $password); ?>
 
@@ -403,6 +431,25 @@ if (isset($_POST['delete'])) {
                 </div>
 
             </div>
+
+            <!-- DOOR STATUS -->
+            <div class="col-md-4 text-center">
+
+                <h5 class="mb-3">
+                    Door Status
+                </h5>
+
+                <div id="doorStatus">
+                    Loading...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
             <!-- FLOOR CONTROLS -->
             <div class="row">
@@ -515,6 +562,83 @@ if (isset($_POST['delete'])) {
         Sign Out
     </a>
 </div>
+
+<script>
+function refreshCANTable() {
+    fetch('get_can_table.php')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('canTableContainer').innerHTML = html;
+        })
+        .catch(error => console.error('Refresh failed:', error));
+}
+
+// Initial load
+refreshCANTable();
+
+// Refresh every 2 seconds
+setInterval(refreshCANTable, 2000);
+</script>
+
+<script>
+function refreshElevatorPosition() {
+
+    console.log("Polling elevator position...");
+
+    fetch('get_elevator_position.php')  // Append timestamp to avoid caching
+        .then(response => response.text())
+        .then(data => {
+            console.log("Received:", data);
+
+            document.getElementById('elevatorPosition').innerHTML = data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+refreshElevatorPosition();
+
+setInterval(refreshElevatorPosition, 1000);
+</script>
+
+<script>
+function refreshDoorStatus() {
+
+    fetch('get_door_status.php?t=' + Date.now())
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('doorStatus').innerHTML = data;
+        })
+        .catch(error => console.error(error));
+}
+
+refreshDoorStatus();
+
+setInterval(refreshDoorStatus, 1000);
+</script>
+
+
+<script>
+function refreshLogCount() {
+
+    fetch('get_log_count.php?t=' + Date.now())
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('logCount').innerHTML = data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+refreshLogCount();
+
+setInterval(refreshLogCount, 1000);
+</script>
+
+
+
 
 </body>
 </html>
