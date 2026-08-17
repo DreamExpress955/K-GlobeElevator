@@ -47,7 +47,7 @@ int db_getFloorNum() {
 	// Query database
 	// ***************************** 
 	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1");	// message query
+	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork");	// message query
 	while(res->next()){
 		floorNum = res->getInt("currentFloor");
 	}
@@ -61,40 +61,60 @@ int db_getFloorNum() {
 }
  
  
-int db_setFloorNum(int floorNum) {
-	sql::Driver *driver; 				// Create a pointer to a MySQL driver object
-	sql::Connection *con; 				// Create a pointer to a database connection object
-	sql::Statement *stmt;				// Create a pointer to a Statement object to hold statements 
-	sql::ResultSet *res;				// Create a pointer to a ResultSet object to hold results 
-	sql::PreparedStatement *pstmt; 		// Create a pointer to a prepared statement	
-	
-	// Create a connection 
-	driver = get_driver_instance();
-	con = driver->connect("host=127.0.0.1", "myphpadmin", "ese1");	
-	con->setSchema("Elevator");										
-	
-	// Query database (possibly not necessary)
-	// ***************************** 
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1");	// message query
-	while(res->next()){
-		res->getInt("currentFloor");
-	}
-		
-	// Update database
-	// *****************************
-	pstmt = con->prepareStatement("UPDATE elevatorNetwork SET currentFloor = ? WHERE nodeID = 1");
-	pstmt->setInt(1, floorNum);
-	pstmt->executeUpdate();
-		
-	// Clean up pointers 
-	delete res;
-	delete pstmt;
-	delete stmt;
-	delete con;
-	
-	return 0;
-} 
+int db_setFloorNum(int floorNum) 
+	{
+    sql::Driver *driver;
+    sql::Connection *con = NULL;
+    sql::PreparedStatement *pstmt = NULL;
+
+    try
+    {
+        // Create connection
+        driver = get_driver_instance();
+        con = driver->connect(
+            "host=127.0.0.1",
+            "myphpadmin",
+            "ese1"
+        );
+
+        con->setSchema("Elevator");
+
+        // Update current floor for node 1
+        pstmt = con->prepareStatement(
+            "UPDATE elevatorNetwork "
+            "SET currentFloor = ? "
+            "WHERE nodeID = 1"
+        );
+
+        pstmt->setInt(1, floorNum);
+
+        int rowsUpdated = pstmt->executeUpdate();
+
+        cout << "Setting floor to: "
+             << floorNum
+             << endl;
+
+        cout << "Rows updated: "
+             << rowsUpdated
+             << endl;
+    }
+    catch (sql::SQLException &error)
+    {
+        cerr << "db_setFloorNum error: "
+             << error.what()
+             << endl;
+
+        delete pstmt;
+        delete con;
+
+        return -1;
+    }
+
+    delete pstmt;
+    delete con;
+
+    return 0;
+}
  
 void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
     const char* description)

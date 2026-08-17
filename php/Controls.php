@@ -19,7 +19,7 @@
 ?>
 <?php 
 	function get_currentFloor(): int {
-		try { $db = new PDO('mysql:host=127.0.0.1;dbname=elevator','myphpadmin','ese1');}
+		try { $db = new PDO('mysql:host=127.0.0.1;dbname=Elevator','myphpadmin','ese1');}
 		catch (PDOException $e){echo $e->getMessage();}           
 			// Query the database to display current floor
 			$rows = $db->query('SELECT currentFloor FROM elevatorNetwork');
@@ -33,7 +33,7 @@
 function get_database(): PDO
 {
     return new PDO(
-        'mysql:host=127.0.0.1;dbname=elevator;charset=utf8mb4',
+        'mysql:host=127.0.0.1;dbname=Elevator;charset=utf8mb4',
         'myphpadmin',
         'ese1',
         [

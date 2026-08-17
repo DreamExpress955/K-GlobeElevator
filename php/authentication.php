@@ -7,9 +7,9 @@
     $password = $_POST['password'];
     
     //Blakes PiConnect database connection
-    //$db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'myphpadmin', 'ese1');
+    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'myphpadmin', 'ese1');
     //Owens Connect database connection
-    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
+    //$db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
      // Authenticate against the database

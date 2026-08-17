@@ -439,24 +439,18 @@ static void canReceiverThread()
             int requestType = db_getRequestType();
             if (requestedFloor >= 1 &&
                 requestedFloor <= 3 &&
-                (requestType == 1 || requestType == 2))
+                (requestType == 1 || requestType == 0))
             {
-                if (requestType == 1)
+                if (requestType == 0)
                 {
-                    printf(
-                        "Website floor controller requested floor %d\n",
-                        requestedFloor
-                    );
+                    addFloorRequestToQueue(requestedFloor, (ID_WEBSITE + requestedFloor));
                 }
                 else
                 {
-                    printf(
-                        "Website car controller requested floor %d\n",
-                        requestedFloor
-                    );
+
+                    addFloorRequestToQueue(requestedFloor, ID_WEBSITE);
                 }
 
-                addFloorRequestToQueue(requestedFloor, ID_WEBSITE);
                 //clear the request so it doesn't add it again
                 db_clearWebsiteRequest();
             }
@@ -766,7 +760,150 @@ static void canProcessorThread()
                 elev = false;
                 break;
             }
+            case ID_WEBSITE:
+            {
+                if (getFloorFromMessageData(msg.DATA[0], floorNumber))
+                {
+                    doorOpenReceived = false;
 
+
+                    printf("Website Car Controller requested floor %d\n",
+                           floorNumber);
+                    //upload to data base
+                    std::string info = "Website Car Controller Requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, msg.DATA[0], "From WebSite");
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit Website car Controller request\n"
+                        );
+                    }
+                    elev = false;
+                }
+                else
+                {
+                    printf("Website Car Controller sent unknown floor data: 0x%02x\n",
+                           static_cast<unsigned int>(msg.DATA[0]));
+                }
+                
+                break;
+            }
+            case (ID_WEBSITE + 1):
+            {
+                if (msg.DATA[0] == 0x05)
+                {
+
+                    floorNumber = 1;
+                    printf("Floor 1 Controller made a request\n");
+                    //upload to data base
+                    std::string info = "Floor 1 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+                        
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR1, "From Floor 1 Controller");
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit Website Floor 1 Controller request\n"
+                        );
+                    }
+                }
+                else
+                {
+                    printf("Website Floor 1 Controller sent unexpected data: 0x%02x\n",
+                           static_cast<unsigned int>(msg.DATA[0]));
+                }
+                elev = false;
+                break;
+            }
+
+            case (ID_WEBSITE + 2):
+            {
+                if (msg.DATA[0] == 0x06)
+                {
+
+
+                    floorNumber = 2;
+                    printf("Website Floor 2 Controller made a request\n");
+
+                    //upload to data base
+                    std::string info = "Website Floor 2 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR2, "From Website Floor 2 Controller");
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit Website Floor 2 request\n"
+                        );
+                    }
+                }
+                else
+                {
+                    printf("Website Floor 2 Controller sent unexpected data: 0x%02x\n",
+                           static_cast<unsigned int>(msg.DATA[0]));
+                }
+                elev = false;
+                break;
+            }
+
+            case (ID_WEBSITE + 3):
+            {
+                if (msg.DATA[0] == 0x07)
+                {
+
+                    floorNumber = 3;
+                    printf("Website Floor 3 Controller made a request\n");
+
+                    //upload to data base
+                    std::string info = "Floor 3 Controller requested floor:" + std::to_string(floorNumber);
+                    db_logCANMessage(0,msg.ID,msg.LEN,msg.DATA,info.c_str());
+
+                    int transmitStatus =
+                        pcanTx(ID_SC_TO_EC, GO_TO_FLOOR3, "From Website Floor 3 Controller");
+
+                    if (transmitStatus == 0)
+                    {
+                        db_setFloorNum(floorNumber);
+                        requestWasTransmitted = true;
+                    }
+                    else
+                    {
+                        printf(
+                            "Failed to transmit Website Floor 3 Controller request\n"
+                        );
+                    }
+                }
+                else
+                {
+                    printf("Website Floor 3 Controller sent unexpected data: 0x%02x\n",
+                           static_cast<unsigned int>(msg.DATA[0]));
+                }
+                elev = false;
+                break;
+            }
             default:
             {
                 printf("Unknown CAN message ID: 0x%04x\n",
