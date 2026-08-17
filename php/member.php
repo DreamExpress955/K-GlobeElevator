@@ -40,24 +40,58 @@ if (isset($_POST['mode'])) {
     switch ($_POST['mode']) {
 
         case 'normal':
+
             $_SESSION['mode'] = 'Normal';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                0
+            );
+
             break;
 
         case 'sabbath':
+
             $_SESSION['mode'] = 'Sabbath';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                1
+            );
+
             break;
 
         case 'maintenance':
+
             $_SESSION['mode'] = 'Maintenance';
+
+            setMode(
+                $path,
+                $user,
+                $password,
+                2
+            );
+
             break;
     }
 }
 
 // Automatic maintenance override
 if ($maintenanceState['maintenance']) {
-    $_SESSION['mode'] = 'Maintenance';
-}
 
+    $_SESSION['mode'] = 'Maintenance';
+
+    setMode(
+        $path,
+        $user,
+        $password,
+        2
+    );
+}
 $currentMode = $_SESSION['mode'];
 
 $current_date = $db->query('SELECT CURRENT_DATE()')->fetchColumn();
@@ -215,192 +249,311 @@ if (isset($_POST['delete'])) {
     <h3 class="mb-0">Database Records</h3>
 </div>
 
-<div class="table-responsive">
-    
+<div id="canTableContainer" class="table-responsive">
     <?php showCANtable($path, $user, $password); ?>
 </div>
 
 </div>
 </div>
 
+
+
 <!-- ELEVATOR CONTROL PANEL -->
-<div class="card shadow mt-4">
-    <div class="card-header bg-primary text-white">
-        <h3 class="mb-0">Elevator Control Panel</h3>
+<div class="container-fluid mt-4">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Elevator Control Panel</h3>
+        </div>
+
+        <div class="card-body">
+
+            <!-- STATUS -->
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+
+                    <div class="card border-0 bg-light">
+                        <div class="card-body text-center">
+
+                            <h6 class="text-muted">
+                                Database Records
+                            </h6>
+
+                            <div id="logCount">
+                            <h2 class="fw-bold">
+                            <?= $logCount ?>
+                            </h2>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="card border-0 bg-light">
+                        <div class="card-body text-center">
+
+                            <h6 class="text-muted">
+                                Current Mode
+                            </h6>
+
+                            <span class="badge fs-5 px-3 py-2
+                            <?php
+                            switch ($currentMode) {
+
+                                case 'Maintenance':
+                                    echo 'bg-danger';
+                                    break;
+
+                                case 'Sabbath':
+                                    echo 'bg-secondary';
+                                    break;
+
+                                default:
+                                    echo 'bg-success';
+                            }
+                            ?>">
+                                <?= htmlspecialchars($currentMode) ?>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- MODE BUTTONS -->
+            <div class="card mb-4">
+
+                <div class="card-header bg-dark text-white">
+                    Mode Controls
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="row g-2">
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="normal"
+                                    class="btn btn-success w-100">
+                                    Normal Mode
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="sabbath"
+                                    class="btn btn-secondary w-100">
+                                    Sabbath Mode
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button
+                                    type="submit"
+                                    name="mode"
+                                    value="maintenance"
+                                    class="btn btn-danger w-100">
+                                    Maintenance Mode
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+<!-- ELEVATOR POSITION -->
+<div class="card mb-4">
+
+    <div class="card-header bg-info text-white">
+        Elevator Status
     </div>
 
-    <h5 class="mb-3">
-
-<div class="alert alert-info">
-    <strong>Total Database Records:</strong>
-    <?= $logCount ?>
-    <br>
-    <strong>Status:</strong>
-    <?= htmlspecialchars($maintenanceState['message']) ?>
-</div>
-
-<span class="badge
-<?php
-switch ($currentMode) {
-
-    case 'Maintenance':
-        echo 'bg-danger';
-        break;
-
-    case 'Sabbath':
-        echo 'bg-secondary';
-        break;
-
-    case 'Warning':
-        echo 'bg-warning text-dark';
-        break;
-
-    case 'Inspection':
-        echo 'bg-info text-dark';
-        break;
-
-    default:
-        echo 'bg-success';
-}
-?>
-">
-    <?= htmlspecialchars($currentMode) ?>
-</span>
-
-</h5>
-
     <div class="card-body">
-
-        <form method="POST">
-
-            <button type="submit"
-                    name="mode"
-                    value="normal"
-                    class="btn btn-secondary">
-                Normal Mode
-            </button>
-
-            <button type="submit"
-                    name="mode"
-                    value="sabbath"
-                    class="btn btn-secondary">
-                Sabbath Mode
-            </button>
-
-            <button type="submit"
-                    name="mode"
-                    value="maintenance"
-                    class="btn btn-secondary">
-                Maintenance Mode
-            </button>
-
-        </form>
-
-    </div>
-</div>
-    <div class="card-body">
-
-        <h5>Current Elevator Position</h5>
-
-        <?php
-        $curFlr = get_currentFloor($path, $user, $password);
-
-echo "<div class='d-flex gap-3'>";
-
-for ($i = 1; $i <= 3; $i++) {
-
-    $color = ($i == $curFlr) ? "green" : "red";
-
-    echo "
-    <div style='
-        width:50px;
-        height:50px;
-        border-radius:50%;
-        background:$color;
-        border:2px solid black;
-    '></div>";
-}
-
-echo "</div>";
-
-echo "</div>";
-
-echo "</div>";
-
-echo "</div>";
-
-        echo "</div>";
-        ?>
 
         <div class="row">
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Request a Floor</div>
+            <!-- FLOOR POSITION -->
+            <div class="col-md-8">
 
-                    <div class="card-body">
-                        <form method="POST">
+                <h5 class="text-center mb-3">
+                    Elevator Position
+                </h5>
 
-                            <input type="hidden" name="request_type" value="floor_controller">
+                <div id="elevatorPosition">
 
-                            <button class="btn btn-primary w-100 mb-2" name="floor" value="1">
-                                Floor 1
-                            </button>
+                    <?php $curFlr = get_currentFloor($path, $user, $password); ?>
 
-                            <button class="btn btn-primary w-100 mb-2" name="floor" value="2">
-                                Floor 2
-                            </button>
+                    <div class="d-flex justify-content-center gap-5">
 
-                            <button class="btn btn-primary w-100" name="floor" value="3">
-                                Floor 3
-                            </button>
+                        <?php for ($i = 1; $i <= 3; $i++): ?>
 
-                        </form>
+                            <div>
+
+                                <div
+                                    class="rounded-circle border border-dark mx-auto mb-2"
+                                    style="
+                                        width:80px;
+                                        height:80px;
+                                        background:
+                                        <?= ($i == $curFlr)
+                                            ? '#198754'
+                                            : '#dc3545' ?>;
+                                    ">
+                                </div>
+
+                                <strong>Floor <?= $i ?></strong>
+
+                            </div>
+
+                        <?php endfor; ?>
+
                     </div>
+
                 </div>
+
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Car Controller</div>
+            <!-- DOOR STATUS -->
+            <div class="col-md-4 text-center">
 
-                    <div class="card-body">
-                        <form method="POST">
+                <h5 class="mb-3">
+                    Door Status
+                </h5>
 
-                            <input type="hidden" name="request_type" value="car_controller">
-
-                            <button class="btn btn-success w-100 mb-2" name="floor" value="1">
-                                Floor 1
-                            </button>
-
-                            <button class="btn btn-success w-100 mb-2" name="floor" value="2">
-                                Floor 2
-                            </button>
-
-                            <button class="btn btn-success w-100" name="floor" value="3">
-                                Floor 3
-                            </button>
-
-                        </form>
-                    </div>
+                <div id="doorStatus">
+                    Loading...
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Queue</div>
-
-                    <div class="card-body">
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item">TEMP</li>
-                        </ol>
-                    </div>
-                </div>
             </div>
 
         </div>
 
     </div>
+
+</div>
+
+            <!-- FLOOR CONTROLS -->
+            <div class="row">
+
+                <!-- FLOOR CONTROLLER -->
+                <div class="col-lg-6 mb-3">
+
+                    <div class="card h-100">
+
+                        <div class="card-header bg-primary text-white">
+                            Floor Controller
+                        </div>
+
+                        <div class="card-body">
+
+                            <form method="POST">
+
+                                <input
+                                    type="hidden"
+                                    name="request_type"
+                                    value="floor_controller">
+
+                                <button
+                                    class="btn btn-primary w-100 mb-2"
+                                    name="floor"
+                                    value="1">
+                                    Floor 1
+                                </button>
+
+                                <button
+                                    class="btn btn-primary w-100 mb-2"
+                                    name="floor"
+                                    value="2">
+                                    Floor 2
+                                </button>
+
+                                <button
+                                    class="btn btn-primary w-100"
+                                    name="floor"
+                                    value="3">
+                                    Floor 3
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CAR CONTROLLER -->
+                <div class="col-lg-6 mb-3">
+
+                    <div class="card h-100">
+
+                        <div class="card-header bg-success text-white">
+                            Car Controller
+                        </div>
+
+                        <div class="card-body">
+
+                            <form method="POST">
+
+                                <input
+                                    type="hidden"
+                                    name="request_type"
+                                    value="car_controller">
+
+                                <button
+                                    class="btn btn-success w-100 mb-2"
+                                    name="floor"
+                                    value="1">
+                                    Floor 1
+                                </button>
+
+                                <button
+                                    class="btn btn-success w-100 mb-2"
+                                    name="floor"
+                                    value="2">
+                                    Floor 2
+                                </button>
+
+                                <button
+                                    class="btn btn-success w-100"
+                                    name="floor"
+                                    value="3">
+                                    Floor 3
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 
@@ -409,6 +562,83 @@ echo "</div>";
         Sign Out
     </a>
 </div>
+
+<script>
+function refreshCANTable() {
+    fetch('get_can_table.php')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('canTableContainer').innerHTML = html;
+        })
+        .catch(error => console.error('Refresh failed:', error));
+}
+
+// Initial load
+refreshCANTable();
+
+// Refresh every 2 seconds
+setInterval(refreshCANTable, 2000);
+</script>
+
+<script>
+function refreshElevatorPosition() {
+
+    console.log("Polling elevator position...");
+
+    fetch('get_elevator_position.php')  // Append timestamp to avoid caching
+        .then(response => response.text())
+        .then(data => {
+            console.log("Received:", data);
+
+            document.getElementById('elevatorPosition').innerHTML = data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+refreshElevatorPosition();
+
+setInterval(refreshElevatorPosition, 1000);
+</script>
+
+<script>
+function refreshDoorStatus() {
+
+    fetch('get_door_status.php?t=' + Date.now())
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('doorStatus').innerHTML = data;
+        })
+        .catch(error => console.error(error));
+}
+
+refreshDoorStatus();
+
+setInterval(refreshDoorStatus, 1000);
+</script>
+
+
+<script>
+function refreshLogCount() {
+
+    fetch('get_log_count.php?t=' + Date.now())
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('logCount').innerHTML = data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+refreshLogCount();
+
+setInterval(refreshLogCount, 1000);
+</script>
+
+
+
 
 </body>
 </html>
