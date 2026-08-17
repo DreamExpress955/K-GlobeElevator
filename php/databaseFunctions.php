@@ -445,19 +445,19 @@ function getMaintenanceStatus(int $recordCount): array
         'message' => 'Normal Operation'
     ];
 
-    if ($recordCount >= 30000) {
+    if ($recordCount >= 5000) {
 
         $status['maintenance'] = true;
         $status['message'] =
             "Maintenance Mode Activated Automatically";
 
-    } elseif ($recordCount >= 20000) {
+    } elseif ($recordCount >= 350) {
 
         $status['warning'] = true;
         $status['message'] =
             "WARNING: Elevator approaching maintenance interval";
 
-    } elseif ($recordCount >= 10000) {
+    } elseif ($recordCount >= 325) {
 
         $status['inspection'] = true;
         $status['message'] =

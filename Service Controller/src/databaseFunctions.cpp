@@ -30,7 +30,37 @@ static sql::Connection* db_openConnection()
     return con;
 }
 
+void db_updateDoor(int door){
+    sql::Driver* driver;
+    sql::Connection* con;
+    sql::PreparedStatement* pstmt;
 
+    driver = get_driver_instance();
+
+    con = driver->connect(
+        "host=127.0.0.1",
+        "myphpadmin",
+        "ese1"
+    );
+
+    con->setSchema("Elevator");
+
+    pstmt = con->prepareStatement(
+        "UPDATE elevatorNetwork "
+        "SET doorOpen = ? "
+        "WHERE nodeID = 1"
+    );
+
+    pstmt->setInt(1, door);
+
+    pstmt->executeUpdate();
+
+    delete pstmt;
+    delete con;
+
+    return;
+    
+}
 
 int db_getFloorNum() {
 	sql::Driver *driver; 			// Create a pointer to a MySQL driver object

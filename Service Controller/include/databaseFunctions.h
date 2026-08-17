@@ -11,6 +11,7 @@ int db_getRequestedFloor();
 int db_getRequestType();
 int db_clearWebsiteRequest();
 
+void db_updateDoor(int door);
 int db_getStopFlag();
 
 #endif

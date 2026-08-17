@@ -6,8 +6,8 @@ $host = '127.0.0.1';
 $database = 'Elevator';
 $path = "mysql:host=$host;dbname=$database";
 
-$user = 'root';
-$password = '';
+$user = 'phpmyadmin';
+$password = 'ese1';
 
 $doorOpen = getDoorStatus(
     $path,

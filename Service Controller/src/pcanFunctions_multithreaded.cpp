@@ -390,7 +390,7 @@ static void canReceiverThread()
 
 
             //maintanence mode (stop all physical CAN readings)
-            if (websiteFlag.load() == 1){
+            if (websiteFlag.load() == 2){
                 if (!systemPaused.load())
                 {
                     systemPaused.store(true);
@@ -405,7 +405,7 @@ static void canReceiverThread()
                 }
             }
             //sabbath mode (stop all physical CAN readings and ignore all requests)
-            else if (websiteFlag.load() == 2){
+            else if (websiteFlag.load() == 1){
                 if (!systemPaused.load())
                 {
                     systemPaused.store(true);
@@ -417,14 +417,18 @@ static void canReceiverThread()
                     );
                     int floor = 0;
                     queueCondition.notify_all();
-                    while(websiteFlag.load() == 2 && !stopRequested){
+                    while(websiteFlag.load() == 1 && !stopRequested){
+
                         //add floor request to the queue (1 then 2, then 3 then back to 1)
-                        addFloorRequestToQueue((floor++ % 3) + 1, ID_CC_TO_SC);
-                        
+                        addFloorRequestToQueue((floor % 3) + 1, ID_CC_TO_SC);
+                        sleep(3);
+                        printf("test\n");
                         //check database if the flag is changed 
                         currentWebsiteFlag = db_getStopFlag();
                         websiteFlag.store(currentWebsiteFlag);
-                        sleep(3);
+                        playFloor((floor % 3) + 1);
+                        sleep(2);
+                        floor++;
                     }
                 }
             }
@@ -486,14 +490,14 @@ static void canReceiverThread()
             doorOpenReceived = false;
 
             printf("Door CLOSE\n");
-
+            db_updateDoor(0);
             continue;
         }
 
         else if (receivedMessage.DATA[0]== 0x09)
         {
             doorOpenReceived = true;
-
+            db_updateDoor(1);
             printf("Door OPEN\n");
 
 
@@ -593,7 +597,7 @@ static void canProcessorThread()
 
             case ID_EC_TO_ALL:
             {
-                if (elev == false && msg.DATA[0] == 0){
+                if (elev == false && (msg.DATA[0] == 0x05 || msg.DATA[0] == 0x06 || msg.DATA[0] ==0x07)){
                     if (getFloorFromMessageData(msg.DATA[0], floorNumber))
                     {
                         printf("Elevator Controller announces elevator is at floor %d\n",
@@ -915,7 +919,7 @@ static void canProcessorThread()
         if (requestWasTransmitted)
         {
             requestWasTransmitted = false;
-            sleep(3); //this sleep is need so that the service controller waits for the door open message.
+            sleep(4); //this sleep is need so that the service controller waits for the door open message.
         }
 
     }
