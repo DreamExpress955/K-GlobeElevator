@@ -9,4 +9,14 @@
           <a href="BGLogBookW12.html">Prev Pg</a>
                 <a href="BGLogBookW14.html">Next Pg</a>
     <p>Copyright &copy; Blake G.</p>
+            <ul>
+        <li>Integrated the database of the GUI (The can nodes and their information) with the current code</li>
+        <li>Can write to the database everytime the service controller sends a can node. <br>
+        This was ditermined to be the best option because every can message the service controller sends will result in the <br>
+        elevator changing floors, and since the main purpose of the can node archive is for maintanence to see where the elevator <br>
+        has moved floor. In turn it adds a description of who send the request (wether its the car controller or one of the floor nodes)</li>
+        <li>Integrated the GUI to work for the pi and for remote acccess when the remote server is fully operational (gave permissions to sql user <br>
+        that has permisions to read and write to the database remotly)</li>
+
+    </ul>
 </body>

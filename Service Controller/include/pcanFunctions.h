@@ -15,6 +15,7 @@
 #define ID_F1_TO_SC  0x201	// ID for messages from floor 1 controller to supervisory controller
 #define ID_F2_TO_SC  0x202	// ID for messages from floor 2 controller to supervisory controller
 #define ID_F3_TO_SC  0x203	// ID for messages from floor 3 controller to supervisory controller	
+#define ID_WEBSITE   0x300  // ID for messages from website to supervisory controller
 
 #define GO_TO_FLOOR1 0x05	// Go to floor 1
 #define GO_TO_FLOOR2 0x06	// Go to floor 2
@@ -24,7 +25,7 @@
 // Function declarations
 int pcanTx(int id, int data);
 int pcanRx(int num_msgs);
-TPCANMsg pcanRxWithDetails();
+//TPCANMsg pcanRxWithDetails();
 
 
 #endif

@@ -13,6 +13,7 @@ int menu(){
 	int usrchoice = 0;
 	system("@cls||clear");
 	while(1) {
+		
 		printf("\n\nMenu - Transmit/Receive CAN Messages\n");
 		printf("1. Transmit CAN message using this program\n");
 		printf("2. Receive CAN message(s) using this program\n");

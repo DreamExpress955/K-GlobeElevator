@@ -2,12 +2,14 @@
     // authenticate.php
     // start session
     session_start();
-
     // Get the submitted username and password from the POST request
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
+    
+    //Blakes PiConnect database connection
+    $db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'myphpadmin', 'ese1');
+    //Owens Connect database connection
+    //$db = new PDO('mysql:host=127.0.0.1;dbname=authorizedUsers', 'root', '');
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
      // Authenticate against the database
@@ -21,10 +23,10 @@
     }
 
     if($authenticated) {
-        $_SESSION['username'] = $username;  
-        echo "<p>Congrats, you a logged in</p>"; 
-        echo "<p>Click <a href='member.php'> here </a> to goto the members only page</p>";
+        $_SESSION['username'] = $username;
+        // Redirect immediately
+        header("Location: member.php");
     } else {
-        echo "<p>You are not authenticated!!!!</p>"; 
+        header("Location: req_access.php"); 
     }
 ?>

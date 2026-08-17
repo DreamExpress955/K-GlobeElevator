@@ -3,10 +3,22 @@
     <title> Weekly Log Book 14 - Blake Gergely</title>
 </head>
 <body> 
-    <h1> Weekly Log Book 2 - Blake Gergely</h1>
+    <h1> Weekly Log Book 14 - Blake Gergely</h1>
         <a href="../index.html">Home</a>
     <a href="../about.html">About</a>
           <a href="BGLogBookW13.html">Prev Pg</a>
                 <a href="BGLogBookW15.html">Next Pg</a>
         <p>Copyright &copy; Blake G.</p>
+        <ul>
+        <li>implemented the "stopFlag" and the "floorRequest" with "floorType" flags in the database</li>
+        <li>the "stopFlag" if 0 is operating in normal mode, the GUI updates it and the superviosor controller goes into normal mode <br>
+            1 is SABBATH mode and 2 is the Maintanence mode.</li>
+        <li>The floor request buttons work, updating the database and the supervisor adds a CAN node to the queue with ID 0x301, 0x302, 0x303 based on the floor <br>
+            this is done so that CAN node is put last in priority. Then once the processing queue gets to the node it will send a request based on the floor.</li>
+        <li> The same is true for the car controller buttons, the ID is different 0x300. The GUI also updates the requestType based off what button was hit. <br>
+            type 0 is the floor controller and type 1 i the car controller.
+        </li>
+
+    </ul>
+
 </body>
