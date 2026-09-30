@@ -1,0 +1,302 @@
+\doxysection{Service Controller/\+include/\+pcan\+Functions\+\_\+multithreaded.h File Reference}
+\hypertarget{pcan_functions__multithreaded_8h}{}\label{pcan_functions__multithreaded_8h}\index{Service Controller/include/pcanFunctions\_multithreaded.h@{Service Controller/include/pcanFunctions\_multithreaded.h}}
+{\ttfamily \+\#include $<$libpcan.\+h$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_abb91615867a8a3808b017a877f9971f1}{PCAN\+\_\+\+RECEIVE\+\_\+\+QUEUE\+\_\+\+EMPTY}}~0x00020U
+\begin{DoxyCompactList}\small\item\em PCAN status value indicating that the receive queue is empty. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a620fb4b9b5fdd04064f41a0ae66f195c}{PCAN\+\_\+\+NO\+\_\+\+ERROR}}~0x00000U
+\begin{DoxyCompactList}\small\item\em PCAN status value indicating that no error has occurred. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a45098ec79b724a141a3f8bc8dc7d6c66}{ID\+\_\+\+SC\+\_\+\+TO\+\_\+\+EC}}~0x100
+\begin{DoxyCompactList}\small\item\em CAN message ID for communication from the Service Controller to the Elevator Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6}{ID\+\_\+\+EC\+\_\+\+TO\+\_\+\+ALL}}~0x101
+\begin{DoxyCompactList}\small\item\em CAN message ID for communication from the Elevator Controller to all nodes. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_ae2432e6bcf307757614d60fbe319e124}{ID\+\_\+\+CC\+\_\+\+TO\+\_\+\+SC}}~0x200
+\begin{DoxyCompactList}\small\item\em CAN message ID for communication from the Car Controller to the Service Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6}{ID\+\_\+\+F1\+\_\+\+TO\+\_\+\+SC}}~0x201
+\begin{DoxyCompactList}\small\item\em CAN message ID for Floor 1 communication to the Service Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_ab3405bba09847ed5582ee6a93c525764}{ID\+\_\+\+F2\+\_\+\+TO\+\_\+\+SC}}~0x202
+\begin{DoxyCompactList}\small\item\em CAN message ID for Floor 2 communication to the Service Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a8bc36f4bab43f6e2de7b4ed559b0f068}{ID\+\_\+\+F3\+\_\+\+TO\+\_\+\+SC}}~0x203
+\begin{DoxyCompactList}\small\item\em CAN message ID for Floor 3 communication to the Service Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_af7bfb49e13ab6a370dc35f2b9b08e097}{ID\+\_\+\+WEBSITE}}~0x300
+\begin{DoxyCompactList}\small\item\em CAN message ID used for requests originating from the website. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a5d676fde3f790a065cd14a70dadeeabe}{GO\+\_\+\+TO\+\_\+\+FLOOR1}}~0x05
+\begin{DoxyCompactList}\small\item\em CAN command value used to request Floor 1. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a32a2456d3ec94d7694948dcc28531994}{GO\+\_\+\+TO\+\_\+\+FLOOR2}}~0x06
+\begin{DoxyCompactList}\small\item\em CAN command value used to request Floor 2. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a291f7771e1489c585ca28ed46671ecb2}{GO\+\_\+\+TO\+\_\+\+FLOOR3}}~0x07
+\begin{DoxyCompactList}\small\item\em CAN command value used to request Floor 3. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a7476f4310c6dc14c0bc2f676667c72b6}{pcan\+Tx}} (int id, int data, std::\+string description)
+\begin{DoxyCompactList}\small\item\em Transmits a CAN message through the PCAN interface. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_ade5413c6c1a3bb84349d5d4e25ba604b}{pcan\+Rx\+With\+Details\+Multithreaded}} ()
+\begin{DoxyCompactList}\small\item\em Starts multithreaded PCAN message reception. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_af63ae20fef6a09166efbf810c4777eab}{stop\+Pcan\+Rx\+Threads}} ()
+\begin{DoxyCompactList}\small\item\em Stops the PCAN receive threads. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a2b3ecb61e357d57adb32a44964f6ac09}{stop\+Pcan\+Multithreaded}} ()
+\begin{DoxyCompactList}\small\item\em Stops the multithreaded PCAN communication system. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a68a1764f886ecf1f092cf2aff2902f34}{is\+PCANBusy}} ()
+\begin{DoxyCompactList}\small\item\em Checks whether the PCAN communication system is busy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{pcan_functions__multithreaded_8h_doc-define-members}
+\Hypertarget{pcan_functions__multithreaded_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{pcan_functions__multithreaded_8h_a5d676fde3f790a065cd14a70dadeeabe}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!GO\_TO\_FLOOR1@{GO\_TO\_FLOOR1}}
+\index{GO\_TO\_FLOOR1@{GO\_TO\_FLOOR1}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR1}{GO\_TO\_FLOOR1}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a5d676fde3f790a065cd14a70dadeeabe} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR1~0x05}
+
+
+
+CAN command value used to request Floor 1. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_a32a2456d3ec94d7694948dcc28531994}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!GO\_TO\_FLOOR2@{GO\_TO\_FLOOR2}}
+\index{GO\_TO\_FLOOR2@{GO\_TO\_FLOOR2}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR2}{GO\_TO\_FLOOR2}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a32a2456d3ec94d7694948dcc28531994} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR2~0x06}
+
+
+
+CAN command value used to request Floor 2. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_a291f7771e1489c585ca28ed46671ecb2}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!GO\_TO\_FLOOR3@{GO\_TO\_FLOOR3}}
+\index{GO\_TO\_FLOOR3@{GO\_TO\_FLOOR3}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR3}{GO\_TO\_FLOOR3}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a291f7771e1489c585ca28ed46671ecb2} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR3~0x07}
+
+
+
+CAN command value used to request Floor 3. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_ae2432e6bcf307757614d60fbe319e124}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_CC\_TO\_SC@{ID\_CC\_TO\_SC}}
+\index{ID\_CC\_TO\_SC@{ID\_CC\_TO\_SC}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_CC\_TO\_SC}{ID\_CC\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_ae2432e6bcf307757614d60fbe319e124} 
+\+\#define ID\+\_\+\+CC\+\_\+\+TO\+\_\+\+SC~0x200}
+
+
+
+CAN message ID for communication from the Car Controller to the Service Controller. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_EC\_TO\_ALL@{ID\_EC\_TO\_ALL}}
+\index{ID\_EC\_TO\_ALL@{ID\_EC\_TO\_ALL}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_EC\_TO\_ALL}{ID\_EC\_TO\_ALL}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6} 
+\+\#define ID\+\_\+\+EC\+\_\+\+TO\+\_\+\+ALL~0x101}
+
+
+
+CAN message ID for communication from the Elevator Controller to all nodes. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_F1\_TO\_SC@{ID\_F1\_TO\_SC}}
+\index{ID\_F1\_TO\_SC@{ID\_F1\_TO\_SC}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F1\_TO\_SC}{ID\_F1\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6} 
+\+\#define ID\+\_\+\+F1\+\_\+\+TO\+\_\+\+SC~0x201}
+
+
+
+CAN message ID for Floor 1 communication to the Service Controller. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_ab3405bba09847ed5582ee6a93c525764}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_F2\_TO\_SC@{ID\_F2\_TO\_SC}}
+\index{ID\_F2\_TO\_SC@{ID\_F2\_TO\_SC}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F2\_TO\_SC}{ID\_F2\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_ab3405bba09847ed5582ee6a93c525764} 
+\+\#define ID\+\_\+\+F2\+\_\+\+TO\+\_\+\+SC~0x202}
+
+
+
+CAN message ID for Floor 2 communication to the Service Controller. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_a8bc36f4bab43f6e2de7b4ed559b0f068}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_F3\_TO\_SC@{ID\_F3\_TO\_SC}}
+\index{ID\_F3\_TO\_SC@{ID\_F3\_TO\_SC}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F3\_TO\_SC}{ID\_F3\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a8bc36f4bab43f6e2de7b4ed559b0f068} 
+\+\#define ID\+\_\+\+F3\+\_\+\+TO\+\_\+\+SC~0x203}
+
+
+
+CAN message ID for Floor 3 communication to the Service Controller. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_a45098ec79b724a141a3f8bc8dc7d6c66}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_SC\_TO\_EC@{ID\_SC\_TO\_EC}}
+\index{ID\_SC\_TO\_EC@{ID\_SC\_TO\_EC}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_SC\_TO\_EC}{ID\_SC\_TO\_EC}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a45098ec79b724a141a3f8bc8dc7d6c66} 
+\+\#define ID\+\_\+\+SC\+\_\+\+TO\+\_\+\+EC~0x100}
+
+
+
+CAN message ID for communication from the Service Controller to the Elevator Controller. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_af7bfb49e13ab6a370dc35f2b9b08e097}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!ID\_WEBSITE@{ID\_WEBSITE}}
+\index{ID\_WEBSITE@{ID\_WEBSITE}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{ID\_WEBSITE}{ID\_WEBSITE}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_af7bfb49e13ab6a370dc35f2b9b08e097} 
+\+\#define ID\+\_\+\+WEBSITE~0x300}
+
+
+
+CAN message ID used for requests originating from the website. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_a620fb4b9b5fdd04064f41a0ae66f195c}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!PCAN\_NO\_ERROR@{PCAN\_NO\_ERROR}}
+\index{PCAN\_NO\_ERROR@{PCAN\_NO\_ERROR}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{PCAN\_NO\_ERROR}{PCAN\_NO\_ERROR}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a620fb4b9b5fdd04064f41a0ae66f195c} 
+\+\#define PCAN\+\_\+\+NO\+\_\+\+ERROR~0x00000U}
+
+
+
+PCAN status value indicating that no error has occurred. 
+
+\Hypertarget{pcan_functions__multithreaded_8h_abb91615867a8a3808b017a877f9971f1}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!PCAN\_RECEIVE\_QUEUE\_EMPTY@{PCAN\_RECEIVE\_QUEUE\_EMPTY}}
+\index{PCAN\_RECEIVE\_QUEUE\_EMPTY@{PCAN\_RECEIVE\_QUEUE\_EMPTY}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{PCAN\_RECEIVE\_QUEUE\_EMPTY}{PCAN\_RECEIVE\_QUEUE\_EMPTY}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_abb91615867a8a3808b017a877f9971f1} 
+\+\#define PCAN\+\_\+\+RECEIVE\+\_\+\+QUEUE\+\_\+\+EMPTY~0x00020U}
+
+
+
+PCAN status value indicating that the receive queue is empty. 
+
+
+
+\label{pcan_functions__multithreaded_8h_doc-func-members}
+\Hypertarget{pcan_functions__multithreaded_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{pcan_functions__multithreaded_8h_a68a1764f886ecf1f092cf2aff2902f34}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!isPCANBusy@{isPCANBusy}}
+\index{isPCANBusy@{isPCANBusy}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{isPCANBusy()}{isPCANBusy()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a68a1764f886ecf1f092cf2aff2902f34} 
+bool is\+PCANBusy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Checks whether the PCAN communication system is busy. 
+
+\begin{DoxyReturn}{Returns}
+true if the PCAN system is currently busy. 
+
+false if the PCAN system is available. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8h_ade5413c6c1a3bb84349d5d4e25ba604b}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!pcanRxWithDetailsMultithreaded@{pcanRxWithDetailsMultithreaded}}
+\index{pcanRxWithDetailsMultithreaded@{pcanRxWithDetailsMultithreaded}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{pcanRxWithDetailsMultithreaded()}{pcanRxWithDetailsMultithreaded()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_ade5413c6c1a3bb84349d5d4e25ba604b} 
+void pcan\+Rx\+With\+Details\+Multithreaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Starts multithreaded PCAN message reception. 
+
+Starts the multithreaded CAN communication system.
+
+Receives CAN messages and processes the received message details using the Service Controller\textquotesingle{}s multithreaded receive system.
+
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+Starts multithreaded PCAN message reception.
+
+Initializes the shared CAN state and installs SIGINT and SIGTERM handlers before starting the CAN receiver and processor threads.
+
+The function remains active until a stop is requested. It then signals both threads to stop, waits for them to finish, and resets the shared CAN device state.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8h_a7476f4310c6dc14c0bc2f676667c72b6}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!pcanTx@{pcanTx}}
+\index{pcanTx@{pcanTx}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{pcanTx()}{pcanTx()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a7476f4310c6dc14c0bc2f676667c72b6} 
+int pcan\+Tx (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{int}]{data}{, }\item[{std::\+string}]{description}{}\end{DoxyParamCaption})}
+
+
+
+Transmits a CAN message through the PCAN interface. 
+
+Transmits a CAN message through the shared PCAN interface.
+
+Sends a CAN message containing the supplied CAN ID and data value. A description is also provided so the transmitted message can be identified or logged by the Service Controller.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data value to transmit in the CAN message. \\
+\hline
+{\em description} & Description associated with the CAN transmission.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of the PCAN transmission operation.
+\end{DoxyReturn}
+Transmits a CAN message through the PCAN interface.
+
+Waits until the CAN device has been initialized by the receiver thread, creates a standard one-\/byte CAN message, and transmits the message through the shared CAN handle.
+
+Successful CAN transmissions are also recorded in the Elevator database using \doxylink{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}{db\+\_\+log\+CANMessage()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data byte to transmit. \\
+\hline
+{\em description} & Description stored with the CAN database log.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when the CAN message is transmitted successfully. 
+
+-\/1 when the CAN interface is unavailable or shutting down. 
+
+PCAN error status when CAN\+\_\+\+Write() fails. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8h_a2b3ecb61e357d57adb32a44964f6ac09}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!stopPcanMultithreaded@{stopPcanMultithreaded}}
+\index{stopPcanMultithreaded@{stopPcanMultithreaded}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{stopPcanMultithreaded()}{stopPcanMultithreaded()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_a2b3ecb61e357d57adb32a44964f6ac09} 
+void stop\+Pcan\+Multithreaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stops the multithreaded PCAN communication system. 
+
+Requests shutdown of the multithreaded CAN system.
+
+Stops the PCAN multithreaded communication operation and allows the Service Controller to shut down PCAN processing.
+
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+Stops the multithreaded PCAN communication system.
+
+Sets the stop and receiver flags, then notifies the CAN queue and device condition variables so waiting threads can wake up and terminate.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8h_af63ae20fef6a09166efbf810c4777eab}\index{pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}!stopPcanRxThreads@{stopPcanRxThreads}}
+\index{stopPcanRxThreads@{stopPcanRxThreads}!pcanFunctions\_multithreaded.h@{pcanFunctions\_multithreaded.h}}
+\doxysubsubsection{\texorpdfstring{stopPcanRxThreads()}{stopPcanRxThreads()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8h_af63ae20fef6a09166efbf810c4777eab} 
+void stop\+Pcan\+Rx\+Threads (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stops the PCAN receive threads. 
+
+Signals the active PCAN receive threads to stop processing incoming CAN messages.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}

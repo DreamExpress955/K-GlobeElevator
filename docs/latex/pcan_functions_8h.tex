@@ -1,0 +1,211 @@
+\doxysection{Service Controller/\+include/\+pcan\+Functions.h File Reference}
+\hypertarget{pcan_functions_8h}{}\label{pcan_functions_8h}\index{Service Controller/include/pcanFunctions.h@{Service Controller/include/pcanFunctions.h}}
+
+
+Declares PCAN communication functions for the elevator Service Controller.  
+
+
+{\ttfamily \+\#include $<$libpcan.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_abb91615867a8a3808b017a877f9971f1}{PCAN\+\_\+\+RECEIVE\+\_\+\+QUEUE\+\_\+\+EMPTY}}~0x00020U
+\begin{DoxyCompactList}\small\item\em PCAN status value indicating that the receive queue is empty. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a620fb4b9b5fdd04064f41a0ae66f195c}{PCAN\+\_\+\+NO\+\_\+\+ERROR}}~0x00000U
+\begin{DoxyCompactList}\small\item\em PCAN status value indicating that no error has occurred. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a45098ec79b724a141a3f8bc8dc7d6c66}{ID\+\_\+\+SC\+\_\+\+TO\+\_\+\+EC}}~0x100
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Supervisory Controller to the Elevator Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6}{ID\+\_\+\+EC\+\_\+\+TO\+\_\+\+ALL}}~0x101
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Elevator Controller to all other elevator network nodes. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_ae2432e6bcf307757614d60fbe319e124}{ID\+\_\+\+CC\+\_\+\+TO\+\_\+\+SC}}~0x200
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Car Controller to the Supervisory Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6}{ID\+\_\+\+F1\+\_\+\+TO\+\_\+\+SC}}~0x201
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Floor 1 Controller to the Supervisory Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_ab3405bba09847ed5582ee6a93c525764}{ID\+\_\+\+F2\+\_\+\+TO\+\_\+\+SC}}~0x202
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Floor 2 Controller to the Supervisory Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a8bc36f4bab43f6e2de7b4ed559b0f068}{ID\+\_\+\+F3\+\_\+\+TO\+\_\+\+SC}}~0x203
+\begin{DoxyCompactList}\small\item\em CAN message ID for messages from the Floor 3 Controller to the Supervisory Controller. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_af7bfb49e13ab6a370dc35f2b9b08e097}{ID\+\_\+\+WEBSITE}}~0x300
+\begin{DoxyCompactList}\small\item\em CAN message ID for requests originating from the website. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a5d676fde3f790a065cd14a70dadeeabe}{GO\+\_\+\+TO\+\_\+\+FLOOR1}}~0x05
+\begin{DoxyCompactList}\small\item\em CAN command used to request Floor 1. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a32a2456d3ec94d7694948dcc28531994}{GO\+\_\+\+TO\+\_\+\+FLOOR2}}~0x06
+\begin{DoxyCompactList}\small\item\em CAN command used to request Floor 2. \end{DoxyCompactList}\item 
+\+\#define \doxymbox{\hyperlink{pcan_functions_8h_a291f7771e1489c585ca28ed46671ecb2}{GO\+\_\+\+TO\+\_\+\+FLOOR3}}~0x07
+\begin{DoxyCompactList}\small\item\em CAN command used to request Floor 3. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{pcan_functions_8h_a2480a29dc57bbd2513bfa50c7098dc68}{pcan\+Tx}} (int id, int data)
+\begin{DoxyCompactList}\small\item\em Transmits a CAN message through the PCAN interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declares PCAN communication functions for the elevator Service Controller. 
+
+Provides the CAN communication constants and functions used by the K-\/\+Globe Elevator Service Controller. This file defines the CAN message IDs used by each elevator node, floor request command values, PCAN status values, and functions for transmitting and receiving CAN messages. 
+
+\label{pcan_functions_8h_doc-define-members}
+\Hypertarget{pcan_functions_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{pcan_functions_8h_a5d676fde3f790a065cd14a70dadeeabe}\index{pcanFunctions.h@{pcanFunctions.h}!GO\_TO\_FLOOR1@{GO\_TO\_FLOOR1}}
+\index{GO\_TO\_FLOOR1@{GO\_TO\_FLOOR1}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR1}{GO\_TO\_FLOOR1}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a5d676fde3f790a065cd14a70dadeeabe} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR1~0x05}
+
+
+
+CAN command used to request Floor 1. 
+
+\Hypertarget{pcan_functions_8h_a32a2456d3ec94d7694948dcc28531994}\index{pcanFunctions.h@{pcanFunctions.h}!GO\_TO\_FLOOR2@{GO\_TO\_FLOOR2}}
+\index{GO\_TO\_FLOOR2@{GO\_TO\_FLOOR2}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR2}{GO\_TO\_FLOOR2}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a32a2456d3ec94d7694948dcc28531994} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR2~0x06}
+
+
+
+CAN command used to request Floor 2. 
+
+\Hypertarget{pcan_functions_8h_a291f7771e1489c585ca28ed46671ecb2}\index{pcanFunctions.h@{pcanFunctions.h}!GO\_TO\_FLOOR3@{GO\_TO\_FLOOR3}}
+\index{GO\_TO\_FLOOR3@{GO\_TO\_FLOOR3}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{GO\_TO\_FLOOR3}{GO\_TO\_FLOOR3}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a291f7771e1489c585ca28ed46671ecb2} 
+\+\#define GO\+\_\+\+TO\+\_\+\+FLOOR3~0x07}
+
+
+
+CAN command used to request Floor 3. 
+
+\Hypertarget{pcan_functions_8h_ae2432e6bcf307757614d60fbe319e124}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_CC\_TO\_SC@{ID\_CC\_TO\_SC}}
+\index{ID\_CC\_TO\_SC@{ID\_CC\_TO\_SC}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_CC\_TO\_SC}{ID\_CC\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_ae2432e6bcf307757614d60fbe319e124} 
+\+\#define ID\+\_\+\+CC\+\_\+\+TO\+\_\+\+SC~0x200}
+
+
+
+CAN message ID for messages from the Car Controller to the Supervisory Controller. 
+
+\Hypertarget{pcan_functions_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_EC\_TO\_ALL@{ID\_EC\_TO\_ALL}}
+\index{ID\_EC\_TO\_ALL@{ID\_EC\_TO\_ALL}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_EC\_TO\_ALL}{ID\_EC\_TO\_ALL}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_aac57c2ca3b9dd9c4890f3dfd1446dab6} 
+\+\#define ID\+\_\+\+EC\+\_\+\+TO\+\_\+\+ALL~0x101}
+
+
+
+CAN message ID for messages from the Elevator Controller to all other elevator network nodes. 
+
+\Hypertarget{pcan_functions_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_F1\_TO\_SC@{ID\_F1\_TO\_SC}}
+\index{ID\_F1\_TO\_SC@{ID\_F1\_TO\_SC}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F1\_TO\_SC}{ID\_F1\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_af5a04f15d3a7bb94ab50ecbaacd1efd6} 
+\+\#define ID\+\_\+\+F1\+\_\+\+TO\+\_\+\+SC~0x201}
+
+
+
+CAN message ID for messages from the Floor 1 Controller to the Supervisory Controller. 
+
+\Hypertarget{pcan_functions_8h_ab3405bba09847ed5582ee6a93c525764}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_F2\_TO\_SC@{ID\_F2\_TO\_SC}}
+\index{ID\_F2\_TO\_SC@{ID\_F2\_TO\_SC}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F2\_TO\_SC}{ID\_F2\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_ab3405bba09847ed5582ee6a93c525764} 
+\+\#define ID\+\_\+\+F2\+\_\+\+TO\+\_\+\+SC~0x202}
+
+
+
+CAN message ID for messages from the Floor 2 Controller to the Supervisory Controller. 
+
+\Hypertarget{pcan_functions_8h_a8bc36f4bab43f6e2de7b4ed559b0f068}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_F3\_TO\_SC@{ID\_F3\_TO\_SC}}
+\index{ID\_F3\_TO\_SC@{ID\_F3\_TO\_SC}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_F3\_TO\_SC}{ID\_F3\_TO\_SC}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a8bc36f4bab43f6e2de7b4ed559b0f068} 
+\+\#define ID\+\_\+\+F3\+\_\+\+TO\+\_\+\+SC~0x203}
+
+
+
+CAN message ID for messages from the Floor 3 Controller to the Supervisory Controller. 
+
+\Hypertarget{pcan_functions_8h_a45098ec79b724a141a3f8bc8dc7d6c66}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_SC\_TO\_EC@{ID\_SC\_TO\_EC}}
+\index{ID\_SC\_TO\_EC@{ID\_SC\_TO\_EC}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_SC\_TO\_EC}{ID\_SC\_TO\_EC}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a45098ec79b724a141a3f8bc8dc7d6c66} 
+\+\#define ID\+\_\+\+SC\+\_\+\+TO\+\_\+\+EC~0x100}
+
+
+
+CAN message ID for messages from the Supervisory Controller to the Elevator Controller. 
+
+\Hypertarget{pcan_functions_8h_af7bfb49e13ab6a370dc35f2b9b08e097}\index{pcanFunctions.h@{pcanFunctions.h}!ID\_WEBSITE@{ID\_WEBSITE}}
+\index{ID\_WEBSITE@{ID\_WEBSITE}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{ID\_WEBSITE}{ID\_WEBSITE}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_af7bfb49e13ab6a370dc35f2b9b08e097} 
+\+\#define ID\+\_\+\+WEBSITE~0x300}
+
+
+
+CAN message ID for requests originating from the website. 
+
+\Hypertarget{pcan_functions_8h_a620fb4b9b5fdd04064f41a0ae66f195c}\index{pcanFunctions.h@{pcanFunctions.h}!PCAN\_NO\_ERROR@{PCAN\_NO\_ERROR}}
+\index{PCAN\_NO\_ERROR@{PCAN\_NO\_ERROR}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{PCAN\_NO\_ERROR}{PCAN\_NO\_ERROR}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a620fb4b9b5fdd04064f41a0ae66f195c} 
+\+\#define PCAN\+\_\+\+NO\+\_\+\+ERROR~0x00000U}
+
+
+
+PCAN status value indicating that no error has occurred. 
+
+\Hypertarget{pcan_functions_8h_abb91615867a8a3808b017a877f9971f1}\index{pcanFunctions.h@{pcanFunctions.h}!PCAN\_RECEIVE\_QUEUE\_EMPTY@{PCAN\_RECEIVE\_QUEUE\_EMPTY}}
+\index{PCAN\_RECEIVE\_QUEUE\_EMPTY@{PCAN\_RECEIVE\_QUEUE\_EMPTY}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{PCAN\_RECEIVE\_QUEUE\_EMPTY}{PCAN\_RECEIVE\_QUEUE\_EMPTY}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_abb91615867a8a3808b017a877f9971f1} 
+\+\#define PCAN\+\_\+\+RECEIVE\+\_\+\+QUEUE\+\_\+\+EMPTY~0x00020U}
+
+
+
+PCAN status value indicating that the receive queue is empty. 
+
+
+
+\label{pcan_functions_8h_doc-func-members}
+\Hypertarget{pcan_functions_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{pcan_functions_8h_a2480a29dc57bbd2513bfa50c7098dc68}\index{pcanFunctions.h@{pcanFunctions.h}!pcanTx@{pcanTx}}
+\index{pcanTx@{pcanTx}!pcanFunctions.h@{pcanFunctions.h}}
+\doxysubsubsection{\texorpdfstring{pcanTx()}{pcanTx()}}
+{\footnotesize\ttfamily \label{pcan_functions_8h_a2480a29dc57bbd2513bfa50c7098dc68} 
+int pcan\+Tx (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{int}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Transmits a CAN message through the PCAN interface. 
+
+Sends a CAN message containing the specified CAN message ID and data value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data value to transmit.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of the PCAN transmission operation.
+\end{DoxyReturn}
+Opens the PCAN USB channel and initializes standard CAN 2.\+0 communication at 125 kbit/\+s. A one-\/byte CAN message is created using the supplied CAN ID and data value before being transmitted.
+
+The PCAN channel is closed after the transmission is complete.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data byte to transmit.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+PCAN status value returned by CAN\+\_\+\+Write(). 
+\end{DoxyReturn}

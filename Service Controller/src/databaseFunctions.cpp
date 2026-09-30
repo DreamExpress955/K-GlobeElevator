@@ -1,4 +1,15 @@
-// Includes required (headers located in /usr/include) 
+/**
+ * @file databaseFunctions.cpp
+ * @brief Implements database functions used by the elevator Service Controller.
+ *
+ * Provides the database functionality required by the K-Globe Elevator
+ * Service Controller. These functions communicate with the MySQL Elevator
+ * database to read and update elevator information, process website floor
+ * requests, log CAN messages, update the elevator door status, and retrieve
+ * the system stop flag.
+ */
+
+// Includes required for database communication.
 #include "../include/databaseFunctions.h"
 #include <stdlib.h>
 #include <iostream>
@@ -9,13 +20,22 @@
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
 
- 
-using namespace std; 
- 
+using namespace std;
+
+
+/**
+ * @brief Opens a connection to the Elevator database.
+ *
+ * Creates a MySQL database connection and selects the Elevator schema.
+ * This helper function is used by several of the Service Controller
+ * database functions.
+ *
+ * @return Pointer to the open MySQL database connection.
+ */
 static sql::Connection* db_openConnection()
 {
-    sql::Driver *driver;
-    sql::Connection *con;
+    sql::Driver* driver;
+    sql::Connection* con;
 
     driver = get_driver_instance();
 
@@ -30,7 +50,18 @@ static sql::Connection* db_openConnection()
     return con;
 }
 
-void db_updateDoor(int door){
+
+/**
+ * @brief Updates the elevator door status in the database.
+ *
+ * Updates the doorOpen field for node 1 in the elevatorNetwork table.
+ *
+ * @param door Door status value to store in the database.
+ *
+ * @return void
+ */
+void db_updateDoor(int door)
+{
     sql::Driver* driver;
     sql::Connection* con;
     sql::PreparedStatement* pstmt;
@@ -59,48 +90,83 @@ void db_updateDoor(int door){
     delete con;
 
     return;
-    
 }
 
-int db_getFloorNum() {
-	sql::Driver *driver; 			// Create a pointer to a MySQL driver object
-	sql::Connection *con; 			// Create a pointer to a database connection object
-	sql::Statement *stmt;			// Crealte a pointer to a Statement object to hold statements 
-	sql::ResultSet *res;			// Create a pointer to a ResultSet object to hold results 
-	int floorNum;					// Floor number 
-	
-	// Create a connection 
-	driver = get_driver_instance();
-	con = driver->connect("host=127.0.0.1", "phpmyadmin", "ese1");	
-	con->setSchema("Elevator");		
-	
-	// Query database
-	// ***************************** 
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork");	// message query
-	while(res->next()){
-		floorNum = res->getInt("currentFloor");
-	}
-	
-	// Clean up pointers 
-	delete res;
-	delete stmt;
-	delete con;
-	
-	return floorNum;
+
+/**
+ * @brief Gets the elevator's current floor from the database.
+ *
+ * Connects to the Elevator database and reads the currentFloor
+ * value from the elevatorNetwork table.
+ *
+ * @return The current elevator floor stored in the database.
+ */
+int db_getFloorNum()
+{
+    sql::Driver* driver;
+    sql::Connection* con;
+    sql::Statement* stmt;
+    sql::ResultSet* res;
+
+    int floorNum;
+
+    // Create a database connection.
+    driver = get_driver_instance();
+
+    con = driver->connect(
+        "host=127.0.0.1",
+        "phpmyadmin",
+        "ese1"
+    );
+
+    con->setSchema("Elevator");
+
+    // Query the current elevator floor.
+    stmt = con->createStatement();
+
+    res = stmt->executeQuery(
+        "SELECT currentFloor FROM elevatorNetwork"
+    );
+
+    while (res->next())
+    {
+        floorNum = res->getInt("currentFloor");
+    }
+
+    // Clean up database objects.
+    delete res;
+    delete stmt;
+    delete con;
+
+    return floorNum;
 }
- 
- 
-int db_setFloorNum(int floorNum) 
-	{
-    sql::Driver *driver;
-    sql::Connection *con = NULL;
-    sql::PreparedStatement *pstmt = NULL;
+
+
+/**
+ * @brief Sets the elevator's current floor in the database.
+ *
+ * Updates the currentFloor field for node 1 in the elevatorNetwork
+ * table using a prepared SQL statement.
+ *
+ * The number of affected database rows is printed to the console for
+ * debugging purposes.
+ *
+ * @param floorNum New current floor to store in the database.
+ *
+ * @return 0 if the database update completes successfully.
+ * @return -1 if a MySQL exception occurs.
+ */
+int db_setFloorNum(int floorNum)
+{
+    sql::Driver* driver;
+    sql::Connection* con = NULL;
+    sql::PreparedStatement* pstmt = NULL;
 
     try
     {
-        // Create connection
+        // Create database connection.
         driver = get_driver_instance();
+
         con = driver->connect(
             "host=127.0.0.1",
             "myphpadmin",
@@ -109,14 +175,17 @@ int db_setFloorNum(int floorNum)
 
         con->setSchema("Elevator");
 
-        // Update current floor for node 1
+        // Update the current floor for node 1.
         pstmt = con->prepareStatement(
             "UPDATE elevatorNetwork "
             "SET currentFloor = ? "
             "WHERE nodeID = 1"
         );
 
-        pstmt->setInt(1, floorNum);
+        pstmt->setInt(
+            1,
+            floorNum
+        );
 
         int rowsUpdated = pstmt->executeUpdate();
 
@@ -128,7 +197,7 @@ int db_setFloorNum(int floorNum)
              << rowsUpdated
              << endl;
     }
-    catch (sql::SQLException &error)
+    catch (sql::SQLException& error)
     {
         cerr << "db_setFloorNum error: "
              << error.what()
@@ -140,14 +209,41 @@ int db_setFloorNum(int floorNum)
         return -1;
     }
 
+    // Clean up database objects.
     delete pstmt;
     delete con;
 
     return 0;
 }
- 
-void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
-    const char* description)
+
+
+/**
+ * @brief Logs a CAN message to the Elevator database.
+ *
+ * Converts the CAN data payload into a hexadecimal string and stores
+ * the CAN message information in the CANLogs table.
+ *
+ * The database entry includes the node ID, CAN message ID, data length,
+ * hexadecimal payload, and a description of the message.
+ *
+ * @param nodeID ID of the CAN node associated with the message.
+ * @param messageID CAN message identifier.
+ * @param dataLength Number of bytes in the CAN message.
+ * @param data Pointer to the CAN message data.
+ * @param description Description associated with the CAN message.
+ *
+ * @return void
+ *
+ * @note The current implementation formats eight bytes from the data
+ * array regardless of the value of dataLength.
+ */
+void db_logCANMessage(
+    int nodeID,
+    int messageID,
+    int dataLength,
+    uint8_t* data,
+    const char* description
+)
 {
     sql::Driver* driver;
     sql::Connection* con;
@@ -160,11 +256,12 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         "myphpadmin",
         "ese1"
     );
-	//printf("1\n");
+
     con->setSchema("Elevator");
-	//printf("2\n");
+
     stmt = con->createStatement();
 
+    // Convert the CAN payload into a hexadecimal string.
     char payload[50];
 
     sprintf(
@@ -179,15 +276,13 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         data[6],
         data[7]
     );
-	//printf("3\n");
+
     char query[512];
-	//printf("Logging CAN message to database: nodeID=%d, messageID=0x%04x, dataLength=%d, payload=%s, description=%s\n",
-	//	nodeID,
-	//	messageID,
-	//	dataLength,
-	//	payload,
-	//	description
-	//);
+
+    /*
+     * Build the SQL query used to insert the CAN message
+     * into the CANLogs table.
+     */
     sprintf(
         query,
         "INSERT INTO CANLogs "
@@ -201,28 +296,42 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         description
     );
 
+    // Execute the CAN log query.
     stmt->execute(query);
 
+    // Clean up database objects.
     delete stmt;
     delete con;
-	return;
+
+    return;
 }
 
+
+/**
+ * @brief Gets the floor requested through the website.
+ *
+ * Reads the requestedFloor value from node 1 in the elevatorNetwork
+ * table.
+ *
+ * @return The requested floor number.
+ *
+ * @note Returns 0 if no floor value is retrieved or if a database
+ * exception occurs.
+ */
 int db_getRequestedFloor()
 {
-    sql::Connection *con = NULL;
-    sql::Statement *stmt = NULL;
-    sql::ResultSet *res = NULL;
+    sql::Connection* con = NULL;
+    sql::Statement* stmt = NULL;
+    sql::ResultSet* res = NULL;
 
     int requestedFloor = 0;
 
     try
     {
-        // Create a connection
+        // Create a database connection.
         con = db_openConnection();
 
-        // Query database
-        // *****************************
+        // Query the requested floor.
         stmt = con->createStatement();
 
         res = stmt->executeQuery(
@@ -233,7 +342,8 @@ int db_getRequestedFloor()
 
         while (res->next())
         {
-            requestedFloor = res->getInt("requestedFloor");
+            requestedFloor =
+                res->getInt("requestedFloor");
         }
     }
     catch (sql::SQLException& error)
@@ -243,7 +353,7 @@ int db_getRequestedFloor()
              << endl;
     }
 
-    // Clean up pointers
+    // Clean up database objects.
     delete res;
     delete stmt;
     delete con;
@@ -251,21 +361,33 @@ int db_getRequestedFloor()
     return requestedFloor;
 }
 
+
+/**
+ * @brief Gets the current website request type.
+ *
+ * Reads the requestedType value for node 1 from the elevatorNetwork
+ * table. The request type identifies the source or type of the
+ * elevator request.
+ *
+ * @return The request type stored in the database.
+ *
+ * @note Returns 0 if no request type is retrieved or if a database
+ * exception occurs.
+ */
 int db_getRequestType()
 {
-    sql::Connection *con = NULL;
-    sql::Statement *stmt = NULL;
-    sql::ResultSet *res = NULL;
+    sql::Connection* con = NULL;
+    sql::Statement* stmt = NULL;
+    sql::ResultSet* res = NULL;
 
     int requestType = 0;
 
     try
     {
-        // Create a connection
+        // Create a database connection.
         con = db_openConnection();
 
-        // Query database
-        // *****************************
+        // Query the website request type.
         stmt = con->createStatement();
 
         res = stmt->executeQuery(
@@ -276,7 +398,8 @@ int db_getRequestType()
 
         while (res->next())
         {
-            requestType = res->getInt("requestedType");
+            requestType =
+                res->getInt("requestedType");
         }
     }
     catch (sql::SQLException& error)
@@ -286,7 +409,7 @@ int db_getRequestType()
              << endl;
     }
 
-    // Clean up pointers
+    // Clean up database objects.
     delete res;
     delete stmt;
     delete con;
@@ -294,18 +417,28 @@ int db_getRequestType()
     return requestType;
 }
 
+
+/**
+ * @brief Clears the current website elevator request.
+ *
+ * Resets both requestedFloor and requestedType to 0 for node 1
+ * in the elevatorNetwork table after the website request has
+ * been processed.
+ *
+ * @return 0 if the request is cleared successfully.
+ * @return -1 if a MySQL exception occurs.
+ */
 int db_clearWebsiteRequest()
 {
-    sql::Connection *con = NULL;
-    sql::PreparedStatement *pstmt = NULL;
+    sql::Connection* con = NULL;
+    sql::PreparedStatement* pstmt = NULL;
 
     try
     {
-        // Create a connection
+        // Create a database connection.
         con = db_openConnection();
 
-        // Clear request
-        // *****************************
+        // Clear the website request.
         pstmt = con->prepareStatement(
             "UPDATE elevatorNetwork "
             "SET requestedFloor = 0, "
@@ -327,28 +460,40 @@ int db_clearWebsiteRequest()
         return -1;
     }
 
-    // Clean up pointers
+    // Clean up database objects.
     delete pstmt;
     delete con;
 
     return 0;
 }
 
+
+/**
+ * @brief Gets the current elevator stop flag.
+ *
+ * Reads the stopFlag value for node 1 from the elevatorNetwork table.
+ * The Service Controller can use this value to determine the requested
+ * operating state of the elevator system.
+ *
+ * @return The current stopFlag value stored in the database.
+ *
+ * @note Returns 0 if no stop flag is retrieved or if a database
+ * exception occurs.
+ */
 int db_getStopFlag()
 {
-    sql::Connection *con = NULL;
-    sql::Statement *stmt = NULL;
-    sql::ResultSet *res = NULL;
+    sql::Connection* con = NULL;
+    sql::Statement* stmt = NULL;
+    sql::ResultSet* res = NULL;
 
     int stopFlag = 0;
 
     try
     {
-        // Create a connection
+        // Create a database connection.
         con = db_openConnection();
 
-        // Query database
-        // *****************************
+        // Query the current stop flag.
         stmt = con->createStatement();
 
         res = stmt->executeQuery(
@@ -359,7 +504,8 @@ int db_getStopFlag()
 
         while (res->next())
         {
-            stopFlag = res->getInt("stopFlag");
+            stopFlag =
+                res->getInt("stopFlag");
         }
     }
     catch (sql::SQLException& error)
@@ -369,11 +515,10 @@ int db_getStopFlag()
              << endl;
     }
 
-    // Clean up pointers
+    // Clean up database objects.
     delete res;
     delete stmt;
     delete con;
 
     return stopFlag;
 }
-

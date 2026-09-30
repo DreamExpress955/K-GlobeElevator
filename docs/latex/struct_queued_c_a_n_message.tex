@@ -1,0 +1,41 @@
+\doxysection{Queued\+CANMessage Struct Reference}
+\hypertarget{struct_queued_c_a_n_message}{}\label{struct_queued_c_a_n_message}\index{QueuedCANMessage@{QueuedCANMessage}}
+
+
+Stores a CAN message and its queue sequence number.  
+
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+TPCANMsg \doxymbox{\hyperlink{struct_queued_c_a_n_message_a00a9f3e8b3a7c224f35dd685d3360002}{message}}
+\item 
+std::\+uint64\+\_\+t \doxymbox{\hyperlink{struct_queued_c_a_n_message_ac668733c6fc6c1afaae9b23a91c1c167}{sequence\+Number}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores a CAN message and its queue sequence number. 
+
+Combines a TPCANMsg with a sequence number so CAN messages with identical IDs can retain their arrival order in the priority queue. 
+
+\label{struct_queued_c_a_n_message_doc-variable-members}
+\Hypertarget{struct_queued_c_a_n_message_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_queued_c_a_n_message_a00a9f3e8b3a7c224f35dd685d3360002}\index{QueuedCANMessage@{QueuedCANMessage}!message@{message}}
+\index{message@{message}!QueuedCANMessage@{QueuedCANMessage}}
+\doxysubsubsection{\texorpdfstring{message}{message}}
+{\footnotesize\ttfamily \label{struct_queued_c_a_n_message_a00a9f3e8b3a7c224f35dd685d3360002} 
+TPCANMsg Queued\+CANMessage::\+message}
+
+\Hypertarget{struct_queued_c_a_n_message_ac668733c6fc6c1afaae9b23a91c1c167}\index{QueuedCANMessage@{QueuedCANMessage}!sequenceNumber@{sequenceNumber}}
+\index{sequenceNumber@{sequenceNumber}!QueuedCANMessage@{QueuedCANMessage}}
+\doxysubsubsection{\texorpdfstring{sequenceNumber}{sequenceNumber}}
+{\footnotesize\ttfamily \label{struct_queued_c_a_n_message_ac668733c6fc6c1afaae9b23a91c1c167} 
+std::\+uint64\+\_\+t Queued\+CANMessage::\+sequence\+Number}
+
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+Service Controller/\+src/\doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp}{pcan\+Functions\+\_\+multithreaded.\+cpp}}\end{DoxyCompactItemize}

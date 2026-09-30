@@ -1,0 +1,79 @@
+\doxysection{php/\+get\+\_\+log\+\_\+count.php File Reference}
+\hypertarget{get__log__count_8php}{}\label{get__log__count_8php}\index{php/get\_log\_count.php@{php/get\_log\_count.php}}
+
+
+Displays the total number of CAN log records.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a711797613cb863ca0756df789c396bf2}{\$host}} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a7691c0162d89de0b6ba47edcd8ba8878}{\$database}} = \textquotesingle{}Elevator\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}} = "{}mysql:\+host=\$host;dbname=\$database"{}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}} = \textquotesingle{}phpmyadmin\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \textquotesingle{}ese1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__log__count_8php_a8bd186860dc9bb1e94880555a7a2379a}{\$log\+Count}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Displays the total number of CAN log records. 
+
+Connects to the Elevator database using the functions provided by \doxylink{database_functions_8php}{database\+Functions.\+php} and retrieves the total number of records stored in the CANLogs table.
+
+The resulting log count is displayed on the webpage as a bold heading. 
+
+\label{get__log__count_8php_doc-var-members}
+\Hypertarget{get__log__count_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{get__log__count_8php_a7691c0162d89de0b6ba47edcd8ba8878}\index{get\_log\_count.php@{get\_log\_count.php}!\$database@{\$database}}
+\index{\$database@{\$database}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$database}{\$database}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a7691c0162d89de0b6ba47edcd8ba8878} 
+\$database = \textquotesingle{}Elevator\textquotesingle{}}
+
+\Hypertarget{get__log__count_8php_a711797613cb863ca0756df789c396bf2}\index{get\_log\_count.php@{get\_log\_count.php}!\$host@{\$host}}
+\index{\$host@{\$host}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a711797613cb863ca0756df789c396bf2} 
+\$host = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+\Hypertarget{get__log__count_8php_a8bd186860dc9bb1e94880555a7a2379a}\index{get\_log\_count.php@{get\_log\_count.php}!\$logCount@{\$logCount}}
+\index{\$logCount@{\$logCount}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$logCount}{\$logCount}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a8bd186860dc9bb1e94880555a7a2379a} 
+\$log\+Count}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_a46ebcd6112e53c4a0fa7b79c99aab22e}{getLogCount}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{get__log__count_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{get\_log\_count.php@{get\_log\_count.php}!\$password@{\$password}}
+\index{\$password@{\$password}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \textquotesingle{}ese1\textquotesingle{}}
+
+\Hypertarget{get__log__count_8php_a0a4baf0b22973c07685c3981f0d17fc4}\index{get\_log\_count.php@{get\_log\_count.php}!\$path@{\$path}}
+\index{\$path@{\$path}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$path}{\$path}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a0a4baf0b22973c07685c3981f0d17fc4} 
+\$path = "{}mysql:\+host=\$host;dbname=\$database"{}}
+
+\Hypertarget{get__log__count_8php_a598ca4e71b15a1313ec95f0df1027ca5}\index{get\_log\_count.php@{get\_log\_count.php}!\$user@{\$user}}
+\index{\$user@{\$user}!get\_log\_count.php@{get\_log\_count.php}}
+\doxysubsubsection{\texorpdfstring{\$user}{\$user}}
+{\footnotesize\ttfamily \label{get__log__count_8php_a598ca4e71b15a1313ec95f0df1027ca5} 
+\$user = \textquotesingle{}phpmyadmin\textquotesingle{}}
+

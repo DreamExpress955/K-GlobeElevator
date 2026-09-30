@@ -1,0 +1,442 @@
+\doxysection{Node Class Reference}
+\hypertarget{class_node}{}\label{class_node}\index{Node@{Node}}
+
+
+Base class for nodes in the elevator system.  
+
+
+Inheritance diagram for Node:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_node}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_node_aa5a641d27e225a24ab14fc3870dce91b}{\+\_\+\+\_\+construct}} (\$node\+ID, \$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}})
+\begin{DoxyCompactList}\small\item\em Creates a new \doxylink{class_node}{Node} object. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_aabcc8e52f1b6dd0034514a468d4b1185}{get\+Node\+ID}} ()
+\begin{DoxyCompactList}\small\item\em Gets the node ID. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_afe28e26f36455139cf0305be293fe9fb}{set\+Node\+ID}} (\$node\+ID)
+\begin{DoxyCompactList}\small\item\em Sets the node ID. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8}{get\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current node status. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a8661e640ee910fb73c5c4005bcc42ebe}{set\+Status}} (\$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}})
+\begin{DoxyCompactList}\small\item\em Sets the current node status. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a4fcd1cc330d73fe6e5f3394b1524f2ba}{\+\_\+\+\_\+construct}} ( \$node\+ID, \$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}, \$\doxymbox{\hyperlink{machine_functions_8cpp_af2ae3c80eff5c67623f0511ce43b3c90}{current\+Floor}}, \$requested\+Floor, \$other\+Info)
+\begin{DoxyCompactList}\small\item\em Creates a new \doxylink{class_node}{Node} object. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a6b2eee3094b0262c8b9aadae52b84da3}{db\+Connect}} ()
+\begin{DoxyCompactList}\small\item\em Creates a connection to the elevator database. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_aabcc8e52f1b6dd0034514a468d4b1185}{get\+Node\+ID}} ()
+\begin{DoxyCompactList}\small\item\em Gets the node ID. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_afe28e26f36455139cf0305be293fe9fb}{set\+Node\+ID}} (\$node\+ID)
+\begin{DoxyCompactList}\small\item\em Sets the node ID. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8}{get\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current node status. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a8661e640ee910fb73c5c4005bcc42ebe}{set\+Status}} (\$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}})
+\begin{DoxyCompactList}\small\item\em Sets the node status. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_ae45b59a383ab0b0623e13c36b91b3813}{get\+Current\+Floor}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_acd6b28b7107b34bd487dc4b746144657}{set\+Current\+Floor}} (\$floor)
+\begin{DoxyCompactList}\small\item\em Sets the current floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_ac84c5b04f2ebd6c0595641b6c16dce5a}{get\+Requested\+Floor}} ()
+\begin{DoxyCompactList}\small\item\em Gets the requested floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a6846f9935b8dc6694605b7b3c405e1df}{set\+Requested\+Floor}} (\$floor)
+\begin{DoxyCompactList}\small\item\em Sets the requested floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_a95531ad98542fd9a76ab8f82d42a335b}{get\+Other\+Info}} ()
+\begin{DoxyCompactList}\small\item\em Gets the additional information associated with the node. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_node_adcfb1504c07121f15265edc95bca12c8}{set\+Other\+Info}} (\$info)
+\begin{DoxyCompactList}\small\item\em Sets the additional information associated with the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_node_a1d99a6b63c92277521eedcf4e80c0a35}{get\+Node\+Count}} ()
+\begin{DoxyCompactList}\small\item\em Gets the total number of \doxylink{class_node}{Node} objects created. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_node_a9e68da300cd22a9e4cccb5d1eb260437}{\$node\+Count}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_node_a45630a21868ce9e0d79463582dc5a908}{\$node\+ID}}
+\item 
+\doxymbox{\hyperlink{class_node_a051019ad56a32fdc05b5cabef250298f}{\$status}}
+\item 
+\doxymbox{\hyperlink{class_node_af97fa2fe4478987d61fbadd8a01551a0}{\$current\+Floor}}
+\item 
+\doxymbox{\hyperlink{class_node_abf2b5f3ebe6ed58a40c9527faeca4a46}{\$requested\+Floor}}
+\item 
+\doxymbox{\hyperlink{class_node_a2fabfd472dc23412221200ba99b98c88}{\$other\+Info}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for nodes in the elevator system. 
+
+Represents a node in the elevator network.
+
+The \doxylink{class_node}{Node} class stores information that is common to elevator system components, including a node ID and status.
+
+Other elevator components such as \doxylink{class_elevator_car}{Elevator\+Car}, \doxylink{class_call_button}{Call\+Button}, and \doxylink{class_distance_sensor}{Distance\+Sensor} inherit from this class.
+
+The \doxylink{class_node}{Node} class stores information associated with an elevator network node and provides getter and setter methods for accessing and modifying its properties.
+
+The class also maintains a static count of the number of \doxylink{class_node}{Node} objects created and provides access to the elevator database. 
+
+\label{class_node_doc-constructors}
+\Hypertarget{class_node_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_node_aa5a641d27e225a24ab14fc3870dce91b}\index{Node@{Node}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_node_aa5a641d27e225a24ab14fc3870dce91b} 
+Node::\+\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$node\+ID}{, }\item[{}]{\$status}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new \doxylink{class_node}{Node} object. 
+
+Initializes the node with an ID and status.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+ID} & Unique ID assigned to the node. \\
+\hline
+mixed & {\em \$status} & Initial status of the node. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_node_a4fcd1cc330d73fe6e5f3394b1524f2ba}\index{Node@{Node}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_node_a4fcd1cc330d73fe6e5f3394b1524f2ba} 
+Node::\+\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$node\+ID}{, }\item[{}]{\$status}{, }\item[{}]{\$current\+Floor}{, }\item[{}]{\$requested\+Floor}{, }\item[{}]{\$other\+Info}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new \doxylink{class_node}{Node} object. 
+
+Initializes the node information and increases the total number of \doxylink{class_node}{Node} objects created.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+ID} & Unique ID assigned to the node. \\
+\hline
+mixed & {\em \$status} & Initial status of the node. \\
+\hline
+int & {\em \$current\+Floor} & Current floor of the node. \\
+\hline
+int & {\em \$requested\+Floor} & Floor requested by the node. \\
+\hline
+mixed & {\em \$other\+Info} & Additional information associated with the node. \\
+\hline
+\end{DoxyParams}
+
+
+\label{class_node_doc-func-members}
+\Hypertarget{class_node_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_node_a6b2eee3094b0262c8b9aadae52b84da3}\index{Node@{Node}!dbConnect@{dbConnect}}
+\index{dbConnect@{dbConnect}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{dbConnect()}{dbConnect()}}
+{\footnotesize\ttfamily \label{class_node_a6b2eee3094b0262c8b9aadae52b84da3} 
+Node::\+db\+Connect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Creates a connection to the elevator database. 
+
+Uses the static \doxylink{class_database_a12df9b62f20181459bea5f2c4f9a8990}{Database\textbackslash{}connect()} method to establish and return a My\+SQL database connection.
+
+\begin{DoxyReturn}{Returns}
+mysqli The My\+SQL database connection object. 
+\end{DoxyReturn}
+\Hypertarget{class_node_ae45b59a383ab0b0623e13c36b91b3813}\index{Node@{Node}!getCurrentFloor@{getCurrentFloor}}
+\index{getCurrentFloor@{getCurrentFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getCurrentFloor()}{getCurrentFloor()}}
+{\footnotesize\ttfamily \label{class_node_ae45b59a383ab0b0623e13c36b91b3813} 
+Node::\+get\+Current\+Floor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current floor. 
+
+\begin{DoxyReturn}{Returns}
+int The current floor associated with the node. 
+\end{DoxyReturn}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_elevator_car_a62ab511000e983636dc8f67576ac4e93}{Elevator\+Car}}, and \doxymbox{\hyperlink{class_elevator_car_a62ab511000e983636dc8f67576ac4e93}{Elevator\+Car}}.
+
+\Hypertarget{class_node_a1d99a6b63c92277521eedcf4e80c0a35}\index{Node@{Node}!getNodeCount@{getNodeCount}}
+\index{getNodeCount@{getNodeCount}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getNodeCount()}{getNodeCount()}}
+{\footnotesize\ttfamily \label{class_node_a1d99a6b63c92277521eedcf4e80c0a35} 
+Node::\+get\+Node\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the total number of \doxylink{class_node}{Node} objects created. 
+
+Returns the shared node counter. The counter is increased each time a new \doxylink{class_node}{Node} object is created.
+
+\begin{DoxyReturn}{Returns}
+int Total number of \doxylink{class_node}{Node} objects created. 
+\end{DoxyReturn}
+\Hypertarget{class_node_aabcc8e52f1b6dd0034514a468d4b1185}\index{Node@{Node}!getNodeID@{getNodeID}}
+\index{getNodeID@{getNodeID}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getNodeID()}{getNodeID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_node_aabcc8e52f1b6dd0034514a468d4b1185} 
+Node::\+get\+Node\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the node ID. 
+
+\begin{DoxyReturn}{Returns}
+int The unique ID assigned to the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_aabcc8e52f1b6dd0034514a468d4b1185}\index{Node@{Node}!getNodeID@{getNodeID}}
+\index{getNodeID@{getNodeID}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getNodeID()}{getNodeID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_node_aabcc8e52f1b6dd0034514a468d4b1185} 
+Node::\+get\+Node\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the node ID. 
+
+\begin{DoxyReturn}{Returns}
+int The unique ID assigned to the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_a95531ad98542fd9a76ab8f82d42a335b}\index{Node@{Node}!getOtherInfo@{getOtherInfo}}
+\index{getOtherInfo@{getOtherInfo}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getOtherInfo()}{getOtherInfo()}}
+{\footnotesize\ttfamily \label{class_node_a95531ad98542fd9a76ab8f82d42a335b} 
+Node::\+get\+Other\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the additional information associated with the node. 
+
+\begin{DoxyReturn}{Returns}
+mixed Additional information associated with the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_ac84c5b04f2ebd6c0595641b6c16dce5a}\index{Node@{Node}!getRequestedFloor@{getRequestedFloor}}
+\index{getRequestedFloor@{getRequestedFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getRequestedFloor()}{getRequestedFloor()}}
+{\footnotesize\ttfamily \label{class_node_ac84c5b04f2ebd6c0595641b6c16dce5a} 
+Node::\+get\+Requested\+Floor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the requested floor. 
+
+\begin{DoxyReturn}{Returns}
+int The floor currently requested by the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8}\index{Node@{Node}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8} 
+Node::\+get\+Status (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current node status. 
+
+\begin{DoxyReturn}{Returns}
+mixed The current status of the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8}\index{Node@{Node}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_node_a3e39969c5da9cb2746f5e7e6c1a61ea8} 
+Node::\+get\+Status (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current node status. 
+
+\begin{DoxyReturn}{Returns}
+mixed The current status of the node. 
+\end{DoxyReturn}
+\Hypertarget{class_node_acd6b28b7107b34bd487dc4b746144657}\index{Node@{Node}!setCurrentFloor@{setCurrentFloor}}
+\index{setCurrentFloor@{setCurrentFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setCurrentFloor()}{setCurrentFloor()}}
+{\footnotesize\ttfamily \label{class_node_acd6b28b7107b34bd487dc4b746144657} 
+Node::\+set\+Current\+Floor (\begin{DoxyParamCaption}\item[{}]{\$floor}{}\end{DoxyParamCaption})}
+
+
+
+Sets the current floor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$floor} & New current floor for the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_elevator_car_a009e2c049d9d653ec9021384ab8ac488}{Elevator\+Car}}.
+
+\Hypertarget{class_node_afe28e26f36455139cf0305be293fe9fb}\index{Node@{Node}!setNodeID@{setNodeID}}
+\index{setNodeID@{setNodeID}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setNodeID()}{setNodeID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_node_afe28e26f36455139cf0305be293fe9fb} 
+Node::\+set\+Node\+ID (\begin{DoxyParamCaption}\item[{}]{\$node\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Sets the node ID. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+ID} & New ID to assign to the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_node_afe28e26f36455139cf0305be293fe9fb}\index{Node@{Node}!setNodeID@{setNodeID}}
+\index{setNodeID@{setNodeID}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setNodeID()}{setNodeID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_node_afe28e26f36455139cf0305be293fe9fb} 
+Node::\+set\+Node\+ID (\begin{DoxyParamCaption}\item[{}]{\$node\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Sets the node ID. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+ID} & New ID to assign to the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_node_adcfb1504c07121f15265edc95bca12c8}\index{Node@{Node}!setOtherInfo@{setOtherInfo}}
+\index{setOtherInfo@{setOtherInfo}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setOtherInfo()}{setOtherInfo()}}
+{\footnotesize\ttfamily \label{class_node_adcfb1504c07121f15265edc95bca12c8} 
+Node::\+set\+Other\+Info (\begin{DoxyParamCaption}\item[{}]{\$info}{}\end{DoxyParamCaption})}
+
+
+
+Sets the additional information associated with the node. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+mixed & {\em \$info} & New additional information to store for the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_node_a6846f9935b8dc6694605b7b3c405e1df}\index{Node@{Node}!setRequestedFloor@{setRequestedFloor}}
+\index{setRequestedFloor@{setRequestedFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setRequestedFloor()}{setRequestedFloor()}}
+{\footnotesize\ttfamily \label{class_node_a6846f9935b8dc6694605b7b3c405e1df} 
+Node::\+set\+Requested\+Floor (\begin{DoxyParamCaption}\item[{}]{\$floor}{}\end{DoxyParamCaption})}
+
+
+
+Sets the requested floor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$floor} & New requested floor for the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_node_a8661e640ee910fb73c5c4005bcc42ebe}\index{Node@{Node}!setStatus@{setStatus}}
+\index{setStatus@{setStatus}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setStatus()}{setStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_node_a8661e640ee910fb73c5c4005bcc42ebe} 
+Node::\+set\+Status (\begin{DoxyParamCaption}\item[{}]{\$status}{}\end{DoxyParamCaption})}
+
+
+
+Sets the current node status. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+mixed & {\em \$status} & New status to assign to the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_node_a8661e640ee910fb73c5c4005bcc42ebe}\index{Node@{Node}!setStatus@{setStatus}}
+\index{setStatus@{setStatus}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setStatus()}{setStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_node_a8661e640ee910fb73c5c4005bcc42ebe} 
+Node::\+set\+Status (\begin{DoxyParamCaption}\item[{}]{\$status}{}\end{DoxyParamCaption})}
+
+
+
+Sets the node status. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+mixed & {\em \$status} & New status to assign to the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\label{class_node_doc-variable-members}
+\Hypertarget{class_node_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_node_af97fa2fe4478987d61fbadd8a01551a0}\index{Node@{Node}!\$currentFloor@{\$currentFloor}}
+\index{\$currentFloor@{\$currentFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$currentFloor}{\$currentFloor}}
+{\footnotesize\ttfamily \label{class_node_af97fa2fe4478987d61fbadd8a01551a0} 
+Node::\+\$current\+Floor\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_node_a9e68da300cd22a9e4cccb5d1eb260437}\index{Node@{Node}!\$nodeCount@{\$nodeCount}}
+\index{\$nodeCount@{\$nodeCount}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$nodeCount}{\$nodeCount}}
+{\footnotesize\ttfamily \label{class_node_a9e68da300cd22a9e4cccb5d1eb260437} 
+Node::\+\$node\+Count = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_node_a45630a21868ce9e0d79463582dc5a908}\index{Node@{Node}!\$nodeID@{\$nodeID}}
+\index{\$nodeID@{\$nodeID}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$nodeID}{\$nodeID}}
+{\footnotesize\ttfamily \label{class_node_a45630a21868ce9e0d79463582dc5a908} 
+Node::\+\$node\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_node_a2fabfd472dc23412221200ba99b98c88}\index{Node@{Node}!\$otherInfo@{\$otherInfo}}
+\index{\$otherInfo@{\$otherInfo}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$otherInfo}{\$otherInfo}}
+{\footnotesize\ttfamily \label{class_node_a2fabfd472dc23412221200ba99b98c88} 
+Node::\+\$other\+Info\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_node_abf2b5f3ebe6ed58a40c9527faeca4a46}\index{Node@{Node}!\$requestedFloor@{\$requestedFloor}}
+\index{\$requestedFloor@{\$requestedFloor}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$requestedFloor}{\$requestedFloor}}
+{\footnotesize\ttfamily \label{class_node_abf2b5f3ebe6ed58a40c9527faeca4a46} 
+Node::\+\$requested\+Floor\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_node_a051019ad56a32fdc05b5cabef250298f}\index{Node@{Node}!\$status@{\$status}}
+\index{\$status@{\$status}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{\$status}{\$status}}
+{\footnotesize\ttfamily \label{class_node_a051019ad56a32fdc05b5cabef250298f} 
+Node::\+\$status\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+php/\+\+Assignment2\+Inheritance/\doxymbox{\hyperlink{_assignment2_inheritance_2_node_8php}{Node.\+php}}\item 
+php/\+\+Assignment2\+OOP/\doxymbox{\hyperlink{_assignment2_o_o_p_2_node_8php}{Node.\+php}}\end{DoxyCompactItemize}

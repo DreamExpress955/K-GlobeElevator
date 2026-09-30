@@ -1,0 +1,211 @@
+\doxysection{Service Controller/\+src/\+pcan\+Functions.cpp File Reference}
+\hypertarget{pcan_functions_8cpp}{}\label{pcan_functions_8cpp}\index{Service Controller/src/pcanFunctions.cpp@{Service Controller/src/pcanFunctions.cpp}}
+
+
+Implements basic PCAN communication for the K-\/\+Globe Elevator Service Controller.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+pcan\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$errno.\+h$>$}\newline
+{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
+{\ttfamily \+\#include $<$signal.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \+\#include $<$ctype.\+h$>$}\newline
+{\ttfamily \+\#include $<$libpcan.\+h$>$}\newline
+{\ttfamily \+\#include $<$queue$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{pcan_functions_8cpp_a2480a29dc57bbd2513bfa50c7098dc68}{pcan\+Tx}} (int id, int data)
+\begin{DoxyCompactList}\small\item\em Transmits a CAN message through the PCAN interface. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{pcan_functions_8cpp_a125c23bf682728ca20f1567df44c970f}{pcan\+Rx}} (int num\+\_\+msgs)
+\begin{DoxyCompactList}\small\item\em Receives a specified number of CAN messages. \end{DoxyCompactList}\item 
+TPCANMsg \doxymbox{\hyperlink{pcan_functions_8cpp_ad974f6089d6b008c1ebc7aebccef92d9}{pcan\+Rx\+With\+Details}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \doxymbox{\hyperlink{pcan_functions_8cpp_a0182b2e472b8af2291079784ca8926c9}{h}}
+\begin{DoxyCompactList}\small\item\em PCAN handle used for CAN transmission. \end{DoxyCompactList}\item 
+HANDLE \doxymbox{\hyperlink{pcan_functions_8cpp_ac0e452b518f170252b67199a035601e8}{h2}}
+\begin{DoxyCompactList}\small\item\em PCAN handle used for CAN reception. \end{DoxyCompactList}\item 
+TPCANMsg \doxymbox{\hyperlink{pcan_functions_8cpp_a3c06e516e41573dddfec6304deff7a3d}{Txmsg}}
+\begin{DoxyCompactList}\small\item\em CAN message structure used for transmitted messages. \end{DoxyCompactList}\item 
+TPCANMsg \doxymbox{\hyperlink{pcan_functions_8cpp_a57eb03fce3d8b5b9b132126422eda2c7}{Rxmsg}}
+\begin{DoxyCompactList}\small\item\em CAN message structure used for received messages. \end{DoxyCompactList}\item 
+DWORD \doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}
+\begin{DoxyCompactList}\small\item\em Stores the status returned by PCAN operations. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{pcan_functions_8cpp_a66967682316a2cf172f2454c980c5ca6}{elev}} = 0
+\begin{DoxyCompactList}\small\item\em Elevator Controller confirmation flag. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{pcan_functions_8cpp_afd42c8dea21176812b5e26619ee5c956}{elev2}} = 0
+\begin{DoxyCompactList}\small\item\em Additional elevator state flag used by the Service Controller. \end{DoxyCompactList}\item 
+std::\+queue$<$ TPCANMsg $>$ \doxymbox{\hyperlink{pcan_functions_8cpp_a22025b69845eaa8a862e23d29f2e1485}{can\+Queue}}
+\begin{DoxyCompactList}\small\item\em Queue used to temporarily store received CAN messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements basic PCAN communication for the K-\/\+Globe Elevator Service Controller. 
+
+Provides the basic non-\/multithreaded CAN transmit and receive functions used by the Service Controller.
+
+The PCAN USB interface is configured for standard CAN 2.\+0 communication at 125 kbit/\+s. This file also contains an older detailed CAN receive implementation that is currently commented out and preserved for reference. 
+
+\label{pcan_functions_8cpp_doc-func-members}
+\Hypertarget{pcan_functions_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{pcan_functions_8cpp_a125c23bf682728ca20f1567df44c970f}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!pcanRx@{pcanRx}}
+\index{pcanRx@{pcanRx}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanRx()}{pcanRx()}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a125c23bf682728ca20f1567df44c970f} 
+int pcan\+Rx (\begin{DoxyParamCaption}\item[{int}]{num\+\_\+msgs}{}\end{DoxyParamCaption})}
+
+
+
+Receives a specified number of CAN messages. 
+
+Opens the PCAN USB channel and initializes standard CAN 2.\+0 communication at 125 kbit/\+s.
+
+The function waits until the requested number of valid CAN messages have been received. PCAN status messages are ignored and valid messages are displayed in the terminal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+msgs} & Number of CAN messages to receive.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Data byte from the last CAN message received. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions_8cpp_ad974f6089d6b008c1ebc7aebccef92d9}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!pcanRxWithDetails@{pcanRxWithDetails}}
+\index{pcanRxWithDetails@{pcanRxWithDetails}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanRxWithDetails()}{pcanRxWithDetails()}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_ad974f6089d6b008c1ebc7aebccef92d9} 
+TPCANMsg pcan\+Rx\+With\+Details (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{pcan_functions_8cpp_a2480a29dc57bbd2513bfa50c7098dc68}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!pcanTx@{pcanTx}}
+\index{pcanTx@{pcanTx}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanTx()}{pcanTx()}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a2480a29dc57bbd2513bfa50c7098dc68} 
+int pcan\+Tx (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{int}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Transmits a CAN message through the PCAN interface. 
+
+Opens the PCAN USB channel and initializes standard CAN 2.\+0 communication at 125 kbit/\+s. A one-\/byte CAN message is created using the supplied CAN ID and data value before being transmitted.
+
+The PCAN channel is closed after the transmission is complete.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data byte to transmit.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+PCAN status value returned by CAN\+\_\+\+Write().
+\end{DoxyReturn}
+Sends a CAN message containing the specified CAN message ID and data value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data value to transmit.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of the PCAN transmission operation. 
+\end{DoxyReturn}
+
+
+\label{pcan_functions_8cpp_doc-var-members}
+\Hypertarget{pcan_functions_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{pcan_functions_8cpp_a22025b69845eaa8a862e23d29f2e1485}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!canQueue@{canQueue}}
+\index{canQueue@{canQueue}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{canQueue}{canQueue}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a22025b69845eaa8a862e23d29f2e1485} 
+std::\+queue$<$TPCANMsg$>$ can\+Queue}
+
+
+
+Queue used to temporarily store received CAN messages. 
+
+\Hypertarget{pcan_functions_8cpp_a66967682316a2cf172f2454c980c5ca6}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!elev@{elev}}
+\index{elev@{elev}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{elev}{elev}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a66967682316a2cf172f2454c980c5ca6} 
+int elev = 0}
+
+
+
+Elevator Controller confirmation flag. 
+
+Used to prevent repeated Elevator Controller messages from being printed multiple times. \Hypertarget{pcan_functions_8cpp_afd42c8dea21176812b5e26619ee5c956}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!elev2@{elev2}}
+\index{elev2@{elev2}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{elev2}{elev2}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_afd42c8dea21176812b5e26619ee5c956} 
+int elev2 = 0}
+
+
+
+Additional elevator state flag used by the Service Controller. 
+
+External elevator state variable.
+
+Additional elevator state flag used by the Service Controller.
+
+This variable is declared in another source file and is available to the Service Controller. \Hypertarget{pcan_functions_8cpp_a0182b2e472b8af2291079784ca8926c9}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!h@{h}}
+\index{h@{h}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{h}{h}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a0182b2e472b8af2291079784ca8926c9} 
+HANDLE h}
+
+
+
+PCAN handle used for CAN transmission. 
+
+\Hypertarget{pcan_functions_8cpp_ac0e452b518f170252b67199a035601e8}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!h2@{h2}}
+\index{h2@{h2}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{h2}{h2}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_ac0e452b518f170252b67199a035601e8} 
+HANDLE h2}
+
+
+
+PCAN handle used for CAN reception. 
+
+\Hypertarget{pcan_functions_8cpp_a57eb03fce3d8b5b9b132126422eda2c7}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!Rxmsg@{Rxmsg}}
+\index{Rxmsg@{Rxmsg}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{Rxmsg}{Rxmsg}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a57eb03fce3d8b5b9b132126422eda2c7} 
+TPCANMsg Rxmsg}
+
+
+
+CAN message structure used for received messages. 
+
+\Hypertarget{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!status@{status}}
+\index{status@{status}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4} 
+DWORD status}
+
+
+
+Stores the status returned by PCAN operations. 
+
+\Hypertarget{pcan_functions_8cpp_a3c06e516e41573dddfec6304deff7a3d}\index{pcanFunctions.cpp@{pcanFunctions.cpp}!Txmsg@{Txmsg}}
+\index{Txmsg@{Txmsg}!pcanFunctions.cpp@{pcanFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{Txmsg}{Txmsg}}
+{\footnotesize\ttfamily \label{pcan_functions_8cpp_a3c06e516e41573dddfec6304deff7a3d} 
+TPCANMsg Txmsg}
+
+
+
+CAN message structure used for transmitted messages. 
+

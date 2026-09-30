@@ -1,0 +1,77 @@
+\doxysection{Service Controller/\+src/\+main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{Service Controller/src/main.cpp@{Service Controller/src/main.cpp}}
+
+
+Main program for the K-\/\+Globe Elevator Service Controller.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+pcan\+Functions.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Entry point for the K-\/\+Globe Elevator Service Controller. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{main_8cpp_afd42c8dea21176812b5e26619ee5c956}{elev2}}
+\begin{DoxyCompactList}\small\item\em External elevator state variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main program for the K-\/\+Globe Elevator Service Controller. 
+
+Provides the main menu and operating modes for the elevator Service Controller.
+
+The Service Controller communicates with the Elevator Controller through the CAN network and communicates with the Elevator database to synchronize floor information and process website requests.
+
+Available operating modes include database monitoring, demo mode, and the K-\/\+Globe multithreaded CAN communication mode. 
+
+\label{main_8cpp_doc-func-members}
+\Hypertarget{main_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Entry point for the K-\/\+Globe Elevator Service Controller. 
+
+Displays the Service Controller menu and executes the operating mode selected by the user.
+
+The available functionality includes:
+\begin{DoxyItemize}
+\item Listening for commands from the website.
+\item Running an automatic floor-\/to-\/floor demonstration.
+\item Running K-\/\+Globe mode with multithreaded CAN reception.
+\item Exiting the Service Controller.
+\end{DoxyItemize}
+
+Some original manual CAN transmit and receive modes are currently commented out but have been preserved for reference.
+
+\begin{DoxyReturn}{Returns}
+0 when the Service Controller exits normally. 
+\end{DoxyReturn}
+
+
+\label{main_8cpp_doc-var-members}
+\Hypertarget{main_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_afd42c8dea21176812b5e26619ee5c956}\index{main.cpp@{main.cpp}!elev2@{elev2}}
+\index{elev2@{elev2}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{elev2}{elev2}}
+{\footnotesize\ttfamily \label{main_8cpp_afd42c8dea21176812b5e26619ee5c956} 
+int elev2\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+External elevator state variable. 
+
+Additional elevator state flag used by the Service Controller.
+
+This variable is declared in another source file and is available to the Service Controller.
+
+External elevator state variable. 

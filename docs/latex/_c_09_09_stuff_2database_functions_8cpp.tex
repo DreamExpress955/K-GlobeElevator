@@ -1,0 +1,137 @@
+\doxysection{C++\+Stuff/\+database\+Functions.cpp File Reference}
+\hypertarget{_c_09_09_stuff_2database_functions_8cpp}{}\label{_c_09_09_stuff_2database_functions_8cpp}\index{C++Stuff/databaseFunctions.cpp@{C++Stuff/databaseFunctions.cpp}}
+
+
+Implements database functions used by the elevator system.  
+
+
+{\ttfamily \+\#include "{}include/\+database\+Funct\texorpdfstring{$\ast$}{*}ons.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$mysql\+\_\+connec\texorpdfstring{$\ast$}{*}ion.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+driver.\+h$>$}\newline
+{\ttfamily \+\#include $<$c\texorpdfstring{$\ast$}{*}pconn/\+prepared\+\_\+statement.\+h$>$}\newline
+{\ttfamily \+\#include $<$cstdint$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084}{db\+\_\+get\+Floor\+Num}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current floor of the elevator from the database. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a0396916fa7558206cfcd1fe45c1a2d51}{db\+\_\+set\+Floor\+Num}} (int floor\+Num)
+\begin{DoxyCompactList}\small\item\em Updates the elevator\textquotesingle{}s current floor in the database. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}{db\+\_\+log\+CANMessage}} (int node\+ID, int message\+ID, int data\+Length, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, const char \texorpdfstring{$\ast$}{*}description)
+\begin{DoxyCompactList}\small\item\em Logs a CAN network message in the Elevator database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements database functions used by the elevator system. 
+
+This file contains functions for communicating with the My\+SQL Elevator database. The functions allow the application to read and update elevator data and record CAN network messages. 
+
+\label{_c_09_09_stuff_2database_functions_8cpp_doc-func-members}
+\Hypertarget{_c_09_09_stuff_2database_functions_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_c_09_09_stuff_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_getFloorNum@{db\_getFloorNum}}
+\index{db\_getFloorNum@{db\_getFloorNum}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_getFloorNum()}{db\_getFloorNum()}}
+{\footnotesize\ttfamily \label{_c_09_09_stuff_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084} 
+int db\+\_\+get\+Floor\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current floor of the elevator from the database. 
+
+Gets the elevator\textquotesingle{}s current floor from the database.
+
+Connects to the local My\+SQL server and queries the Elevator database. The current\+Floor value is retrieved from the elevator\+Network record where node\+ID is 1.
+
+\begin{DoxyReturn}{Returns}
+The current floor number stored in the database.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The function currently connects to My\+SQL at 127.\+0.\+0.\+1:3306 using the root account.
+\end{DoxyNote}
+Gets the current floor of the elevator from the database.
+
+Reads the current\+Floor value from the elevator\+Network table for node\+ID 1.
+
+\begin{DoxyReturn}{Returns}
+The current floor number stored in the database. 
+\end{DoxyReturn}
+\Hypertarget{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_logCANMessage@{db\_logCANMessage}}
+\index{db\_logCANMessage@{db\_logCANMessage}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_logCANMessage()}{db\_logCANMessage()}}
+{\footnotesize\ttfamily \label{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896} 
+void db\+\_\+log\+CANMessage (\begin{DoxyParamCaption}\item[{int}]{node\+ID}{, }\item[{int}]{message\+ID}{, }\item[{int}]{data\+Length}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{description}{}\end{DoxyParamCaption})}
+
+
+
+Logs a CAN network message in the Elevator database. 
+
+Logs a CAN message to the elevator database.
+
+Converts an 8-\/byte CAN payload into a hexadecimal string and inserts the CAN message information into the CANNetwork database table.
+
+The database entry contains the transmitting node, CAN message ID, data length, message payload, and a description of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+ID} & ID of the node associated with the CAN message. \\
+\hline
+{\em message\+ID} & CAN message identifier. \\
+\hline
+{\em data\+Length} & Number of bytes contained in the CAN message. \\
+\hline
+{\em data} & Pointer to the CAN message data. \\
+\hline
+{\em description} & Text description associated with the CAN message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The current implementation formats eight bytes from the data array. The data pointer should therefore reference an array containing at least eight bytes.
+\end{DoxyNote}
+Logs a CAN network message in the Elevator database.
+
+Stores a CAN message in the CANNetwork table, including the node ID, message ID, data length, message data, and a description of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+ID} & ID of the CAN node associated with the message. \\
+\hline
+{\em message\+ID} & CAN message identifier. \\
+\hline
+{\em data\+Length} & Number of bytes in the CAN message. \\
+\hline
+{\em data} & Pointer to the CAN message data. \\
+\hline
+{\em description} & Description of the CAN message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_c_09_09_stuff_2database_functions_8cpp_a0396916fa7558206cfcd1fe45c1a2d51}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_setFloorNum@{db\_setFloorNum}}
+\index{db\_setFloorNum@{db\_setFloorNum}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_setFloorNum()}{db\_setFloorNum()}}
+{\footnotesize\ttfamily \label{_c_09_09_stuff_2database_functions_8cpp_a0396916fa7558206cfcd1fe45c1a2d51} 
+void db\+\_\+set\+Floor\+Num (\begin{DoxyParamCaption}\item[{int}]{floor\+Num}{}\end{DoxyParamCaption})}
+
+
+
+Updates the elevator\textquotesingle{}s current floor in the database. 
+
+Connects to the Elevator database and updates the current\+Floor field for the elevator with node\+ID 1.
+
+A prepared statement is used to pass the new floor number to the UPDATE query.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Num} & The new floor number to store in the database.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The function currently connects to My\+SQL at 127.\+0.\+0.\+1:3306 using the root account.
+\end{DoxyNote}
+Updates the current\+Floor value in the elevator\+Network table for node\+ID 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Num} & The new floor number to store in the database. \\
+\hline
+\end{DoxyParams}

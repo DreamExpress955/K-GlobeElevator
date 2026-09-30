@@ -1,0 +1,87 @@
+\doxysection{php/\+req\+\_\+access.php File Reference}
+\hypertarget{req__access_8php}{}\label{req__access_8php}\index{php/req\_access.php@{php/req\_access.php}}
+
+
+Provides the access request page for the K-\/\+Globe Elevator system.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a711797613cb863ca0756df789c396bf2}{\$host}} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a7691c0162d89de0b6ba47edcd8ba8878}{\$database}} = \textquotesingle{}authorized\+Users\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}} = \textquotesingle{}myphpadmin\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \textquotesingle{}ese1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}} = "{}mysql:\+host=\$host;dbname=\$database"{}
+\item 
+\doxymbox{\hyperlink{req__access_8php_a1fa3127fc82f96b1436d871ef02be319}{\$db}}
+\item 
+\doxymbox{\hyperlink{req__access_8php_abf17cb2dba2ed17cb28aa5f37deb5293}{\$message}} = "{}"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides the access request page for the K-\/\+Globe Elevator system. 
+
+Allows a user to request access to the elevator dashboard by submitting a username and password.
+
+Submitted credentials are inserted into the authorized\+Users database. After a successful request, the user is redirected to the login page. 
+
+\label{req__access_8php_doc-var-members}
+\Hypertarget{req__access_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{req__access_8php_a7691c0162d89de0b6ba47edcd8ba8878}\index{req\_access.php@{req\_access.php}!\$database@{\$database}}
+\index{\$database@{\$database}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$database}{\$database}}
+{\footnotesize\ttfamily \label{req__access_8php_a7691c0162d89de0b6ba47edcd8ba8878} 
+\$database = \textquotesingle{}authorized\+Users\textquotesingle{}}
+
+\Hypertarget{req__access_8php_a1fa3127fc82f96b1436d871ef02be319}\index{req\_access.php@{req\_access.php}!\$db@{\$db}}
+\index{\$db@{\$db}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$db}{\$db}}
+{\footnotesize\ttfamily \label{req__access_8php_a1fa3127fc82f96b1436d871ef02be319} 
+\$db}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_ae690a75222343af1db226684868cf254}{connect}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{req__access_8php_a711797613cb863ca0756df789c396bf2}\index{req\_access.php@{req\_access.php}!\$host@{\$host}}
+\index{\$host@{\$host}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{req__access_8php_a711797613cb863ca0756df789c396bf2} 
+\$host = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+\Hypertarget{req__access_8php_abf17cb2dba2ed17cb28aa5f37deb5293}\index{req\_access.php@{req\_access.php}!\$message@{\$message}}
+\index{\$message@{\$message}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$message}{\$message}}
+{\footnotesize\ttfamily \label{req__access_8php_abf17cb2dba2ed17cb28aa5f37deb5293} 
+\$message = "{}"{}}
+
+\Hypertarget{req__access_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{req\_access.php@{req\_access.php}!\$password@{\$password}}
+\index{\$password@{\$password}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{req__access_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \textquotesingle{}ese1\textquotesingle{}}
+
+\Hypertarget{req__access_8php_a0a4baf0b22973c07685c3981f0d17fc4}\index{req\_access.php@{req\_access.php}!\$path@{\$path}}
+\index{\$path@{\$path}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$path}{\$path}}
+{\footnotesize\ttfamily \label{req__access_8php_a0a4baf0b22973c07685c3981f0d17fc4} 
+\$path = "{}mysql:\+host=\$host;dbname=\$database"{}}
+
+\Hypertarget{req__access_8php_a598ca4e71b15a1313ec95f0df1027ca5}\index{req\_access.php@{req\_access.php}!\$user@{\$user}}
+\index{\$user@{\$user}!req\_access.php@{req\_access.php}}
+\doxysubsubsection{\texorpdfstring{\$user}{\$user}}
+{\footnotesize\ttfamily \label{req__access_8php_a598ca4e71b15a1313ec95f0df1027ca5} 
+\$user = \textquotesingle{}myphpadmin\textquotesingle{}}
+

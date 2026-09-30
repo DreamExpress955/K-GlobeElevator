@@ -1,0 +1,107 @@
+\doxysection{php/\+\+Assignment2\+Inheritance/\+\+Inheritance\+Test.php File Reference}
+\hypertarget{_inheritance_test_8php}{}\label{_inheritance_test_8php}\index{php/Assignment2Inheritance/InheritanceTest.php@{php/Assignment2Inheritance/InheritanceTest.php}}
+
+
+Tests inheritance and activation of elevator system components.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_inheritance_test_8php_ab1525c8f175cfce97f0b526bb80d6827}{\$elevator}}
+\item 
+\doxymbox{\hyperlink{_inheritance_test_8php_a49d0bc3d1fd64b2525d6a216dcb88502}{\$button\+Up}}
+\item 
+\doxymbox{\hyperlink{_inheritance_test_8php_a510478d162ec6d9272bed54da8a4f75b}{\$button\+Down}}
+\item 
+\doxymbox{\hyperlink{_inheritance_test_8php_aecc0a0a88088aa3c01f70eea2375afa3}{\$button\+Emergency}}
+\item 
+\doxymbox{\hyperlink{_inheritance_test_8php_a19fa158331985d119cf2fe8a8f05c98a}{\$sensor}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tests inheritance and activation of elevator system components. 
+
+Creates an \doxylink{class_elevator_car}{Elevator\+Car}, multiple \doxylink{class_call_button}{Call\+Button} objects, and a \doxylink{class_distance_sensor}{Distance\+Sensor} to test the shared \doxylink{class_node}{Node} inheritance and component functionality.
+
+The test moves the elevator, activates each call button, activates the distance sensor, and displays the elevator\textquotesingle{}s final floor. 
+
+\label{_inheritance_test_8php_doc-var-members}
+\Hypertarget{_inheritance_test_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_inheritance_test_8php_a510478d162ec6d9272bed54da8a4f75b}\index{InheritanceTest.php@{InheritanceTest.php}!\$buttonDown@{\$buttonDown}}
+\index{\$buttonDown@{\$buttonDown}!InheritanceTest.php@{InheritanceTest.php}}
+\doxysubsubsection{\texorpdfstring{\$buttonDown}{\$buttonDown}}
+{\footnotesize\ttfamily \label{_inheritance_test_8php_a510478d162ec6d9272bed54da8a4f75b} 
+\$button\+Down}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_call_button}{CallButton}}(}
+\DoxyCodeLine{\ \ \ \ 3,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}DOWN"{}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{_inheritance_test_8php_aecc0a0a88088aa3c01f70eea2375afa3}\index{InheritanceTest.php@{InheritanceTest.php}!\$buttonEmergency@{\$buttonEmergency}}
+\index{\$buttonEmergency@{\$buttonEmergency}!InheritanceTest.php@{InheritanceTest.php}}
+\doxysubsubsection{\texorpdfstring{\$buttonEmergency}{\$buttonEmergency}}
+{\footnotesize\ttfamily \label{_inheritance_test_8php_aecc0a0a88088aa3c01f70eea2375afa3} 
+\$button\+Emergency}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_call_button}{CallButton}}(}
+\DoxyCodeLine{\ \ \ \ 4,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}EMERGENCY"{}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{_inheritance_test_8php_a49d0bc3d1fd64b2525d6a216dcb88502}\index{InheritanceTest.php@{InheritanceTest.php}!\$buttonUp@{\$buttonUp}}
+\index{\$buttonUp@{\$buttonUp}!InheritanceTest.php@{InheritanceTest.php}}
+\doxysubsubsection{\texorpdfstring{\$buttonUp}{\$buttonUp}}
+{\footnotesize\ttfamily \label{_inheritance_test_8php_a49d0bc3d1fd64b2525d6a216dcb88502} 
+\$button\+Up}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_call_button}{CallButton}}(}
+\DoxyCodeLine{\ \ \ \ 2,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}UP"{}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{_inheritance_test_8php_ab1525c8f175cfce97f0b526bb80d6827}\index{InheritanceTest.php@{InheritanceTest.php}!\$elevator@{\$elevator}}
+\index{\$elevator@{\$elevator}!InheritanceTest.php@{InheritanceTest.php}}
+\doxysubsubsection{\texorpdfstring{\$elevator}{\$elevator}}
+{\footnotesize\ttfamily \label{_inheritance_test_8php_ab1525c8f175cfce97f0b526bb80d6827} 
+\$elevator}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_elevator_car}{ElevatorCar}}(}
+\DoxyCodeLine{\ \ \ \ 1,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ 1}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{_inheritance_test_8php_a19fa158331985d119cf2fe8a8f05c98a}\index{InheritanceTest.php@{InheritanceTest.php}!\$sensor@{\$sensor}}
+\index{\$sensor@{\$sensor}!InheritanceTest.php@{InheritanceTest.php}}
+\doxysubsubsection{\texorpdfstring{\$sensor}{\$sensor}}
+{\footnotesize\ttfamily \label{_inheritance_test_8php_a19fa158331985d119cf2fe8a8f05c98a} 
+\$sensor}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_distance_sensor}{DistanceSensor}}(}
+\DoxyCodeLine{\ \ \ \ 5,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ 25}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}

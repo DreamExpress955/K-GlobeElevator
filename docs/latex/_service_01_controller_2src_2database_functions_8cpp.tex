@@ -1,0 +1,342 @@
+\doxysection{Service Controller/\+src/\+database\+Functions.cpp File Reference}
+\hypertarget{_service_01_controller_2src_2database_functions_8cpp}{}\label{_service_01_controller_2src_2database_functions_8cpp}\index{Service Controller/src/databaseFunctions.cpp@{Service Controller/src/databaseFunctions.cpp}}
+
+
+Implements database functions used by the elevator Service Controller.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+database\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$mysql\+\_\+connection.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+driver.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+exception.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+resultset.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+statement.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+prepared\+\_\+statement.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static sql::\+\+Connection \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_af15b48c49055cd6d3029225cf577de95}{db\+\_\+open\+Connection}} ()
+\begin{DoxyCompactList}\small\item\em Opens a connection to the Elevator database. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a14a7c7ae613f4dfb13a3c79730b3352a}{db\+\_\+update\+Door}} (int door)
+\begin{DoxyCompactList}\small\item\em Updates the elevator door status in the database. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084}{db\+\_\+get\+Floor\+Num}} ()
+\begin{DoxyCompactList}\small\item\em Gets the elevator\textquotesingle{}s current floor from the database. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a34b11d730855b4401c4f41b58f03303e}{db\+\_\+set\+Floor\+Num}} (int floor\+Num)
+\begin{DoxyCompactList}\small\item\em Sets the elevator\textquotesingle{}s current floor in the database. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}{db\+\_\+log\+CANMessage}} (int node\+ID, int message\+ID, int data\+Length, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, const char \texorpdfstring{$\ast$}{*}description)
+\begin{DoxyCompactList}\small\item\em Logs a CAN message to the Elevator database. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a32372bc5673953a1f46db0e88ec7dc5f}{db\+\_\+get\+Requested\+Floor}} ()
+\begin{DoxyCompactList}\small\item\em Gets the floor requested through the website. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a1effe965a09f9865b6184ead6e523417}{db\+\_\+get\+Request\+Type}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current website request type. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a2b0d41161a746c018e0273b65838ad5e}{db\+\_\+clear\+Website\+Request}} ()
+\begin{DoxyCompactList}\small\item\em Clears the current website elevator request. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{_service_01_controller_2src_2database_functions_8cpp_a20ea3824a9ca02e19693fd777f00b88a}{db\+\_\+get\+Stop\+Flag}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current elevator stop flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements database functions used by the elevator Service Controller. 
+
+Provides the database functionality required by the K-\/\+Globe Elevator Service Controller. These functions communicate with the My\+SQL Elevator database to read and update elevator information, process website floor requests, log CAN messages, update the elevator door status, and retrieve the system stop flag. 
+
+\label{_service_01_controller_2src_2database_functions_8cpp_doc-func-members}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a2b0d41161a746c018e0273b65838ad5e}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_clearWebsiteRequest@{db\_clearWebsiteRequest}}
+\index{db\_clearWebsiteRequest@{db\_clearWebsiteRequest}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_clearWebsiteRequest()}{db\_clearWebsiteRequest()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a2b0d41161a746c018e0273b65838ad5e} 
+int db\+\_\+clear\+Website\+Request (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Clears the current website elevator request. 
+
+Clears the current website floor request.
+
+Resets both requested\+Floor and requested\+Type to 0 for node 1 in the elevator\+Network table after the website request has been processed.
+
+\begin{DoxyReturn}{Returns}
+0 if the request is cleared successfully. 
+
+-\/1 if a My\+SQL exception occurs.
+\end{DoxyReturn}
+Clears the current website elevator request.
+
+Clears or resets the website request after the Service Controller has processed the request.
+
+\begin{DoxyReturn}{Returns}
+Result of the clear request operation. 
+\end{DoxyReturn}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_getFloorNum@{db\_getFloorNum}}
+\index{db\_getFloorNum@{db\_getFloorNum}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_getFloorNum()}{db\_getFloorNum()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084} 
+int db\+\_\+get\+Floor\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the elevator\textquotesingle{}s current floor from the database. 
+
+Connects to the Elevator database and reads the current\+Floor value from the elevator\+Network table.
+
+\begin{DoxyReturn}{Returns}
+The current elevator floor stored in the database.
+\end{DoxyReturn}
+Gets the current floor of the elevator from the database.
+
+Reads the current\+Floor value from the elevator\+Network table for node\+ID 1.
+
+\begin{DoxyReturn}{Returns}
+The current floor number stored in the database.
+\end{DoxyReturn}
+Gets the elevator\textquotesingle{}s current floor from the database.
+
+Connects to the local My\+SQL server and queries the Elevator database. The current\+Floor value is retrieved from the elevator\+Network record where node\+ID is 1.
+
+\begin{DoxyReturn}{Returns}
+The current floor number stored in the database.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The function currently connects to My\+SQL at 127.\+0.\+0.\+1:3306 using the root account. 
+\end{DoxyNote}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a32372bc5673953a1f46db0e88ec7dc5f}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_getRequestedFloor@{db\_getRequestedFloor}}
+\index{db\_getRequestedFloor@{db\_getRequestedFloor}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_getRequestedFloor()}{db\_getRequestedFloor()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a32372bc5673953a1f46db0e88ec7dc5f} 
+int db\+\_\+get\+Requested\+Floor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the floor requested through the website. 
+
+Reads the requested\+Floor value from node 1 in the elevator\+Network table.
+
+\begin{DoxyReturn}{Returns}
+The requested floor number.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns 0 if no floor value is retrieved or if a database exception occurs.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+The requested floor number stored in the database. 
+\end{DoxyReturn}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a1effe965a09f9865b6184ead6e523417}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_getRequestType@{db\_getRequestType}}
+\index{db\_getRequestType@{db\_getRequestType}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_getRequestType()}{db\_getRequestType()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a1effe965a09f9865b6184ead6e523417} 
+int db\+\_\+get\+Request\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current website request type. 
+
+Gets the type of floor request stored in the database.
+
+Reads the requested\+Type value for node 1 from the elevator\+Network table. The request type identifies the source or type of the elevator request.
+
+\begin{DoxyReturn}{Returns}
+The request type stored in the database.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns 0 if no request type is retrieved or if a database exception occurs.
+\end{DoxyNote}
+Gets the current website request type.
+
+The request type identifies where the elevator request originated.
+
+\begin{DoxyReturn}{Returns}
+The stored request type. 
+\end{DoxyReturn}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a20ea3824a9ca02e19693fd777f00b88a}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_getStopFlag@{db\_getStopFlag}}
+\index{db\_getStopFlag@{db\_getStopFlag}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_getStopFlag()}{db\_getStopFlag()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a20ea3824a9ca02e19693fd777f00b88a} 
+int db\+\_\+get\+Stop\+Flag (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current elevator stop flag. 
+
+Gets the elevator stop flag from the database.
+
+Reads the stop\+Flag value for node 1 from the elevator\+Network table. The Service Controller can use this value to determine the requested operating state of the elevator system.
+
+\begin{DoxyReturn}{Returns}
+The current stop\+Flag value stored in the database.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns 0 if no stop flag is retrieved or if a database exception occurs.
+\end{DoxyNote}
+Gets the current elevator stop flag.
+
+The stop flag is used by the Service Controller to determine the operating state requested through the elevator system.
+
+\begin{DoxyReturn}{Returns}
+The current stop flag value. 
+\end{DoxyReturn}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_logCANMessage@{db\_logCANMessage}}
+\index{db\_logCANMessage@{db\_logCANMessage}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_logCANMessage()}{db\_logCANMessage()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896} 
+void db\+\_\+log\+CANMessage (\begin{DoxyParamCaption}\item[{int}]{node\+ID}{, }\item[{int}]{message\+ID}{, }\item[{int}]{data\+Length}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{description}{}\end{DoxyParamCaption})}
+
+
+
+Logs a CAN message to the Elevator database. 
+
+Logs a CAN message to the elevator database.
+
+Converts the CAN data payload into a hexadecimal string and stores the CAN message information in the CANLogs table.
+
+The database entry includes the node ID, CAN message ID, data length, hexadecimal payload, and a description of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+ID} & ID of the CAN node associated with the message. \\
+\hline
+{\em message\+ID} & CAN message identifier. \\
+\hline
+{\em data\+Length} & Number of bytes in the CAN message. \\
+\hline
+{\em data} & Pointer to the CAN message data. \\
+\hline
+{\em description} & Description associated with the CAN message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The current implementation formats eight bytes from the data array regardless of the value of data\+Length.
+\end{DoxyNote}
+Logs a CAN network message in the Elevator database.
+
+Stores a CAN message in the CANNetwork table, including the node ID, message ID, data length, message data, and a description of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+ID} & ID of the CAN node associated with the message. \\
+\hline
+{\em message\+ID} & CAN message identifier. \\
+\hline
+{\em data\+Length} & Number of bytes in the CAN message. \\
+\hline
+{\em data} & Pointer to the CAN message data. \\
+\hline
+{\em description} & Description of the CAN message.\\
+\hline
+\end{DoxyParams}
+Logs a CAN message to the elevator database.
+
+Converts an 8-\/byte CAN payload into a hexadecimal string and inserts the CAN message information into the CANNetwork database table.
+
+The database entry contains the transmitting node, CAN message ID, data length, message payload, and a description of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+ID} & ID of the node associated with the CAN message. \\
+\hline
+{\em message\+ID} & CAN message identifier. \\
+\hline
+{\em data\+Length} & Number of bytes contained in the CAN message. \\
+\hline
+{\em data} & Pointer to the CAN message data. \\
+\hline
+{\em description} & Text description associated with the CAN message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The current implementation formats eight bytes from the data array. The data pointer should therefore reference an array containing at least eight bytes. 
+\end{DoxyNote}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_af15b48c49055cd6d3029225cf577de95}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_openConnection@{db\_openConnection}}
+\index{db\_openConnection@{db\_openConnection}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_openConnection()}{db\_openConnection()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_af15b48c49055cd6d3029225cf577de95} 
+sql::\+\+Connection \texorpdfstring{$\ast$}{*} db\+\_\+open\+Connection (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Opens a connection to the Elevator database. 
+
+Creates a My\+SQL database connection and selects the Elevator schema. This helper function is used by several of the Service Controller database functions.
+
+\begin{DoxyReturn}{Returns}
+Pointer to the open My\+SQL database connection. 
+\end{DoxyReturn}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a34b11d730855b4401c4f41b58f03303e}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_setFloorNum@{db\_setFloorNum}}
+\index{db\_setFloorNum@{db\_setFloorNum}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_setFloorNum()}{db\_setFloorNum()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a34b11d730855b4401c4f41b58f03303e} 
+int db\+\_\+set\+Floor\+Num (\begin{DoxyParamCaption}\item[{int}]{floor\+Num}{}\end{DoxyParamCaption})}
+
+
+
+Sets the elevator\textquotesingle{}s current floor in the database. 
+
+Updates the elevator\textquotesingle{}s current floor in the database.
+
+Updates the current\+Floor field for node 1 in the elevator\+Network table using a prepared SQL statement.
+
+The number of affected database rows is printed to the console for debugging purposes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Num} & New current floor to store in the database.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the database update completes successfully. 
+
+-\/1 if a My\+SQL exception occurs.
+\end{DoxyReturn}
+Updates the current\+Floor value in the elevator\+Network table for node\+ID 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Num} & The new floor number to store in the database.\\
+\hline
+\end{DoxyParams}
+Connects to the Elevator database and updates the current\+Floor field for the elevator with node\+ID 1.
+
+A prepared statement is used to pass the new floor number to the UPDATE query.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Num} & The new floor number to store in the database.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The function currently connects to My\+SQL at 127.\+0.\+0.\+1:3306 using the root account. 
+\end{DoxyNote}
+\Hypertarget{_service_01_controller_2src_2database_functions_8cpp_a14a7c7ae613f4dfb13a3c79730b3352a}\index{databaseFunctions.cpp@{databaseFunctions.cpp}!db\_updateDoor@{db\_updateDoor}}
+\index{db\_updateDoor@{db\_updateDoor}!databaseFunctions.cpp@{databaseFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{db\_updateDoor()}{db\_updateDoor()}}
+{\footnotesize\ttfamily \label{_service_01_controller_2src_2database_functions_8cpp_a14a7c7ae613f4dfb13a3c79730b3352a} 
+void db\+\_\+update\+Door (\begin{DoxyParamCaption}\item[{int}]{door}{}\end{DoxyParamCaption})}
+
+
+
+Updates the elevator door status in the database. 
+
+Updates the door\+Open field for node 1 in the elevator\+Network table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em door} & Door status value to store in the database.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em door} & Door status value to store in the database.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}

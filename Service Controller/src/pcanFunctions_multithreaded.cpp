@@ -1,3 +1,17 @@
+/**
+ * @file pcanFunctions_multithreaded.cpp
+ * @brief Implements multithreaded CAN communication for the K-Globe Elevator Service Controller.
+ *
+ * Provides the main CAN communication system used by the Service Controller.
+ * CAN messages are received in one thread, placed into a priority queue,
+ * and processed in a separate thread.
+ *
+ * The implementation also communicates with the elevator database to
+ * process website requests, update floor and door information, control
+ * operating modes, log CAN traffic, and coordinate elevator audio
+ * announcements.
+ */
+
 #include "../include/pcanFunctions_multithreaded.h"
 #include "../include/databaseFunctions.h"
 #include "../include/audio.h"
@@ -48,6 +62,17 @@ static std::atomic<bool> systemPaused(false);
 //signal handler to stop the program gracefully
 static volatile std::sig_atomic_t stopRequested =0;
 
+/**
+ * @brief Handles operating-system shutdown signals.
+ *
+ * Sets the shared stopRequested flag when SIGINT or SIGTERM is received.
+ * This allows the CAN threads to terminate gracefully.
+ *
+ * @param signalNumber Signal received by the application.
+ *
+ * @return void
+ */
+
 static void signalHandler(int signalNumber)
 {
     if (signalNumber == SIGINT || signalNumber == SIGTERM)
@@ -56,11 +81,28 @@ static void signalHandler(int signalNumber)
     }
 }
 
+/**
+* @struct QueuedCANMessage
+* @brief Stores a CAN message and its queue sequence number.
+*
+* Combines a TPCANMsg with a sequence number so CAN messages with
+* identical IDs can retain their arrival order in the priority queue.
+*/
+
 struct QueuedCANMessage
 {
     TPCANMsg message;
     std::uint64_t sequenceNumber;
 };
+
+/**
+* @struct CANMessageCompare
+* @brief Defines ordering for CAN messages in the priority queue.
+*
+* Messages are primarily ordered using their CAN message ID. When two
+* messages have the same ID, their sequence numbers are used to maintain
+* their arrival order.
+*/
 
 struct CANMessageCompare
 {
@@ -87,10 +129,35 @@ static std::condition_variable queueCondition;
 static std::atomic<bool> receiverRunning(false);
 static std::atomic<std::uint64_t> nextSequenceNumber(0);
 
+/**
+* @brief Checks whether a CAN message is an ignored status message.
+*
+* Checks for the status message identified by CAN ID 0x01
+* with a message length of 0x04.
+*
+* @param msg CAN message to examine.
+*
+* @return true if the message matches the ignored status format.
+* @return false otherwise.
+*/
+
 static bool isIgnoredStatusMessage(const TPCANMsg& msg)
 {
     return msg.ID == 0x01 && msg.LEN == 0x04;
 }
+
+/**
+* @brief Converts CAN message data into an elevator floor number.
+*
+* Converts the GO_TO_FLOOR1, GO_TO_FLOOR2, and GO_TO_FLOOR3
+* CAN command values into Floors 1, 2, and 3.
+*
+* @param data CAN data byte containing the floor command.
+* @param floorNumber Reference used to store the converted floor number.
+*
+* @return true if the data contains a valid floor command.
+* @return false if the CAN command is not recognized.
+*/
 
 static bool getFloorFromMessageData(BYTE data, int& floorNumber)
 {
@@ -113,6 +180,20 @@ static bool getFloorFromMessageData(BYTE data, int& floorNumber)
     }
 }
 
+/**
+* @brief Converts an elevator floor number into CAN message data.
+*
+* Converts Floors 1, 2, and 3 into their corresponding
+* GO_TO_FLOOR CAN command values.
+*
+* @param floorNumber Elevator floor number to convert.
+*
+* @return GO_TO_FLOOR1 for Floor 1.
+* @return GO_TO_FLOOR2 for Floor 2.
+* @return GO_TO_FLOOR3 for Floor 3.
+* @return -1 if the floor number is invalid.
+*/
+
 static int getFloorMessageData(int floorNumber)
 {
     switch (floorNumber)
@@ -131,6 +212,15 @@ static int getFloorMessageData(int floorNumber)
     }
 }
 
+/**
+ * @brief Removes all pending messages from the CAN priority queue.
+ *
+ * Locks the shared CAN queue and removes every queued message.
+ * This is used when CAN request processing must be stopped or reset.
+ *
+ * @return void
+ */
+
 static void clearCANQueue()
 {
     std::lock_guard<std::mutex> queueLock(queueMutex);
@@ -140,6 +230,19 @@ static void clearCANQueue()
         canPriorityQueue.pop();
     }
 }
+
+/**
+ * @brief Adds an elevator floor request to the CAN processing queue.
+ *
+ * Converts the supplied floor number into its CAN command value, creates
+ * a standard CAN message, assigns a sequence number, and adds the message
+ * to the shared priority queue.
+ *
+ * @param floorNumber Elevator floor being requested.
+ * @param ID CAN message ID associated with the request.
+ *
+ * @return void
+ */
 
 static void addFloorRequestToQueue(int floorNumber, int ID)
 {
@@ -172,6 +275,25 @@ static void addFloorRequestToQueue(int floorNumber, int ID)
 
     queueCondition.notify_one();
 }
+
+/**
+ * @brief Transmits a CAN message through the shared PCAN interface.
+ *
+ * Waits until the CAN device has been initialized by the receiver thread,
+ * creates a standard one-byte CAN message, and transmits the message
+ * through the shared CAN handle.
+ *
+ * Successful CAN transmissions are also recorded in the Elevator
+ * database using db_logCANMessage().
+ *
+ * @param id CAN message identifier.
+ * @param data Data byte to transmit.
+ * @param description Description stored with the CAN database log.
+ *
+ * @return 0 when the CAN message is transmitted successfully.
+ * @return -1 when the CAN interface is unavailable or shutting down.
+ * @return PCAN error status when CAN_Write() fails.
+ */
 
 int pcanTx(int id, int data, std::string description)
 {
@@ -242,6 +364,21 @@ int pcanTx(int id, int data, std::string description)
     return 0;
 }
 
+/**
+ * @brief Receives a CAN message directly from the PCAN interface.
+ *
+ * Opens the PCAN USB device, initializes communication at 125 kbit/s,
+ * and waits for a valid CAN message.
+ *
+ * Received CAN messages are logged to the Elevator database. Ignored
+ * status messages are skipped until a message requiring processing
+ * is received.
+ *
+ * @return The received TPCANMsg.
+ *
+ * @note A zero-initialized TPCANMsg is returned if the PCAN device
+ * cannot be opened or initialized.
+ */
 
 TPCANMsg pcanRxWithDetails()
 {
@@ -313,6 +450,29 @@ TPCANMsg pcanRxWithDetails()
     CAN_Close(h2);
     return receivedMessage;
 }
+
+/**
+ * @brief Receives CAN messages and monitors website elevator commands.
+ *
+ * Runs as the CAN receiver thread for the Service Controller. The
+ * function opens and initializes the PCAN device, publishes the shared
+ * CAN handle, receives physical CAN messages, and places valid messages
+ * into the priority queue.
+ *
+ * The receiver also polls the Elevator database approximately every
+ * 250 milliseconds for:
+ * - Operating mode changes.
+ * - Website floor requests.
+ * - Floor-controller requests.
+ *
+ * Door-open and door-closed CAN messages are processed immediately and
+ * their status is written to the Elevator database.
+ *
+ * Maintenance and Sabbath modes can pause normal physical CAN request
+ * processing and clear queued requests.
+ *
+ * @return void
+ */
 
 static void canReceiverThread()
 {
@@ -543,6 +703,30 @@ static void canReceiverThread()
     printf("CAN receiver thread stopped\n");
     
 }
+
+/**
+ * @brief Processes CAN messages stored in the priority queue.
+ *
+ * Runs independently from the CAN receiver thread. The processor waits
+ * for queued CAN messages and determines the appropriate action based
+ * on each message's CAN ID.
+ *
+ * Supported message sources include:
+ * - Supervisory Controller.
+ * - Elevator Controller.
+ * - Car Controller.
+ * - Floor 1 Controller.
+ * - Floor 2 Controller.
+ * - Floor 3 Controller.
+ * - Website car controller.
+ * - Website floor controllers.
+ *
+ * Depending on the received message, this function can transmit a new
+ * CAN command, update the Elevator database, log CAN activity, update
+ * floor information, or play a floor audio announcement.
+ *
+ * @return void
+ */
 
 static void canProcessorThread()
 {
@@ -927,6 +1111,19 @@ static void canProcessorThread()
     printf("CAN processing thread stopped\n");
 }
 
+/**
+ * @brief Starts the multithreaded CAN communication system.
+ *
+ * Initializes the shared CAN state and installs SIGINT and SIGTERM
+ * handlers before starting the CAN receiver and processor threads.
+ *
+ * The function remains active until a stop is requested. It then
+ * signals both threads to stop, waits for them to finish, and resets
+ * the shared CAN device state.
+ *
+ * @return void
+ */
+
 void pcanRxWithDetailsMultithreaded()
 {
     if (receiverRunning)
@@ -995,6 +1192,16 @@ void pcanRxWithDetailsMultithreaded()
     
 
 }
+
+/**
+ * @brief Requests shutdown of the multithreaded CAN system.
+ *
+ * Sets the stop and receiver flags, then notifies the CAN queue and
+ * device condition variables so waiting threads can wake up and
+ * terminate.
+ *
+ * @return void
+ */
 
 void stopPcanMultithreaded()
 {

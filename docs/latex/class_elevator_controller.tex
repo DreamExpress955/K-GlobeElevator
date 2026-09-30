@@ -1,0 +1,137 @@
+\doxysection{Elevator\+Controller Class Reference}
+\hypertarget{class_elevator_controller}{}\label{class_elevator_controller}\index{ElevatorController@{ElevatorController}}
+
+
+Provides basic validation and control functions for the elevator.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_elevator_controller_a742f5cb5dd31c411dc5ecb11d2cea06c}{request\+Floor}} (\$floor)
+\begin{DoxyCompactList}\small\item\em Requests that the elevator move to a specified floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_elevator_controller_a46a0e678c5be4ffc0050c0dea086d418}{check\+Connection}} (\$connected)
+\begin{DoxyCompactList}\small\item\em Checks the status of the CAN network connection. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_elevator_controller_a2bc7c12b74cf46bd03e3580ec09f77d9}{read\+Sensor}} (\$distance)
+\begin{DoxyCompactList}\small\item\em Validates a sensor reading. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_elevator_controller_af456c2963eb7d3a800b8390b4dc14ffe}{validate\+Node}} (\$node\+ID)
+\begin{DoxyCompactList}\small\item\em Validates a CAN network node ID. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_elevator_controller_a0d669dacc52dafc6d39c7999c26b79c3}{\$max\+Floor}} = 3
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides basic validation and control functions for the elevator. 
+
+The \doxylink{class_elevator_controller}{Elevator\+Controller} validates several parts of the elevator system, including requested floors, network communication, sensor readings, and CAN node IDs. 
+
+\label{class_elevator_controller_doc-func-members}
+\Hypertarget{class_elevator_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_elevator_controller_a46a0e678c5be4ffc0050c0dea086d418}\index{ElevatorController@{ElevatorController}!checkConnection@{checkConnection}}
+\index{checkConnection@{checkConnection}!ElevatorController@{ElevatorController}}
+\doxysubsubsection{\texorpdfstring{checkConnection()}{checkConnection()}}
+{\footnotesize\ttfamily \label{class_elevator_controller_a46a0e678c5be4ffc0050c0dea086d418} 
+Elevator\+Controller::\+check\+Connection (\begin{DoxyParamCaption}\item[{}]{\$connected}{}\end{DoxyParamCaption})}
+
+
+
+Checks the status of the CAN network connection. 
+
+Determines whether communication with the elevator network is currently available.
+
+
+\begin{DoxyParams}[1]{Parameters}
+bool & {\em \$connected} & True if the network is connected, false otherwise.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{class_communication_exception}{Communication\+Exception}} & If network communication is unavailable. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{class_elevator_controller_a2bc7c12b74cf46bd03e3580ec09f77d9}\index{ElevatorController@{ElevatorController}!readSensor@{readSensor}}
+\index{readSensor@{readSensor}!ElevatorController@{ElevatorController}}
+\doxysubsubsection{\texorpdfstring{readSensor()}{readSensor()}}
+{\footnotesize\ttfamily \label{class_elevator_controller_a2bc7c12b74cf46bd03e3580ec09f77d9} 
+Elevator\+Controller::\+read\+Sensor (\begin{DoxyParamCaption}\item[{}]{\$distance}{}\end{DoxyParamCaption})}
+
+
+
+Validates a sensor reading. 
+
+Checks that the supplied distance measurement is valid. Negative distance values are considered invalid sensor readings.
+
+
+\begin{DoxyParams}[1]{Parameters}
+float & {\em \$distance} & Distance value reported by the sensor.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{class_sensor_exception}{Sensor\+Exception}} & If the sensor returns a negative distance. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{class_elevator_controller_a742f5cb5dd31c411dc5ecb11d2cea06c}\index{ElevatorController@{ElevatorController}!requestFloor@{requestFloor}}
+\index{requestFloor@{requestFloor}!ElevatorController@{ElevatorController}}
+\doxysubsubsection{\texorpdfstring{requestFloor()}{requestFloor()}}
+{\footnotesize\ttfamily \label{class_elevator_controller_a742f5cb5dd31c411dc5ecb11d2cea06c} 
+Elevator\+Controller::\+request\+Floor (\begin{DoxyParamCaption}\item[{}]{\$floor}{}\end{DoxyParamCaption})}
+
+
+
+Requests that the elevator move to a specified floor. 
+
+Checks that the requested floor is within the valid range of floor 1 to the maximum floor before accepting the request.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$floor} & The floor that the elevator should move to.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{class_invalid_floor_exception}{Invalid\+Floor\+Exception}} & If the requested floor is outside the valid floor range. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{class_elevator_controller_af456c2963eb7d3a800b8390b4dc14ffe}\index{ElevatorController@{ElevatorController}!validateNode@{validateNode}}
+\index{validateNode@{validateNode}!ElevatorController@{ElevatorController}}
+\doxysubsubsection{\texorpdfstring{validateNode()}{validateNode()}}
+{\footnotesize\ttfamily \label{class_elevator_controller_af456c2963eb7d3a800b8390b4dc14ffe} 
+Elevator\+Controller::\+validate\+Node (\begin{DoxyParamCaption}\item[{}]{\$node\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Validates a CAN network node ID. 
+
+Checks that the supplied node ID is greater than zero before accepting the node as valid.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+ID} & CAN network node ID to validate.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{class_node_exception}{Node\+Exception}} & If the node ID is zero or negative. \\
+\hline
+\end{DoxyExceptions}
+
+
+\label{class_elevator_controller_doc-variable-members}
+\Hypertarget{class_elevator_controller_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_elevator_controller_a0d669dacc52dafc6d39c7999c26b79c3}\index{ElevatorController@{ElevatorController}!\$maxFloor@{\$maxFloor}}
+\index{\$maxFloor@{\$maxFloor}!ElevatorController@{ElevatorController}}
+\doxysubsubsection{\texorpdfstring{\$maxFloor}{\$maxFloor}}
+{\footnotesize\ttfamily \label{class_elevator_controller_a0d669dacc52dafc6d39c7999c26b79c3} 
+Elevator\+Controller::\+\$max\+Floor = 3\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+php/\+\+Assignment2\+Error\+Handling/\doxymbox{\hyperlink{_elevator_controller_8php}{Elevator\+Controller.\+php}}\end{DoxyCompactItemize}

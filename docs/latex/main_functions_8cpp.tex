@@ -1,0 +1,196 @@
+\doxysection{Service Controller/\+src/\+main\+Functions.cpp File Reference}
+\hypertarget{main_functions_8cpp}{}\label{main_functions_8cpp}\index{Service Controller/src/mainFunctions.cpp@{Service Controller/src/mainFunctions.cpp}}
+
+
+Implements menu and conversion functions for the elevator Service Controller.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+pcan\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include "{}../\+include/\+main\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
+{\ttfamily \+\#include $<$libpcan.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{main_functions_8cpp_ae83fcdbeb2b6757fc741ae953b633ee1}{menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays the main Service Controller menu. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{main_functions_8cpp_af375a7be938bc3bc1e466e225d4e64c6}{choose\+ID}} ()
+\begin{DoxyCompactList}\small\item\em Allows the user to select a CAN message ID. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{main_functions_8cpp_a4e47bd5a4bef54e70414d21d443d9d29}{choose\+Msg}} ()
+\begin{DoxyCompactList}\small\item\em Allows the user to select an elevator floor command. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{main_functions_8cpp_a1be2b8709bb5cdb442cb40605ee8c3ee}{Hex\+From\+Floor}} (int floor\+Val)
+\begin{DoxyCompactList}\small\item\em Converts an elevator floor number into a CAN command. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{main_functions_8cpp_a0a3ba43945a4de45e06b806a254ae159}{Floor\+From\+Hex}} (int Hex)
+\begin{DoxyCompactList}\small\item\em Converts a CAN floor command into an elevator floor number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements menu and conversion functions for the elevator Service Controller. 
+
+Provides the user menus used by the Service Controller to select operating modes, CAN message IDs, and elevator floor commands.
+
+This file also contains utility functions for converting between elevator floor numbers and the hexadecimal CAN command values used by the K-\/\+Globe Elevator system. 
+
+\label{main_functions_8cpp_doc-func-members}
+\Hypertarget{main_functions_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_functions_8cpp_af375a7be938bc3bc1e466e225d4e64c6}\index{mainFunctions.cpp@{mainFunctions.cpp}!chooseID@{chooseID}}
+\index{chooseID@{chooseID}!mainFunctions.cpp@{mainFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{chooseID()}{chooseID()}}
+{\footnotesize\ttfamily \label{main_functions_8cpp_af375a7be938bc3bc1e466e225d4e64c6} 
+int choose\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Allows the user to select a CAN message ID. 
+
+Allows the user to select a CAN node ID.
+
+Displays a menu containing the CAN communication paths used by the elevator network. The selected menu item is converted into the corresponding CAN message ID.
+
+Available CAN IDs include communication between the Supervisory Controller, Elevator Controller, Car Controller, and each floor controller.
+
+\begin{DoxyReturn}{Returns}
+The CAN message ID associated with the user\textquotesingle{}s selection.
+\end{DoxyReturn}
+Allows the user to select a CAN message ID.
+
+\begin{DoxyReturn}{Returns}
+The CAN node ID selected by the user. 
+\end{DoxyReturn}
+\Hypertarget{main_functions_8cpp_a4e47bd5a4bef54e70414d21d443d9d29}\index{mainFunctions.cpp@{mainFunctions.cpp}!chooseMsg@{chooseMsg}}
+\index{chooseMsg@{chooseMsg}!mainFunctions.cpp@{mainFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{chooseMsg()}{chooseMsg()}}
+{\footnotesize\ttfamily \label{main_functions_8cpp_a4e47bd5a4bef54e70414d21d443d9d29} 
+int choose\+Msg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Allows the user to select an elevator floor command. 
+
+Allows the user to select a CAN message.
+
+Displays a menu containing the three available elevator floors. The user\textquotesingle{}s selection is converted into the corresponding CAN floor command.
+
+\begin{DoxyReturn}{Returns}
+The CAN command associated with the selected floor.
+\end{DoxyReturn}
+Allows the user to select an elevator floor command.
+
+\begin{DoxyReturn}{Returns}
+The CAN message selection made by the user. 
+\end{DoxyReturn}
+\Hypertarget{main_functions_8cpp_a0a3ba43945a4de45e06b806a254ae159}\index{mainFunctions.cpp@{mainFunctions.cpp}!FloorFromHex@{FloorFromHex}}
+\index{FloorFromHex@{FloorFromHex}!mainFunctions.cpp@{mainFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{FloorFromHex()}{FloorFromHex()}}
+{\footnotesize\ttfamily \label{main_functions_8cpp_a0a3ba43945a4de45e06b806a254ae159} 
+int Floor\+From\+Hex (\begin{DoxyParamCaption}\item[{int}]{Hex}{}\end{DoxyParamCaption})}
+
+
+
+Converts a CAN floor command into an elevator floor number. 
+
+Converts a hexadecimal floor value to an elevator floor number.
+
+Converts the GO\+\_\+\+TO\+\_\+\+FLOOR CAN command values back into their corresponding elevator floor numbers.
+
+If an invalid CAN command is supplied, the function defaults to Floor 1.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Hex} & CAN floor command to convert.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the command represents Floor 1. 
+
+2 if the command represents Floor 2. 
+
+3 if the command represents Floor 3. 
+
+1 if the command is invalid.
+\end{DoxyReturn}
+Converts a CAN floor command into an elevator floor number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Hex} & Hexadecimal floor value to convert.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The elevator floor number associated with the hexadecimal value. 
+\end{DoxyReturn}
+\Hypertarget{main_functions_8cpp_a1be2b8709bb5cdb442cb40605ee8c3ee}\index{mainFunctions.cpp@{mainFunctions.cpp}!HexFromFloor@{HexFromFloor}}
+\index{HexFromFloor@{HexFromFloor}!mainFunctions.cpp@{mainFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{HexFromFloor()}{HexFromFloor()}}
+{\footnotesize\ttfamily \label{main_functions_8cpp_a1be2b8709bb5cdb442cb40605ee8c3ee} 
+int Hex\+From\+Floor (\begin{DoxyParamCaption}\item[{int}]{floor\+Val}{}\end{DoxyParamCaption})}
+
+
+
+Converts an elevator floor number into a CAN command. 
+
+Converts an elevator floor number to its hexadecimal value.
+
+Converts Floors 1, 2, and 3 into the corresponding GO\+\_\+\+TO\+\_\+\+FLOOR command used on the elevator CAN network.
+
+If an invalid floor number is supplied, the function defaults to the Floor 1 command.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Val} & Elevator floor number to convert.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+GO\+\_\+\+TO\+\_\+\+FLOOR1 for Floor 1. 
+
+GO\+\_\+\+TO\+\_\+\+FLOOR2 for Floor 2. 
+
+GO\+\_\+\+TO\+\_\+\+FLOOR3 for Floor 3. 
+
+GO\+\_\+\+TO\+\_\+\+FLOOR1 if floor\+Val is invalid.
+\end{DoxyReturn}
+Converts an elevator floor number into a CAN command.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Val} & Elevator floor number to convert.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The hexadecimal representation associated with the floor. 
+\end{DoxyReturn}
+\Hypertarget{main_functions_8cpp_ae83fcdbeb2b6757fc741ae953b633ee1}\index{mainFunctions.cpp@{mainFunctions.cpp}!menu@{menu}}
+\index{menu@{menu}!mainFunctions.cpp@{mainFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{menu()}{menu()}}
+{\footnotesize\ttfamily \label{main_functions_8cpp_ae83fcdbeb2b6757fc741ae953b633ee1} 
+int menu (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Displays the main Service Controller menu. 
+
+Displays the Service Controller menu and gets a user selection.
+
+Allows the user to select one of six Service Controller operating modes. The function continues prompting until a valid selection between 1 and 6 is entered.
+
+Menu options include:
+\begin{DoxyItemize}
+\item 1: Transmit a CAN message.
+\item 2: Receive CAN messages.
+\item 3: Control the elevator from the website.
+\item 4: Run the elevator demo mode.
+\item 5: Exit the program.
+\item 6: Run the K-\/\+Globe receive/\+transmit mode.
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+The menu option selected by the user.
+\end{DoxyReturn}
+Displays the main Service Controller menu.
+
+\begin{DoxyReturn}{Returns}
+The menu option selected by the user. 
+\end{DoxyReturn}

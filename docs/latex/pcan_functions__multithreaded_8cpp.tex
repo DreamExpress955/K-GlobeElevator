@@ -1,0 +1,534 @@
+\doxysection{Service Controller/\+src/\+pcan\+Functions\+\_\+multithreaded.cpp File Reference}
+\hypertarget{pcan_functions__multithreaded_8cpp}{}\label{pcan_functions__multithreaded_8cpp}\index{Service Controller/src/pcanFunctions\_multithreaded.cpp@{Service Controller/src/pcanFunctions\_multithreaded.cpp}}
+
+
+Implements multithreaded CAN communication for the K-\/\+Globe Elevator Service Controller.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+pcan\+Functions\+\_\+multithreaded.\+h"{}}\newline
+{\ttfamily \+\#include "{}../\+include/\+database\+Functions.\+h"{}}\newline
+{\ttfamily \+\#include "{}../\+include/\+audio.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$errno.\+h$>$}\newline
+{\ttfamily \+\#include $<$unistd.\+h$>$}\newline
+{\ttfamily \+\#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \+\#include $<$libpcan.\+h$>$}\newline
+{\ttfamily \+\#include $<$cstring$>$}\newline
+{\ttfamily \+\#include $<$atomic$>$}\newline
+{\ttfamily \+\#include $<$condition\+\_\+variable$>$}\newline
+{\ttfamily \+\#include $<$cstdint$>$}\newline
+{\ttfamily \+\#include $<$mutex$>$}\newline
+{\ttfamily \+\#include $<$queue$>$}\newline
+{\ttfamily \+\#include $<$thread$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$csignal$>$}\newline
+{\ttfamily \+\#include $<$chrono$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}}
+\begin{DoxyCompactList}\small\item\em Stores a CAN message and its queue sequence number. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_c_a_n_message_compare}{CANMessage\+Compare}}
+\begin{DoxyCompactList}\small\item\em Defines ordering for CAN messages in the priority queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std::\+atomic$<$ bool $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a473b6f719786ae8a1d303a51586715fa}{elev}} (false)
+\item 
+static std::\+atomic$<$ bool $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a3b00ca222ec6d565478392e871f02b25}{door\+Open\+Received}} (false)
+\item 
+static std::\+atomic$<$ int $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a837e1283f4e949e6e97736e6432dd680}{website\+Flag}} (0)
+\item 
+static std::\+atomic$<$ bool $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_ade8093089a8d50ab181b2b466f243b3f}{system\+Paused}} (false)
+\item 
+static void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_af7cb763a339a6219a80607a4947b9f5f}{signal\+Handler}} (int signal\+Number)
+\begin{DoxyCompactList}\small\item\em Handles operating-\/system shutdown signals. \end{DoxyCompactList}\item 
+static std::\+atomic$<$ bool $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a92eb2d6a72fb0aa2ce88722881b97806}{receiver\+Running}} (false)
+\item 
+static std::\+atomic$<$ std::\+uint64\+\_\+t $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a0f7b01bf7ea8a03f1b2f4dc6da3efcd9}{next\+Sequence\+Number}} (0)
+\item 
+static bool \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a5958294045126b9db71e6252aa2a2591}{is\+Ignored\+Status\+Message}} (const TPCANMsg \&msg)
+\begin{DoxyCompactList}\small\item\em Checks whether a CAN message is an ignored status message. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a07678cb6a732edd988edf6625667dd8e}{get\+Floor\+From\+Message\+Data}} (BYTE data, int \&floor\+Number)
+\begin{DoxyCompactList}\small\item\em Converts CAN message data into an elevator floor number. \end{DoxyCompactList}\item 
+static int \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a47e68a7bd29bad55149475a3555a1388}{get\+Floor\+Message\+Data}} (int floor\+Number)
+\begin{DoxyCompactList}\small\item\em Converts an elevator floor number into CAN message data. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_acd39d16d9920b530260937ff25e65ff7}{clear\+CANQueue}} ()
+\begin{DoxyCompactList}\small\item\em Removes all pending messages from the CAN priority queue. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a755ee99fc40d76c0d218b57386079efb}{add\+Floor\+Request\+To\+Queue}} (int floor\+Number, int ID)
+\begin{DoxyCompactList}\small\item\em Adds an elevator floor request to the CAN processing queue. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a7476f4310c6dc14c0bc2f676667c72b6}{pcan\+Tx}} (int id, int data, std::\+string description)
+\begin{DoxyCompactList}\small\item\em Transmits a CAN message through the shared PCAN interface. \end{DoxyCompactList}\item 
+TPCANMsg \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_ad974f6089d6b008c1ebc7aebccef92d9}{pcan\+Rx\+With\+Details}} ()
+\begin{DoxyCompactList}\small\item\em Receives a CAN message directly from the PCAN interface. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a506be7c950a215518a0d346fccdd931b}{can\+Receiver\+Thread}} ()
+\begin{DoxyCompactList}\small\item\em Receives CAN messages and monitors website elevator commands. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a53e38cd72cfb845ff3b9cdcfad84a088}{can\+Processor\+Thread}} ()
+\begin{DoxyCompactList}\small\item\em Processes CAN messages stored in the priority queue. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_ade5413c6c1a3bb84349d5d4e25ba604b}{pcan\+Rx\+With\+Details\+Multithreaded}} ()
+\begin{DoxyCompactList}\small\item\em Starts the multithreaded CAN communication system. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a2b3ecb61e357d57adb32a44964f6ac09}{stop\+Pcan\+Multithreaded}} ()
+\begin{DoxyCompactList}\small\item\em Requests shutdown of the multithreaded CAN system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a0182b2e472b8af2291079784ca8926c9}{h}}
+\item 
+HANDLE \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_ac0e452b518f170252b67199a035601e8}{h2}}
+\item 
+TPCANMsg \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a3c06e516e41573dddfec6304deff7a3d}{Txmsg}}
+\item 
+DWORD \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}
+\item 
+static HANDLE \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a2a967a840f7b4b3ea62fcf9d0860edc0}{shared\+CANHandle}} = NULL
+\item 
+static std::\+mutex \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_ac6e558d5fe2e1947215110d02444c075}{can\+Write\+Mutex}}
+\item 
+static std::\+mutex \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_af97c376308453962cf9a5adfb7a11c7e}{can\+Handle\+Mutex}}
+\item 
+static std::\+condition\+\_\+variable \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a0313ebcb7e2f2668e2fde4bd2ab78ef8}{can\+Ready\+Condition}}
+\item 
+static bool \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_aa23a9098fb969f2aa9d9af7fd3504ef7}{can\+Device\+Ready}} = false
+\item 
+static volatile std::\+sig\+\_\+atomic\+\_\+t \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_aa42abdbd3a87f209fdb14cc986912d4f}{stop\+Requested}} =0
+\item 
+static std::\+priority\+\_\+queue$<$ \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}}, std::\+vector$<$ \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}} $>$, \doxymbox{\hyperlink{struct_c_a_n_message_compare}{CANMessage\+Compare}} $>$ \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_af9dba6be70d5e2e49dbc55d38a930e20}{can\+Priority\+Queue}}
+\item 
+static std::\+mutex \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a781e3772674224fa00da70ac8e0bb247}{queue\+Mutex}}
+\item 
+static std::\+condition\+\_\+variable \doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp_a1215168db6254235949d363c874dfb51}{queue\+Condition}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements multithreaded CAN communication for the K-\/\+Globe Elevator Service Controller. 
+
+Provides the main CAN communication system used by the Service Controller. CAN messages are received in one thread, placed into a priority queue, and processed in a separate thread.
+
+The implementation also communicates with the elevator database to process website requests, update floor and door information, control operating modes, log CAN traffic, and coordinate elevator audio announcements. 
+
+\label{pcan_functions__multithreaded_8cpp_doc-func-members}
+\Hypertarget{pcan_functions__multithreaded_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a755ee99fc40d76c0d218b57386079efb}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!addFloorRequestToQueue@{addFloorRequestToQueue}}
+\index{addFloorRequestToQueue@{addFloorRequestToQueue}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{addFloorRequestToQueue()}{addFloorRequestToQueue()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a755ee99fc40d76c0d218b57386079efb} 
+void add\+Floor\+Request\+To\+Queue (\begin{DoxyParamCaption}\item[{int}]{floor\+Number}{, }\item[{int}]{ID}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds an elevator floor request to the CAN processing queue. 
+
+Converts the supplied floor number into its CAN command value, creates a standard CAN message, assigns a sequence number, and adds the message to the shared priority queue.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Number} & Elevator floor being requested. \\
+\hline
+{\em ID} & CAN message ID associated with the request.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a53e38cd72cfb845ff3b9cdcfad84a088}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canProcessorThread@{canProcessorThread}}
+\index{canProcessorThread@{canProcessorThread}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canProcessorThread()}{canProcessorThread()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a53e38cd72cfb845ff3b9cdcfad84a088} 
+void can\+Processor\+Thread (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Processes CAN messages stored in the priority queue. 
+
+Runs independently from the CAN receiver thread. The processor waits for queued CAN messages and determines the appropriate action based on each message\textquotesingle{}s CAN ID.
+
+Supported message sources include:
+\begin{DoxyItemize}
+\item Supervisory Controller.
+\item Elevator Controller.
+\item Car Controller.
+\item Floor 1 Controller.
+\item Floor 2 Controller.
+\item Floor 3 Controller.
+\item Website car controller.
+\item Website floor controllers.
+\end{DoxyItemize}
+
+Depending on the received message, this function can transmit a new CAN command, update the Elevator database, log CAN activity, update floor information, or play a floor audio announcement.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a506be7c950a215518a0d346fccdd931b}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canReceiverThread@{canReceiverThread}}
+\index{canReceiverThread@{canReceiverThread}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canReceiverThread()}{canReceiverThread()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a506be7c950a215518a0d346fccdd931b} 
+void can\+Receiver\+Thread (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Receives CAN messages and monitors website elevator commands. 
+
+Runs as the CAN receiver thread for the Service Controller. The function opens and initializes the PCAN device, publishes the shared CAN handle, receives physical CAN messages, and places valid messages into the priority queue.
+
+The receiver also polls the Elevator database approximately every 250 milliseconds for:
+\begin{DoxyItemize}
+\item Operating mode changes.
+\item Website floor requests.
+\item Floor-\/controller requests.
+\end{DoxyItemize}
+
+Door-\/open and door-\/closed CAN messages are processed immediately and their status is written to the Elevator database.
+
+Maintenance and Sabbath modes can pause normal physical CAN request processing and clear queued requests.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_acd39d16d9920b530260937ff25e65ff7}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!clearCANQueue@{clearCANQueue}}
+\index{clearCANQueue@{clearCANQueue}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{clearCANQueue()}{clearCANQueue()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_acd39d16d9920b530260937ff25e65ff7} 
+void clear\+CANQueue (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Removes all pending messages from the CAN priority queue. 
+
+Locks the shared CAN queue and removes every queued message. This is used when CAN request processing must be stopped or reset.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a3b00ca222ec6d565478392e871f02b25}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!doorOpenReceived@{doorOpenReceived}}
+\index{doorOpenReceived@{doorOpenReceived}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{doorOpenReceived()}{doorOpenReceived()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a3b00ca222ec6d565478392e871f02b25} 
+std::\+atomic$<$ bool $>$ door\+Open\+Received (\begin{DoxyParamCaption}\item[{false}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a473b6f719786ae8a1d303a51586715fa}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!elev@{elev}}
+\index{elev@{elev}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{elev()}{elev()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a473b6f719786ae8a1d303a51586715fa} 
+std::\+atomic$<$ bool $>$ elev (\begin{DoxyParamCaption}\item[{false}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a07678cb6a732edd988edf6625667dd8e}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!getFloorFromMessageData@{getFloorFromMessageData}}
+\index{getFloorFromMessageData@{getFloorFromMessageData}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{getFloorFromMessageData()}{getFloorFromMessageData()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a07678cb6a732edd988edf6625667dd8e} 
+bool get\+Floor\+From\+Message\+Data (\begin{DoxyParamCaption}\item[{BYTE}]{data}{, }\item[{int \&}]{floor\+Number}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts CAN message data into an elevator floor number. 
+
+Converts the GO\+\_\+\+TO\+\_\+\+FLOOR1, GO\+\_\+\+TO\+\_\+\+FLOOR2, and GO\+\_\+\+TO\+\_\+\+FLOOR3 CAN command values into Floors 1, 2, and 3.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & CAN data byte containing the floor command. \\
+\hline
+{\em floor\+Number} & Reference used to store the converted floor number.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the data contains a valid floor command. 
+
+false if the CAN command is not recognized. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a47e68a7bd29bad55149475a3555a1388}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!getFloorMessageData@{getFloorMessageData}}
+\index{getFloorMessageData@{getFloorMessageData}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{getFloorMessageData()}{getFloorMessageData()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a47e68a7bd29bad55149475a3555a1388} 
+int get\+Floor\+Message\+Data (\begin{DoxyParamCaption}\item[{int}]{floor\+Number}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts an elevator floor number into CAN message data. 
+
+Converts Floors 1, 2, and 3 into their corresponding GO\+\_\+\+TO\+\_\+\+FLOOR CAN command values.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor\+Number} & Elevator floor number to convert.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+GO\+\_\+\+TO\+\_\+\+FLOOR1 for Floor 1. 
+
+GO\+\_\+\+TO\+\_\+\+FLOOR2 for Floor 2. 
+
+GO\+\_\+\+TO\+\_\+\+FLOOR3 for Floor 3. 
+
+-\/1 if the floor number is invalid. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a5958294045126b9db71e6252aa2a2591}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!isIgnoredStatusMessage@{isIgnoredStatusMessage}}
+\index{isIgnoredStatusMessage@{isIgnoredStatusMessage}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{isIgnoredStatusMessage()}{isIgnoredStatusMessage()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a5958294045126b9db71e6252aa2a2591} 
+bool is\+Ignored\+Status\+Message (\begin{DoxyParamCaption}\item[{const TPCANMsg \&}]{msg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks whether a CAN message is an ignored status message. 
+
+Checks for the status message identified by CAN ID 0x01 with a message length of 0x04.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & CAN message to examine.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the message matches the ignored status format. 
+
+false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a0f7b01bf7ea8a03f1b2f4dc6da3efcd9}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!nextSequenceNumber@{nextSequenceNumber}}
+\index{nextSequenceNumber@{nextSequenceNumber}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{nextSequenceNumber()}{nextSequenceNumber()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a0f7b01bf7ea8a03f1b2f4dc6da3efcd9} 
+std::\+atomic$<$ std::\+uint64\+\_\+t $>$ next\+Sequence\+Number (\begin{DoxyParamCaption}\item[{0}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_ad974f6089d6b008c1ebc7aebccef92d9}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!pcanRxWithDetails@{pcanRxWithDetails}}
+\index{pcanRxWithDetails@{pcanRxWithDetails}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanRxWithDetails()}{pcanRxWithDetails()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_ad974f6089d6b008c1ebc7aebccef92d9} 
+TPCANMsg pcan\+Rx\+With\+Details (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Receives a CAN message directly from the PCAN interface. 
+
+Opens the PCAN USB device, initializes communication at 125 kbit/\+s, and waits for a valid CAN message.
+
+Received CAN messages are logged to the Elevator database. Ignored status messages are skipped until a message requiring processing is received.
+
+\begin{DoxyReturn}{Returns}
+The received TPCANMsg.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+A zero-\/initialized TPCANMsg is returned if the PCAN device cannot be opened or initialized. 
+\end{DoxyNote}
+\Hypertarget{pcan_functions__multithreaded_8cpp_ade5413c6c1a3bb84349d5d4e25ba604b}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!pcanRxWithDetailsMultithreaded@{pcanRxWithDetailsMultithreaded}}
+\index{pcanRxWithDetailsMultithreaded@{pcanRxWithDetailsMultithreaded}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanRxWithDetailsMultithreaded()}{pcanRxWithDetailsMultithreaded()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_ade5413c6c1a3bb84349d5d4e25ba604b} 
+void pcan\+Rx\+With\+Details\+Multithreaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Starts the multithreaded CAN communication system. 
+
+Starts multithreaded PCAN message reception.
+
+Initializes the shared CAN state and installs SIGINT and SIGTERM handlers before starting the CAN receiver and processor threads.
+
+The function remains active until a stop is requested. It then signals both threads to stop, waits for them to finish, and resets the shared CAN device state.
+
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+Starts the multithreaded CAN communication system.
+
+Receives CAN messages and processes the received message details using the Service Controller\textquotesingle{}s multithreaded receive system.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a7476f4310c6dc14c0bc2f676667c72b6}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!pcanTx@{pcanTx}}
+\index{pcanTx@{pcanTx}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{pcanTx()}{pcanTx()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a7476f4310c6dc14c0bc2f676667c72b6} 
+int pcan\+Tx (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{int}]{data}{, }\item[{std::\+string}]{description}{}\end{DoxyParamCaption})}
+
+
+
+Transmits a CAN message through the shared PCAN interface. 
+
+Transmits a CAN message through the PCAN interface.
+
+Waits until the CAN device has been initialized by the receiver thread, creates a standard one-\/byte CAN message, and transmits the message through the shared CAN handle.
+
+Successful CAN transmissions are also recorded in the Elevator database using \doxylink{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}{db\+\_\+log\+CANMessage()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data byte to transmit. \\
+\hline
+{\em description} & Description stored with the CAN database log.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 when the CAN message is transmitted successfully. 
+
+-\/1 when the CAN interface is unavailable or shutting down. 
+
+PCAN error status when CAN\+\_\+\+Write() fails.
+\end{DoxyReturn}
+Transmits a CAN message through the shared PCAN interface.
+
+Sends a CAN message containing the supplied CAN ID and data value. A description is also provided so the transmitted message can be identified or logged by the Service Controller.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & CAN message identifier. \\
+\hline
+{\em data} & Data value to transmit in the CAN message. \\
+\hline
+{\em description} & Description associated with the CAN transmission.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result of the PCAN transmission operation. 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a92eb2d6a72fb0aa2ce88722881b97806}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!receiverRunning@{receiverRunning}}
+\index{receiverRunning@{receiverRunning}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{receiverRunning()}{receiverRunning()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a92eb2d6a72fb0aa2ce88722881b97806} 
+std::\+atomic$<$ bool $>$ receiver\+Running (\begin{DoxyParamCaption}\item[{false}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_af7cb763a339a6219a80607a4947b9f5f}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!signalHandler@{signalHandler}}
+\index{signalHandler@{signalHandler}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{signalHandler()}{signalHandler()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_af7cb763a339a6219a80607a4947b9f5f} 
+void signal\+Handler (\begin{DoxyParamCaption}\item[{int}]{signal\+Number}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Handles operating-\/system shutdown signals. 
+
+Sets the shared stop\+Requested flag when SIGINT or SIGTERM is received. This allows the CAN threads to terminate gracefully.
+
+
+\begin{DoxyParams}{Parameters}
+{\em signal\+Number} & Signal received by the application.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_a2b3ecb61e357d57adb32a44964f6ac09}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!stopPcanMultithreaded@{stopPcanMultithreaded}}
+\index{stopPcanMultithreaded@{stopPcanMultithreaded}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{stopPcanMultithreaded()}{stopPcanMultithreaded()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a2b3ecb61e357d57adb32a44964f6ac09} 
+void stop\+Pcan\+Multithreaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Requests shutdown of the multithreaded CAN system. 
+
+Stops the multithreaded PCAN communication system.
+
+Sets the stop and receiver flags, then notifies the CAN queue and device condition variables so waiting threads can wake up and terminate.
+
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+Requests shutdown of the multithreaded CAN system.
+
+Stops the PCAN multithreaded communication operation and allows the Service Controller to shut down PCAN processing.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{pcan_functions__multithreaded_8cpp_ade8093089a8d50ab181b2b466f243b3f}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!systemPaused@{systemPaused}}
+\index{systemPaused@{systemPaused}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{systemPaused()}{systemPaused()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_ade8093089a8d50ab181b2b466f243b3f} 
+std::\+atomic$<$ bool $>$ system\+Paused (\begin{DoxyParamCaption}\item[{false}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a837e1283f4e949e6e97736e6432dd680}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!websiteFlag@{websiteFlag}}
+\index{websiteFlag@{websiteFlag}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{websiteFlag()}{websiteFlag()}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a837e1283f4e949e6e97736e6432dd680} 
+std::\+atomic$<$ int $>$ website\+Flag (\begin{DoxyParamCaption}\item[{0}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\label{pcan_functions__multithreaded_8cpp_doc-var-members}
+\Hypertarget{pcan_functions__multithreaded_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{pcan_functions__multithreaded_8cpp_aa23a9098fb969f2aa9d9af7fd3504ef7}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canDeviceReady@{canDeviceReady}}
+\index{canDeviceReady@{canDeviceReady}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canDeviceReady}{canDeviceReady}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_aa23a9098fb969f2aa9d9af7fd3504ef7} 
+bool can\+Device\+Ready = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_af97c376308453962cf9a5adfb7a11c7e}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canHandleMutex@{canHandleMutex}}
+\index{canHandleMutex@{canHandleMutex}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canHandleMutex}{canHandleMutex}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_af97c376308453962cf9a5adfb7a11c7e} 
+std::\+mutex can\+Handle\+Mutex\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_af9dba6be70d5e2e49dbc55d38a930e20}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canPriorityQueue@{canPriorityQueue}}
+\index{canPriorityQueue@{canPriorityQueue}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canPriorityQueue}{canPriorityQueue}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_af9dba6be70d5e2e49dbc55d38a930e20} 
+std::\+priority\+\_\+queue$<$ \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}}, std::\+vector$<$\doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}}$>$, \doxymbox{\hyperlink{struct_c_a_n_message_compare}{CANMessage\+Compare}}$>$ can\+Priority\+Queue\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a0313ebcb7e2f2668e2fde4bd2ab78ef8}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canReadyCondition@{canReadyCondition}}
+\index{canReadyCondition@{canReadyCondition}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canReadyCondition}{canReadyCondition}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a0313ebcb7e2f2668e2fde4bd2ab78ef8} 
+std::\+condition\+\_\+variable can\+Ready\+Condition\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_ac6e558d5fe2e1947215110d02444c075}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!canWriteMutex@{canWriteMutex}}
+\index{canWriteMutex@{canWriteMutex}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{canWriteMutex}{canWriteMutex}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_ac6e558d5fe2e1947215110d02444c075} 
+std::\+mutex can\+Write\+Mutex\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a0182b2e472b8af2291079784ca8926c9}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!h@{h}}
+\index{h@{h}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{h}{h}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a0182b2e472b8af2291079784ca8926c9} 
+HANDLE h}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_ac0e452b518f170252b67199a035601e8}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!h2@{h2}}
+\index{h2@{h2}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{h2}{h2}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_ac0e452b518f170252b67199a035601e8} 
+HANDLE h2}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a1215168db6254235949d363c874dfb51}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!queueCondition@{queueCondition}}
+\index{queueCondition@{queueCondition}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{queueCondition}{queueCondition}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a1215168db6254235949d363c874dfb51} 
+std::\+condition\+\_\+variable queue\+Condition\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a781e3772674224fa00da70ac8e0bb247}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!queueMutex@{queueMutex}}
+\index{queueMutex@{queueMutex}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{queueMutex}{queueMutex}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a781e3772674224fa00da70ac8e0bb247} 
+std::\+mutex queue\+Mutex\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a2a967a840f7b4b3ea62fcf9d0860edc0}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!sharedCANHandle@{sharedCANHandle}}
+\index{sharedCANHandle@{sharedCANHandle}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{sharedCANHandle}{sharedCANHandle}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a2a967a840f7b4b3ea62fcf9d0860edc0} 
+HANDLE shared\+CANHandle = NULL\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!status@{status}}
+\index{status@{status}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_af78ce6e98cc8c58250be7729a52c5ea4} 
+DWORD status}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_aa42abdbd3a87f209fdb14cc986912d4f}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!stopRequested@{stopRequested}}
+\index{stopRequested@{stopRequested}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{stopRequested}{stopRequested}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_aa42abdbd3a87f209fdb14cc986912d4f} 
+volatile std::\+sig\+\_\+atomic\+\_\+t stop\+Requested =0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{pcan_functions__multithreaded_8cpp_a3c06e516e41573dddfec6304deff7a3d}\index{pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}!Txmsg@{Txmsg}}
+\index{Txmsg@{Txmsg}!pcanFunctions\_multithreaded.cpp@{pcanFunctions\_multithreaded.cpp}}
+\doxysubsubsection{\texorpdfstring{Txmsg}{Txmsg}}
+{\footnotesize\ttfamily \label{pcan_functions__multithreaded_8cpp_a3c06e516e41573dddfec6304deff7a3d} 
+TPCANMsg Txmsg}
+

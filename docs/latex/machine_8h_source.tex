@@ -1,0 +1,28 @@
+\doxysection{machine.\+h}
+\hypertarget{machine_8h_source}{}\label{machine_8h_source}\index{FiniteStateMachine/machine.h@{FiniteStateMachine/machine.h}}
+\doxymbox{\hyperlink{machine_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Header\ file\ for\ Finite\ State\ Machine}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ MACHINE\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ MACHINE\_H}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ Machine\ states\ for\ the\ elevator}}
+\DoxyCodeLine{00008\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{MachineState}}\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eba8a96c79239779f2c16dcea7e9a269685}{DoorsClosed}},\ \textcolor{comment}{//\ 0}}
+\DoxyCodeLine{00010\ \ \ \ \ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eba7a6b51800380398de732a5d278b2795f}{DoorsOpened}},\ \textcolor{comment}{//\ 1}}
+\DoxyCodeLine{00011\ \ \ \ \ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9ebaaf927282809663e74c878f067c83f140}{CarMoving}},\ \ \ \textcolor{comment}{//\ 2}}
+\DoxyCodeLine{00012\ \ \ \ \ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9ebae5748b00bc4bb138f82ec9d427dbbcca}{CarStopped}},\ \ \textcolor{comment}{//\ 3}}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Menu\ Functions}}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{machine_8h_afdf1ca9e7afc3e7ec41b47fea4b3d80d}{Menu}}();}
+\DoxyCodeLine{00017\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{machine_8h_ab87869216c2250ea9620cdd2dc9b9cab}{FloorReq}}();}
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{machine_8h_afbc2bda809db2ba16bf62e567e210823}{InsideReq}}();}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{machine_8h_a1ab03d38b9bbf9bd596f274c261f7a29}{PrintState}}(\doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{MachineState}}\ \doxymbox{\hyperlink{machine_functions_8cpp_af4feb7bd1d05a1c20cf9350fc90f92ee}{state}});}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MACHINE\_H}}
+
+\end{DoxyCode}

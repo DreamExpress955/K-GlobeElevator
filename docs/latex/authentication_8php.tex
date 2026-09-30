@@ -1,0 +1,94 @@
+\doxysection{php/\+authentication.php File Reference}
+\hypertarget{authentication_8php}{}\label{authentication_8php}\index{php/authentication.php@{php/authentication.php}}
+
+
+Authenticates users against the authorized users database.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{authentication_8php_a0eb82aa5f81cf845de4b36cd653c42cf}{\$username}} = \$\+\_\+\+POST\+[\textquotesingle{}username\textquotesingle{}]
+\item 
+\doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \$\+\_\+\+POST\+[\textquotesingle{}password\textquotesingle{}]
+\item 
+\doxymbox{\hyperlink{authentication_8php_a1fa3127fc82f96b1436d871ef02be319}{\$db}}
+\item 
+\doxymbox{\hyperlink{authentication_8php_a6740149b50329e0dbdcf5e5e65cd2820}{\$authenticated}} = false
+\item 
+\doxymbox{\hyperlink{authentication_8php_af59a5f7cd609e592c41dc3643efd3c98}{\$query}} = "{}SELECT \texorpdfstring{$\ast$}{*} FROM authorized\+Users WHERE username = \textquotesingle{}\$username\textquotesingle{}"{}
+\item 
+\doxymbox{\hyperlink{authentication_8php_ace2ec39e7df3899fa8df9640ec274b03}{\$rows}} = \$db-\/$>$query(\$query)
+\item 
+\doxymbox{\hyperlink{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0}{foreach}}( \$rows as \$row) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(\$authenticated) \doxymbox{\hyperlink{authentication_8php_ab14de2e2152e09fe4c3686f170ae219a}{else}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Authenticates users against the authorized users database. 
+
+Processes a username and password submitted through a POST request and checks the supplied credentials against the authorized\+Users database.
+
+If the credentials are valid, the username is stored in the current PHP session and the user is redirected to the member page. If the credentials are invalid, the user is redirected to the access request page. 
+
+\label{authentication_8php_doc-var-members}
+\Hypertarget{authentication_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{authentication_8php_a6740149b50329e0dbdcf5e5e65cd2820}\index{authentication.php@{authentication.php}!\$authenticated@{\$authenticated}}
+\index{\$authenticated@{\$authenticated}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$authenticated}{\$authenticated}}
+{\footnotesize\ttfamily \label{authentication_8php_a6740149b50329e0dbdcf5e5e65cd2820} 
+\$authenticated = false}
+
+\Hypertarget{authentication_8php_a1fa3127fc82f96b1436d871ef02be319}\index{authentication.php@{authentication.php}!\$db@{\$db}}
+\index{\$db@{\$db}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$db}{\$db}}
+{\footnotesize\ttfamily \label{authentication_8php_a1fa3127fc82f96b1436d871ef02be319} 
+\$db}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ =\ \textcolor{keyword}{new}\ PDO(}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'mysql:host=127.0.0.1;dbname=authorizedUsers'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'myphpadmin'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'YOUR\_DATABASE\_PASSWORD'}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{authentication.php@{authentication.php}!\$password@{\$password}}
+\index{\$password@{\$password}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \$\+\_\+\+POST\+[\textquotesingle{}password\textquotesingle{}]}
+
+\Hypertarget{authentication_8php_af59a5f7cd609e592c41dc3643efd3c98}\index{authentication.php@{authentication.php}!\$query@{\$query}}
+\index{\$query@{\$query}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$query}{\$query}}
+{\footnotesize\ttfamily \label{authentication_8php_af59a5f7cd609e592c41dc3643efd3c98} 
+\$query = "{}SELECT \texorpdfstring{$\ast$}{*} FROM authorized\+Users WHERE username = \textquotesingle{}\$username\textquotesingle{}"{}}
+
+\Hypertarget{authentication_8php_ace2ec39e7df3899fa8df9640ec274b03}\index{authentication.php@{authentication.php}!\$rows@{\$rows}}
+\index{\$rows@{\$rows}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$rows}{\$rows}}
+{\footnotesize\ttfamily \label{authentication_8php_ace2ec39e7df3899fa8df9640ec274b03} 
+\$rows = \$db-\/$>$query(\$query)}
+
+\Hypertarget{authentication_8php_a0eb82aa5f81cf845de4b36cd653c42cf}\index{authentication.php@{authentication.php}!\$username@{\$username}}
+\index{\$username@{\$username}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{\$username}{\$username}}
+{\footnotesize\ttfamily \label{authentication_8php_a0eb82aa5f81cf845de4b36cd653c42cf} 
+\$username = \$\+\_\+\+POST\+[\textquotesingle{}username\textquotesingle{}]}
+
+\Hypertarget{authentication_8php_ab14de2e2152e09fe4c3686f170ae219a}\index{authentication.php@{authentication.php}!else@{else}}
+\index{else@{else}!authentication.php@{authentication.php}}
+\doxysubsubsection{\texorpdfstring{else}{else}}
+{\footnotesize\ttfamily \label{authentication_8php_ab14de2e2152e09fe4c3686f170ae219a} 
+\doxymbox{\hyperlink{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0}{foreach}}(\$rows as \$row) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} ( \$authenticated) else}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ header(\textcolor{stringliteral}{"{}Location:\ req\_access.php"{}})}
+
+\end{DoxyCode}

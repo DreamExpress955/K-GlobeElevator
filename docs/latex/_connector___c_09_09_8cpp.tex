@@ -1,0 +1,60 @@
+\doxysection{C++\+Stuff/\+\+Connector\+\_\+\+C++.cpp File Reference}
+\hypertarget{_connector___c_09_09_8cpp}{}\label{_connector___c_09_09_8cpp}\index{C++Stuff/Connector\_C++.cpp@{C++Stuff/Connector\_C++.cpp}}
+
+
+Tests the My\+SQL Connector/\+\+C++ connection and elevator database functions.  
+
+
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include "{}mysql\+\_\+connection.\+h"{}}\newline
+{\ttfamily \+\#include "{}mysql\+\_\+driver.\+h"{}}\newline
+{\ttfamily \+\#include $<$cppconn/\+driver.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+build\+\_\+config.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+resultset.\+h$>$}\newline
+{\ttfamily \+\#include $<$cppconn/\+statement.\+h$>$}\newline
+{\ttfamily \+\#include $<$cstdint$>$}\newline
+{\ttfamily \+\#include "{}include/\+database\+Functions.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{_connector___c_09_09_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Runs tests for the elevator database functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tests the My\+SQL Connector/\+\+C++ connection and elevator database functions. 
+
+This program tests communication between the elevator application and the My\+SQL Elevator database. It uses the functions provided by database\+Functions.\+h to read and update elevator information and to log CAN messages.
+
+\begin{DoxyNote}{Note}
+This project uses My\+SQL Connector/\+\+C++ and Boost 1.\+85. 
+
+Apache and My\+SQL must be running before database operations are tested. 
+\end{DoxyNote}
+
+
+\label{_connector___c_09_09_8cpp_doc-func-members}
+\Hypertarget{_connector___c_09_09_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_connector___c_09_09_8cpp_a840291bc02cba5474a4cb46a9b9566fe}\index{Connector\_C++.cpp@{Connector\_C++.cpp}!main@{main}}
+\index{main@{main}!Connector\_C++.cpp@{Connector\_C++.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{_connector___c_09_09_8cpp_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Runs tests for the elevator database functions. 
+
+The program tests communication with the Elevator database by:
+\begin{DoxyItemize}
+\item Reading the current floor from the database.
+\item Updating the current floor.
+\item Reading the floor again to verify the update.
+\item Logging a sample CAN message to the CANNetwork table.
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+0 if the test program completes successfully. 
+\end{DoxyReturn}

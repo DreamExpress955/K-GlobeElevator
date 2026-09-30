@@ -1,0 +1,140 @@
+\doxysection{php/\+\+Controls.php File Reference}
+\hypertarget{_controls_8php}{}\label{_controls_8php}\index{php/Controls.php@{php/Controls.php}}
+
+
+Provides the troubleshooting and manual elevator control page.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_controls_8php_a22b3a22c5feb5b0e9d4196fba0d04a72}{update\+\_\+elevator\+Network}} (int \$node\+\_\+\+ID, int \$new\+\_\+floor=1)
+\begin{DoxyCompactList}\small\item\em Updates the current floor for an elevator network node. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\+\_\+current\+Floor}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current elevator floor from the database. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{_controls_8php_a1c5ba7192d699618a18cd52f13e777ec}{get\+\_\+database}} ()
+\begin{DoxyCompactList}\small\item\em Creates a connection to the Elevator My\+SQL database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_controls_8php_a25b5b4c70be7dd968b64cb57e5f9565d}{\$error\+Message}} = \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(\$\+\_\+\+SERVER\+[\textquotesingle{}REQUEST\+\_\+\+METHOD\textquotesingle{}]\+===\textquotesingle{}POST\textquotesingle{}) \doxymbox{\hyperlink{_controls_8php_aaf72277041027d3d2f83b07878af7c36}{try}}
+\item 
+\doxymbox{\hyperlink{member_8php_a1554d05c057115d4c9fe54d4d3144e80}{catch}}(Throwable \$error) \doxymbox{\hyperlink{_controls_8php_ad6120ebd4c2619563f8dff1b6bcfb8df}{\$cur\+Flr}} = \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\+\_\+current\+Floor}}()
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(\$cur\+Flr==1) elseif( \$cur\+Flr==2) elseif(\$cur\+Flr==3) \doxymbox{\hyperlink{_controls_8php_ac87abe6d479da12047d2edecbd3a566f}{else}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides the troubleshooting and manual elevator control page. 
+
+This page provides controls for manually requesting elevator floors from both the floor controller and car controller.
+
+The page communicates with the Elevator My\+SQL database to read the elevator\textquotesingle{}s current floor and update floor requests. The current floor is displayed using red and green floor indicators.
+
+The page also contains a temporary queue section for future elevator request queue functionality. 
+
+\label{_controls_8php_doc-func-members}
+\Hypertarget{_controls_8php_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}\index{Controls.php@{Controls.php}!get\_currentFloor@{get\_currentFloor}}
+\index{get\_currentFloor@{get\_currentFloor}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{get\_currentFloor()}{get\_currentFloor()}}
+{\footnotesize\ttfamily \label{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a} 
+get\+\_\+current\+Floor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current elevator floor from the database. 
+
+Connects to the Elevator My\+SQL database and retrieves the current\+Floor value from the elevator\+Network table.
+
+\begin{DoxyReturn}{Returns}
+int The current floor stored in the elevator\+Network table. 
+\end{DoxyReturn}
+\Hypertarget{_controls_8php_a1c5ba7192d699618a18cd52f13e777ec}\index{Controls.php@{Controls.php}!get\_database@{get\_database}}
+\index{get\_database@{get\_database}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{get\_database()}{get\_database()}}
+{\footnotesize\ttfamily \label{_controls_8php_a1c5ba7192d699618a18cd52f13e777ec} 
+get\+\_\+database (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Creates a connection to the Elevator My\+SQL database. 
+
+Creates and returns a PDO connection configured to throw exceptions when database errors occur and to return query results as associative arrays.
+
+\begin{DoxyReturn}{Returns}
+PDO Connection to the Elevator database. 
+\end{DoxyReturn}
+\Hypertarget{_controls_8php_a22b3a22c5feb5b0e9d4196fba0d04a72}\index{Controls.php@{Controls.php}!update\_elevatorNetwork@{update\_elevatorNetwork}}
+\index{update\_elevatorNetwork@{update\_elevatorNetwork}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{update\_elevatorNetwork()}{update\_elevatorNetwork()}}
+{\footnotesize\ttfamily \label{_controls_8php_a22b3a22c5feb5b0e9d4196fba0d04a72} 
+update\+\_\+elevator\+Network (\begin{DoxyParamCaption}\item[{int}]{\$node\+\_\+\+ID}{, }\item[{int}]{\$new\+\_\+floor}{ = {\ttfamily 1}}\end{DoxyParamCaption})}
+
+
+
+Updates the current floor for an elevator network node. 
+
+Connects to the Elevator database and updates the current\+Floor field in the elevator\+Network table for the specified node.
+
+A prepared statement is used to safely pass the floor number and node ID to the database query.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+\_\+\+ID} & ID of the elevator network node to update. \\
+\hline
+int & {\em \$new\+\_\+floor} & New floor value to store. Defaults to floor 1.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The floor number that was stored in the database. 
+\end{DoxyReturn}
+
+
+\label{_controls_8php_doc-var-members}
+\Hypertarget{_controls_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_controls_8php_ad6120ebd4c2619563f8dff1b6bcfb8df}\index{Controls.php@{Controls.php}!\$curFlr@{\$curFlr}}
+\index{\$curFlr@{\$curFlr}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{\$curFlr}{\$curFlr}}
+{\footnotesize\ttfamily \label{_controls_8php_ad6120ebd4c2619563f8dff1b6bcfb8df} 
+\doxymbox{\hyperlink{member_8php_a1554d05c057115d4c9fe54d4d3144e80}{catch}} (Throwable \$error) \$cur\+Flr = \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\+\_\+current\+Floor}}()}
+
+\Hypertarget{_controls_8php_a25b5b4c70be7dd968b64cb57e5f9565d}\index{Controls.php@{Controls.php}!\$errorMessage@{\$errorMessage}}
+\index{\$errorMessage@{\$errorMessage}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{\$errorMessage}{\$errorMessage}}
+{\footnotesize\ttfamily \label{_controls_8php_a25b5b4c70be7dd968b64cb57e5f9565d} 
+\$error\+Message = \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{_controls_8php_ac87abe6d479da12047d2edecbd3a566f}\index{Controls.php@{Controls.php}!else@{else}}
+\index{else@{else}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{else}{else}}
+{\footnotesize\ttfamily \label{_controls_8php_ac87abe6d479da12047d2edecbd3a566f} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}( \$cur\+Flr==1) elseif(\$cur\+Flr==2) elseif ( \$cur\+Flr==3) else}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ echo\ \textcolor{stringliteral}{'<div\ class\ ="{}img-\/grid"{}>}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ../Pics/RED.png}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ../Pics/RED.png}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ../Pics/RED.png}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </div>'}}
+
+\end{DoxyCode}
+\Hypertarget{_controls_8php_aaf72277041027d3d2f83b07878af7c36}\index{Controls.php@{Controls.php}!try@{try}}
+\index{try@{try}!Controls.php@{Controls.php}}
+\doxysubsubsection{\texorpdfstring{try}{try}}
+{\footnotesize\ttfamily \label{_controls_8php_aaf72277041027d3d2f83b07878af7c36} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} ( \$\+\_\+\+SERVER\+[ \textquotesingle{}REQUEST\+\_\+\+METHOD\textquotesingle{}]\+===\textquotesingle{}POST\textquotesingle{}) try}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_controls_8php_ad6120ebd4c2619563f8dff1b6bcfb8df}{\$curFlr}}\ =\ \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\_currentFloor}}()}
+
+\end{DoxyCode}

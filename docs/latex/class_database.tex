@@ -1,0 +1,82 @@
+\doxysection{Database Class Reference}
+\hypertarget{class_database}{}\label{class_database}\index{Database@{Database}}
+
+
+Provides a connection to the elevator My\+SQL database.  
+
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_database_a12df9b62f20181459bea5f2c4f9a8990}{connect}} ()
+\begin{DoxyCompactList}\small\item\em Creates a connection to the elevator database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_database_ac7fbab56b2714481177ac97d070b564f}{\$host}} = "{}localhost"{}
+\item 
+static \doxymbox{\hyperlink{class_database_a402b975f8ce7e3b9d942de723d5edc1a}{\$username}} = "{}root"{}
+\item 
+static \doxymbox{\hyperlink{class_database_a0a7f07657d70ea4beec9c9ec0506f698}{\$password}} = "{}"{}
+\item 
+static \doxymbox{\hyperlink{class_database_aef247ff6561269bf16f235426421e5ac}{\$dbname}} = "{}elevator\+\_\+db"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a connection to the elevator My\+SQL database. 
+
+The \doxylink{class_database}{Database} class stores the database connection information as private static properties. The \doxylink{class_database_a12df9b62f20181459bea5f2c4f9a8990}{connect()} method uses these properties to create and return a My\+SQL database connection. 
+
+\label{class_database_doc-func-members}
+\Hypertarget{class_database_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_database_a12df9b62f20181459bea5f2c4f9a8990}\index{Database@{Database}!connect@{connect}}
+\index{connect@{connect}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily \label{class_database_a12df9b62f20181459bea5f2c4f9a8990} 
+Database::\+connect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a connection to the elevator database. 
+
+Uses the stored host, username, password, and database name to create a new My\+SQL connection.
+
+\begin{DoxyReturn}{Returns}
+mysqli The My\+SQL database connection object. 
+\end{DoxyReturn}
+
+
+\label{class_database_doc-variable-members}
+\Hypertarget{class_database_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_database_aef247ff6561269bf16f235426421e5ac}\index{Database@{Database}!\$dbname@{\$dbname}}
+\index{\$dbname@{\$dbname}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{\$dbname}{\$dbname}}
+{\footnotesize\ttfamily \label{class_database_aef247ff6561269bf16f235426421e5ac} 
+Database::\+\$dbname = "{}elevator\+\_\+db"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_database_ac7fbab56b2714481177ac97d070b564f}\index{Database@{Database}!\$host@{\$host}}
+\index{\$host@{\$host}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{class_database_ac7fbab56b2714481177ac97d070b564f} 
+Database::\+\$host = "{}localhost"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_database_a0a7f07657d70ea4beec9c9ec0506f698}\index{Database@{Database}!\$password@{\$password}}
+\index{\$password@{\$password}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{class_database_a0a7f07657d70ea4beec9c9ec0506f698} 
+Database::\+\$password = "{}"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_database_a402b975f8ce7e3b9d942de723d5edc1a}\index{Database@{Database}!\$username@{\$username}}
+\index{\$username@{\$username}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{\$username}{\$username}}
+{\footnotesize\ttfamily \label{class_database_a402b975f8ce7e3b9d942de723d5edc1a} 
+Database::\+\$username = "{}root"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+php/\+\+Assignment2\+OOP/\doxymbox{\hyperlink{php_2_assignment2_o_o_p_2database_8php}{Database.\+php}}\end{DoxyCompactItemize}

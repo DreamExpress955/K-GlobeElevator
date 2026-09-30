@@ -1,0 +1,104 @@
+\doxysection{Sensor Class Reference}
+\hypertarget{class_sensor}{}\label{class_sensor}\index{Sensor@{Sensor}}
+
+
+Represents a distance sensor in the elevator system.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_sensor_a3bdb96eb832ea8d8ea8c34d33e51a0fe}{\+\_\+\+\_\+construct}} (\$distance)
+\begin{DoxyCompactList}\small\item\em Creates a new \doxylink{class_sensor}{Sensor} object. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_sensor_a9986a3e09b7d82dfbe9f6026a661b4c7}{read\+Distance}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current distance measurement. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_sensor_ad1a5e8db8b60ae790bfc4725dc0dde78}{set\+Distance}} (\$distance)
+\begin{DoxyCompactList}\small\item\em Sets the sensor\textquotesingle{}s distance measurement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_sensor_a024df8ddd5da94261c0fd9eb560e5ecb}{\$distance}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a distance sensor in the elevator system. 
+
+The \doxylink{class_sensor}{Sensor} class stores a distance measurement as a private property. The measurement can be accessed using \doxylink{class_sensor_a9986a3e09b7d82dfbe9f6026a661b4c7}{read\+Distance()} and updated using \doxylink{class_sensor_ad1a5e8db8b60ae790bfc4725dc0dde78}{set\+Distance()}.
+
+This class demonstrates encapsulation by keeping the distance value private and providing public methods to access and modify it. 
+
+\label{class_sensor_doc-constructors}
+\Hypertarget{class_sensor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_sensor_a3bdb96eb832ea8d8ea8c34d33e51a0fe}\index{Sensor@{Sensor}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Sensor@{Sensor}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \label{class_sensor_a3bdb96eb832ea8d8ea8c34d33e51a0fe} 
+Sensor::\+\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$distance}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new \doxylink{class_sensor}{Sensor} object. 
+
+Initializes the sensor with the specified distance measurement.
+
+
+\begin{DoxyParams}[1]{Parameters}
+mixed & {\em \$distance} & Initial distance measurement of the sensor. \\
+\hline
+\end{DoxyParams}
+
+
+\label{class_sensor_doc-func-members}
+\Hypertarget{class_sensor_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sensor_a9986a3e09b7d82dfbe9f6026a661b4c7}\index{Sensor@{Sensor}!readDistance@{readDistance}}
+\index{readDistance@{readDistance}!Sensor@{Sensor}}
+\doxysubsubsection{\texorpdfstring{readDistance()}{readDistance()}}
+{\footnotesize\ttfamily \label{class_sensor_a9986a3e09b7d82dfbe9f6026a661b4c7} 
+Sensor::\+read\+Distance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current distance measurement. 
+
+\begin{DoxyReturn}{Returns}
+mixed The current distance measured by the sensor. 
+\end{DoxyReturn}
+\Hypertarget{class_sensor_ad1a5e8db8b60ae790bfc4725dc0dde78}\index{Sensor@{Sensor}!setDistance@{setDistance}}
+\index{setDistance@{setDistance}!Sensor@{Sensor}}
+\doxysubsubsection{\texorpdfstring{setDistance()}{setDistance()}}
+{\footnotesize\ttfamily \label{class_sensor_ad1a5e8db8b60ae790bfc4725dc0dde78} 
+Sensor::\+set\+Distance (\begin{DoxyParamCaption}\item[{}]{\$distance}{}\end{DoxyParamCaption})}
+
+
+
+Sets the sensor\textquotesingle{}s distance measurement. 
+
+Updates the stored distance value with a new measurement.
+
+
+\begin{DoxyParams}[1]{Parameters}
+mixed & {\em \$distance} & New distance measurement to store.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\label{class_sensor_doc-variable-members}
+\Hypertarget{class_sensor_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_sensor_a024df8ddd5da94261c0fd9eb560e5ecb}\index{Sensor@{Sensor}!\$distance@{\$distance}}
+\index{\$distance@{\$distance}!Sensor@{Sensor}}
+\doxysubsubsection{\texorpdfstring{\$distance}{\$distance}}
+{\footnotesize\ttfamily \label{class_sensor_a024df8ddd5da94261c0fd9eb560e5ecb} 
+Sensor::\+\$distance\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+php/\+\+Assignment2\+OOP/\doxymbox{\hyperlink{_sensor_8php}{Sensor.\+php}}\end{DoxyCompactItemize}

@@ -1,0 +1,117 @@
+\doxysection{Floor\+Node Class Reference}
+\hypertarget{class_floor_node}{}\label{class_floor_node}\index{FloorNode@{FloorNode}}
+
+
+Represents a floor node in the elevator system.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_floor_node_ab52ff2ae93144991e55efcb0a0b47337}{\+\_\+\+\_\+construct}} (\$floor\+Number)
+\begin{DoxyCompactList}\small\item\em Creates a new \doxylink{class_floor_node}{Floor\+Node} object. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_floor_node_a766472e183a1404cb409f36d077f2cfb}{call\+Elevator}} ()
+\begin{DoxyCompactList}\small\item\em Calls the elevator from this floor. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_floor_node_a1a517419fee2ff864b5572ccff1fc02b}{get\+Floor\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Gets the floor number. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_floor_node_a7976f2a235b3fe2d58b8121f9e25d6e9}{set\+Floor\+Number}} (\$number)
+\begin{DoxyCompactList}\small\item\em Sets the floor number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_floor_node_adfc6564fc6ff129a1631e67c9a098b76}{\$floor\+Number}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a floor node in the elevator system. 
+
+The \doxylink{class_floor_node}{Floor\+Node} class stores the floor number associated with a particular floor. The floor number is kept private and can be accessed or modified using getter and setter methods. 
+
+\label{class_floor_node_doc-constructors}
+\Hypertarget{class_floor_node_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_floor_node_ab52ff2ae93144991e55efcb0a0b47337}\index{FloorNode@{FloorNode}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!FloorNode@{FloorNode}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \label{class_floor_node_ab52ff2ae93144991e55efcb0a0b47337} 
+Floor\+Node::\+\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$floor\+Number}{}\end{DoxyParamCaption})}
+
+
+
+Creates a new \doxylink{class_floor_node}{Floor\+Node} object. 
+
+Initializes the floor node with the specified floor number.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$floor\+Number} & Floor number assigned to the node. \\
+\hline
+\end{DoxyParams}
+
+
+\label{class_floor_node_doc-func-members}
+\Hypertarget{class_floor_node_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_floor_node_a766472e183a1404cb409f36d077f2cfb}\index{FloorNode@{FloorNode}!callElevator@{callElevator}}
+\index{callElevator@{callElevator}!FloorNode@{FloorNode}}
+\doxysubsubsection{\texorpdfstring{callElevator()}{callElevator()}}
+{\footnotesize\ttfamily \label{class_floor_node_a766472e183a1404cb409f36d077f2cfb} 
+Floor\+Node::\+call\+Elevator (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Calls the elevator from this floor. 
+
+Displays a message indicating the floor from which the elevator has been called.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_floor_node_a1a517419fee2ff864b5572ccff1fc02b}\index{FloorNode@{FloorNode}!getFloorNumber@{getFloorNumber}}
+\index{getFloorNumber@{getFloorNumber}!FloorNode@{FloorNode}}
+\doxysubsubsection{\texorpdfstring{getFloorNumber()}{getFloorNumber()}}
+{\footnotesize\ttfamily \label{class_floor_node_a1a517419fee2ff864b5572ccff1fc02b} 
+Floor\+Node::\+get\+Floor\+Number (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the floor number. 
+
+\begin{DoxyReturn}{Returns}
+int The floor number associated with this node. 
+\end{DoxyReturn}
+\Hypertarget{class_floor_node_a7976f2a235b3fe2d58b8121f9e25d6e9}\index{FloorNode@{FloorNode}!setFloorNumber@{setFloorNumber}}
+\index{setFloorNumber@{setFloorNumber}!FloorNode@{FloorNode}}
+\doxysubsubsection{\texorpdfstring{setFloorNumber()}{setFloorNumber()}}
+{\footnotesize\ttfamily \label{class_floor_node_a7976f2a235b3fe2d58b8121f9e25d6e9} 
+Floor\+Node::\+set\+Floor\+Number (\begin{DoxyParamCaption}\item[{}]{\$number}{}\end{DoxyParamCaption})}
+
+
+
+Sets the floor number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$number} & New floor number to assign to the node.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\label{class_floor_node_doc-variable-members}
+\Hypertarget{class_floor_node_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_floor_node_adfc6564fc6ff129a1631e67c9a098b76}\index{FloorNode@{FloorNode}!\$floorNumber@{\$floorNumber}}
+\index{\$floorNumber@{\$floorNumber}!FloorNode@{FloorNode}}
+\doxysubsubsection{\texorpdfstring{\$floorNumber}{\$floorNumber}}
+{\footnotesize\ttfamily \label{class_floor_node_adfc6564fc6ff129a1631e67c9a098b76} 
+Floor\+Node::\+\$floor\+Number\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+php/\+\+Assignment2\+OOP/\doxymbox{\hyperlink{_floor_node_8php}{Floor\+Node.\+php}}\end{DoxyCompactItemize}

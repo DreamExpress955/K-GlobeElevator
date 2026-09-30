@@ -1,0 +1,98 @@
+\doxysection{php/\+get\+\_\+door\+\_\+status.php File Reference}
+\hypertarget{get__door__status_8php}{}\label{get__door__status_8php}\index{php/get\_door\_status.php@{php/get\_door\_status.php}}
+
+
+Displays the current elevator door status.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a711797613cb863ca0756df789c396bf2}{\$host}} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a7691c0162d89de0b6ba47edcd8ba8878}{\$database}} = \textquotesingle{}Elevator\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}} = "{}mysql:\+host=\$host;dbname=\$database"{}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}} = \textquotesingle{}phpmyadmin\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \textquotesingle{}ese1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__door__status_8php_a194f83ad21256ff6779f732ffe5b71f5}{\$door\+Open}}
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(\$door\+Open==1) \doxymbox{\hyperlink{get__door__status_8php_a07642e5f04a2ec22832d1197e3581bbd}{else}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Displays the current elevator door status. 
+
+Connects to the Elevator database using the database functions provided by \doxylink{database_functions_8php}{database\+Functions.\+php} and retrieves the current door status.
+
+A green Bootstrap badge is displayed when the elevator door is open, and a red Bootstrap badge is displayed when the elevator door is closed. 
+
+\label{get__door__status_8php_doc-var-members}
+\Hypertarget{get__door__status_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{get__door__status_8php_a7691c0162d89de0b6ba47edcd8ba8878}\index{get\_door\_status.php@{get\_door\_status.php}!\$database@{\$database}}
+\index{\$database@{\$database}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$database}{\$database}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a7691c0162d89de0b6ba47edcd8ba8878} 
+\$database = \textquotesingle{}Elevator\textquotesingle{}}
+
+\Hypertarget{get__door__status_8php_a194f83ad21256ff6779f732ffe5b71f5}\index{get\_door\_status.php@{get\_door\_status.php}!\$doorOpen@{\$doorOpen}}
+\index{\$doorOpen@{\$doorOpen}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$doorOpen}{\$doorOpen}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a194f83ad21256ff6779f732ffe5b71f5} 
+\$door\+Open}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_a002fe92810c0d092048835fcf8a5d74f}{getDoorStatus}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{get__door__status_8php_a711797613cb863ca0756df789c396bf2}\index{get\_door\_status.php@{get\_door\_status.php}!\$host@{\$host}}
+\index{\$host@{\$host}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a711797613cb863ca0756df789c396bf2} 
+\$host = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+\Hypertarget{get__door__status_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{get\_door\_status.php@{get\_door\_status.php}!\$password@{\$password}}
+\index{\$password@{\$password}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \textquotesingle{}ese1\textquotesingle{}}
+
+\Hypertarget{get__door__status_8php_a0a4baf0b22973c07685c3981f0d17fc4}\index{get\_door\_status.php@{get\_door\_status.php}!\$path@{\$path}}
+\index{\$path@{\$path}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$path}{\$path}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a0a4baf0b22973c07685c3981f0d17fc4} 
+\$path = "{}mysql:\+host=\$host;dbname=\$database"{}}
+
+\Hypertarget{get__door__status_8php_a598ca4e71b15a1313ec95f0df1027ca5}\index{get\_door\_status.php@{get\_door\_status.php}!\$user@{\$user}}
+\index{\$user@{\$user}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{\$user}{\$user}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a598ca4e71b15a1313ec95f0df1027ca5} 
+\$user = \textquotesingle{}phpmyadmin\textquotesingle{}}
+
+\Hypertarget{get__door__status_8php_a07642e5f04a2ec22832d1197e3581bbd}\index{get\_door\_status.php@{get\_door\_status.php}!else@{else}}
+\index{else@{else}!get\_door\_status.php@{get\_door\_status.php}}
+\doxysubsubsection{\texorpdfstring{else}{else}}
+{\footnotesize\ttfamily \label{get__door__status_8php_a07642e5f04a2ec22832d1197e3581bbd} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} ( \$door\+Open==1) else}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ echo\ \textcolor{stringliteral}{'}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ <div\ class="{}badge\ bg-\/danger\ fs-\/4"{}>}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ Door\ CLOSED}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ </div>}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ '}}
+
+\end{DoxyCode}

@@ -1,0 +1,491 @@
+\doxysection{php/\+database\+Functions.php File Reference}
+\hypertarget{database_functions_8php}{}\label{database_functions_8php}\index{php/databaseFunctions.php@{php/databaseFunctions.php}}
+
+
+Provides database and CAN network functions for the K-\/\+Globe Elevator system.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{database_functions_8php_ae690a75222343af1db226684868cf254}{connect}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Creates a connection to a database. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a8d15b6f0f3e32e8de1bcf0289d6fe4cd}{insert}} (string \$path, string \$user, string \$password, string \$current\+\_\+date, string \$current\+\_\+time, int \$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}, int \$\doxymbox{\hyperlink{machine_functions_8cpp_af2ae3c80eff5c67623f0511ce43b3c90}{current\+Floor}}, int \$requested\+Floor, string \$other\+Info)
+\begin{DoxyCompactList}\small\item\em Inserts a new elevator log record into the CANLogs table. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a3143e0e10284dd6954b3470c6758eefe}{show\+Table}} (string \$path, string \$user, string \$password, string \$tablename)
+\begin{DoxyCompactList}\small\item\em Displays the contents of the CANLogs table. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a8fbe6f83dbb28d310fb79883cc5f6a91}{update}} (string \$path, string \$user, string \$password, int \$node\+ID, int \$new\+Status, int \$new\+Current\+Floor, int \$new\+Requested\+Floor, string \$new\+Other\+Info)
+\begin{DoxyCompactList}\small\item\em Updates an elevator log using a database transaction. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a078ea9155b01332486951592c8d29dca}{delete}} (string \$path, string \$user, string \$password, int \$node\+ID)
+\begin{DoxyCompactList}\small\item\em Deletes an elevator log from the CANLogs table. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a028201cc2bb975010801c5822812c6a6}{get\+\_\+current\+Floor}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Gets the most recent elevator floor from the database. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a978cbcd695233468cc87c54f8dc16a48}{insert\+CAN}} (string \$path, string \$user, string \$password, int \$node\+ID, int \$message\+ID, int \$baud\+Rate, string \$last\+Message)
+\begin{DoxyCompactList}\small\item\em Inserts CAN information into the CANLogs table. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_ad5405147f2ae9888b891d56fccd1478c}{update\+CAN}} (string \$path, string \$user, string \$password, int \$can\+ID, int \$message\+ID, int \$baud\+Rate, string \$last\+Message)
+\begin{DoxyCompactList}\small\item\em Updates an existing CAN log entry. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a4640c74a76188c90a9b41e9eeeb890a5}{delete\+CAN}} (string \$path, string \$user, string \$password, int \$can\+ID)
+\begin{DoxyCompactList}\small\item\em Deletes a CAN log entry. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_aeba2b94c5da866b1b254ead16a549b61}{show\+Combined\+Table}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Prepares a query for combined elevator and CAN information. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a7e64058c77aace863e86ab206dda4814}{show\+CANTable}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Displays recent CAN message logs. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a46ebcd6112e53c4a0fa7b79c99aab22e}{get\+Log\+Count}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Gets the number of records stored in CANLogs. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a652db6816542eae0e8a5cd1ec6e409b4}{get\+Maintenance\+Status}} (int \$record\+Count)
+\begin{DoxyCompactList}\small\item\em Determines the elevator maintenance status. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a5b4b806f98e9cb735947f7139bf2f98f}{get\+Mode}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Gets the current elevator operating mode. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a57e266a10af2b2e1e691acd35555c326}{set\+Mode}} (string \$path, string \$user, string \$password, int \$mode)
+\begin{DoxyCompactList}\small\item\em Sets the elevator operating mode. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{database_functions_8php_a002fe92810c0d092048835fcf8a5d74f}{get\+Door\+Status}} (string \$path, string \$user, string \$password)
+\begin{DoxyCompactList}\small\item\em Gets the current elevator door status. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides database and CAN network functions for the K-\/\+Globe Elevator system. 
+
+Contains functions for connecting to the elevator database, performing CRUD operations on elevator and CAN log information, displaying database tables, monitoring maintenance intervals, and controlling elevator operating and door status information. 
+
+\label{database_functions_8php_doc-func-members}
+\Hypertarget{database_functions_8php_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{database_functions_8php_ae690a75222343af1db226684868cf254}\index{databaseFunctions.php@{databaseFunctions.php}!connect@{connect}}
+\index{connect@{connect}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily \label{database_functions_8php_ae690a75222343af1db226684868cf254} 
+connect (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Creates a connection to a database. 
+
+Creates a PDO database connection using the supplied database path, username, and password. The connection is configured to return associative arrays and throw exceptions when database errors occur.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+PDO The configured database connection. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a078ea9155b01332486951592c8d29dca}\index{databaseFunctions.php@{databaseFunctions.php}!delete@{delete}}
+\index{delete@{delete}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a078ea9155b01332486951592c8d29dca} 
+delete (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$node\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Deletes an elevator log from the CANLogs table. 
+
+Deletes the record associated with the specified node ID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$node\+ID} & \doxylink{class_node}{Node} ID of the record to delete.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a4640c74a76188c90a9b41e9eeeb890a5}\index{databaseFunctions.php@{databaseFunctions.php}!deleteCAN@{deleteCAN}}
+\index{deleteCAN@{deleteCAN}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{deleteCAN()}{deleteCAN()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a4640c74a76188c90a9b41e9eeeb890a5} 
+delete\+CAN (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$can\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Deletes a CAN log entry. 
+
+Removes a CANLogs record matching the supplied CAN ID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$can\+ID} & CAN record ID to delete.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a028201cc2bb975010801c5822812c6a6}\index{databaseFunctions.php@{databaseFunctions.php}!get\_currentFloor@{get\_currentFloor}}
+\index{get\_currentFloor@{get\_currentFloor}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{get\_currentFloor()}{get\_currentFloor()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a028201cc2bb975010801c5822812c6a6} 
+get\+\_\+current\+Floor (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Gets the most recent elevator floor from the database. 
+
+Reads the current\+Floor value from the elevator\+Network entry with the highest node ID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Current elevator floor, or 0 when no record is found. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a002fe92810c0d092048835fcf8a5d74f}\index{databaseFunctions.php@{databaseFunctions.php}!getDoorStatus@{getDoorStatus}}
+\index{getDoorStatus@{getDoorStatus}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{getDoorStatus()}{getDoorStatus()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a002fe92810c0d092048835fcf8a5d74f} 
+get\+Door\+Status (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current elevator door status. 
+
+Retrieves the door\+Open value from the most recent elevator\+Network record.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Current door\+Open value, or 0 when no record is found. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a46ebcd6112e53c4a0fa7b79c99aab22e}\index{databaseFunctions.php@{databaseFunctions.php}!getLogCount@{getLogCount}}
+\index{getLogCount@{getLogCount}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{getLogCount()}{getLogCount()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a46ebcd6112e53c4a0fa7b79c99aab22e} 
+get\+Log\+Count (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Gets the number of records stored in CANLogs. 
+
+Counts all records currently contained in the CANLogs table.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Number of records in the CANLogs table. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a652db6816542eae0e8a5cd1ec6e409b4}\index{databaseFunctions.php@{databaseFunctions.php}!getMaintenanceStatus@{getMaintenanceStatus}}
+\index{getMaintenanceStatus@{getMaintenanceStatus}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{getMaintenanceStatus()}{getMaintenanceStatus()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a652db6816542eae0e8a5cd1ec6e409b4} 
+get\+Maintenance\+Status (\begin{DoxyParamCaption}\item[{int}]{\$record\+Count}{}\end{DoxyParamCaption})}
+
+
+
+Determines the elevator maintenance status. 
+
+Uses the number of database log records to determine whether the elevator is operating normally, requires inspection, is approaching a maintenance interval, or should enter maintenance mode.
+
+Inspection is activated at 325 records, a warning is activated at 350 records, and maintenance mode is activated at 5000 records.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$record\+Count} & Number of CAN log records.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array Maintenance status flags and status message. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a5b4b806f98e9cb735947f7139bf2f98f}\index{databaseFunctions.php@{databaseFunctions.php}!getMode@{getMode}}
+\index{getMode@{getMode}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{getMode()}{getMode()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a5b4b806f98e9cb735947f7139bf2f98f} 
+get\+Mode (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current elevator operating mode. 
+
+Reads the stop\+Flag value from the most recent elevator\+Network record.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Current stop\+Flag value, or 0 when no record is found. 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a8d15b6f0f3e32e8de1bcf0289d6fe4cd}\index{databaseFunctions.php@{databaseFunctions.php}!insert@{insert}}
+\index{insert@{insert}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a8d15b6f0f3e32e8de1bcf0289d6fe4cd} 
+insert (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{string}]{\$current\+\_\+date}{, }\item[{string}]{\$current\+\_\+time}{, }\item[{int}]{\$status}{, }\item[{int}]{\$current\+Floor}{, }\item[{int}]{\$requested\+Floor}{, }\item[{string}]{\$other\+Info}{}\end{DoxyParamCaption})}
+
+
+
+Inserts a new elevator log record into the CANLogs table. 
+
+Creates a new record containing the date, time, elevator status, current floor, requested floor, and additional information.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+string & {\em \$current\+\_\+date} & Date associated with the log entry. \\
+\hline
+string & {\em \$current\+\_\+time} & Time associated with the log entry. \\
+\hline
+int & {\em \$status} & Elevator status value. \\
+\hline
+int & {\em \$current\+Floor} & Current elevator floor. \\
+\hline
+int & {\em \$requested\+Floor} & Requested elevator floor. \\
+\hline
+string & {\em \$other\+Info} & Additional information about the elevator.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a978cbcd695233468cc87c54f8dc16a48}\index{databaseFunctions.php@{databaseFunctions.php}!insertCAN@{insertCAN}}
+\index{insertCAN@{insertCAN}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{insertCAN()}{insertCAN()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a978cbcd695233468cc87c54f8dc16a48} 
+insert\+CAN (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$node\+ID}{, }\item[{int}]{\$message\+ID}{, }\item[{int}]{\$baud\+Rate}{, }\item[{string}]{\$last\+Message}{}\end{DoxyParamCaption})}
+
+
+
+Inserts CAN information into the CANLogs table. 
+
+Stores CAN node information including the node ID, message ID, baud rate, and most recent message.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$node\+ID} & CAN node ID. \\
+\hline
+int & {\em \$message\+ID} & CAN message identifier. \\
+\hline
+int & {\em \$baud\+Rate} & CAN network baud rate. \\
+\hline
+string & {\em \$last\+Message} & Most recent CAN message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a57e266a10af2b2e1e691acd35555c326}\index{databaseFunctions.php@{databaseFunctions.php}!setMode@{setMode}}
+\index{setMode@{setMode}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{setMode()}{setMode()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a57e266a10af2b2e1e691acd35555c326} 
+set\+Mode (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$mode}{}\end{DoxyParamCaption})}
+
+
+
+Sets the elevator operating mode. 
+
+Updates the stop\+Flag field for the most recent node in the elevator\+Network table.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$mode} & New elevator operating mode.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a7e64058c77aace863e86ab206dda4814}\index{databaseFunctions.php@{databaseFunctions.php}!showCANTable@{showCANTable}}
+\index{showCANTable@{showCANTable}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{showCANTable()}{showCANTable()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a7e64058c77aace863e86ab206dda4814} 
+show\+CANTable (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Displays recent CAN message logs. 
+
+Retrieves the 50 most recent CANLogs records ordered by timestamp and displays the information in an HTML table.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_aeba2b94c5da866b1b254ead16a549b61}\index{databaseFunctions.php@{databaseFunctions.php}!showCombinedTable@{showCombinedTable}}
+\index{showCombinedTable@{showCombinedTable}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{showCombinedTable()}{showCombinedTable()}}
+{\footnotesize\ttfamily \label{database_functions_8php_aeba2b94c5da866b1b254ead16a549b61} 
+show\+Combined\+Table (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{}\end{DoxyParamCaption})}
+
+
+
+Prepares a query for combined elevator and CAN information. 
+
+Creates a query that combines elevator log information with CAN information using the node ID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a3143e0e10284dd6954b3470c6758eefe}\index{databaseFunctions.php@{databaseFunctions.php}!showTable@{showTable}}
+\index{showTable@{showTable}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{showTable()}{showTable()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a3143e0e10284dd6954b3470c6758eefe} 
+show\+Table (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{string}]{\$tablename}{}\end{DoxyParamCaption})}
+
+
+
+Displays the contents of the CANLogs table. 
+
+Reads elevator and CAN information from the database and displays the results as an HTML table.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+string & {\em \$tablename} & Name of the table requested for display.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_a8fbe6f83dbb28d310fb79883cc5f6a91}\index{databaseFunctions.php@{databaseFunctions.php}!update@{update}}
+\index{update@{update}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{database_functions_8php_a8fbe6f83dbb28d310fb79883cc5f6a91} 
+update (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$node\+ID}{, }\item[{int}]{\$new\+Status}{, }\item[{int}]{\$new\+Current\+Floor}{, }\item[{int}]{\$new\+Requested\+Floor}{, }\item[{string}]{\$new\+Other\+Info}{}\end{DoxyParamCaption})}
+
+
+
+Updates an elevator log using a database transaction. 
+
+Validates the node ID and floor values before performing the update. A database transaction is used so the operation can be rolled back if an error occurs.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$node\+ID} & \doxylink{class_node}{Node} ID of the record being updated. \\
+\hline
+int & {\em \$new\+Status} & New elevator status. \\
+\hline
+int & {\em \$new\+Current\+Floor} & New current floor. \\
+\hline
+int & {\em \$new\+Requested\+Floor} & New requested floor. \\
+\hline
+string & {\em \$new\+Other\+Info} & New additional information.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & If the node ID is invalid. \\
+\hline
+{\em Exception} & If either floor is outside the range 1 through 3. \\
+\hline
+{\em Exception} & If the specified node cannot be updated. \\
+\hline
+{\em Exception} & If the database transaction fails.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{database_functions_8php_ad5405147f2ae9888b891d56fccd1478c}\index{databaseFunctions.php@{databaseFunctions.php}!updateCAN@{updateCAN}}
+\index{updateCAN@{updateCAN}!databaseFunctions.php@{databaseFunctions.php}}
+\doxysubsubsection{\texorpdfstring{updateCAN()}{updateCAN()}}
+{\footnotesize\ttfamily \label{database_functions_8php_ad5405147f2ae9888b891d56fccd1478c} 
+update\+CAN (\begin{DoxyParamCaption}\item[{string}]{\$path}{, }\item[{string}]{\$user}{, }\item[{string}]{\$password}{, }\item[{int}]{\$can\+ID}{, }\item[{int}]{\$message\+ID}{, }\item[{int}]{\$baud\+Rate}{, }\item[{string}]{\$last\+Message}{}\end{DoxyParamCaption})}
+
+
+
+Updates an existing CAN log entry. 
+
+Updates the message ID, baud rate, and most recent message associated with the specified CAN ID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$path} & \doxylink{class_database}{Database} connection string. \\
+\hline
+string & {\em \$user} & \doxylink{class_database}{Database} username. \\
+\hline
+string & {\em \$password} & \doxylink{class_database}{Database} password. \\
+\hline
+int & {\em \$can\+ID} & CAN record ID to update. \\
+\hline
+int & {\em \$message\+ID} & New CAN message identifier. \\
+\hline
+int & {\em \$baud\+Rate} & New CAN network baud rate. \\
+\hline
+string & {\em \$last\+Message} & New last-\/message value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}

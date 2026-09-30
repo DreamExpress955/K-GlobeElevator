@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['sensor_0',['Sensor',['../class_sensor.html',1,'']]],
+  ['sensor_2ephp_1',['Sensor.php',['../_sensor_8php.html',1,'']]],
+  ['sensorexception_2',['SensorException',['../class_sensor_exception.html',1,'']]],
+  ['sequencenumber_3',['sequenceNumber',['../struct_queued_c_a_n_message.html#ac668733c6fc6c1afaae9b23a91c1c167',1,'QueuedCANMessage']]],
+  ['setcurrentfloor_4',['setCurrentFloor',['../class_elevator_car.html#a009e2c049d9d653ec9021384ab8ac488',1,'ElevatorCar\\setCurrentFloor()'],['../class_node.html#acd6b28b7107b34bd487dc4b746144657',1,'Node\\setCurrentFloor()']]],
+  ['setdirection_5',['setDirection',['../class_call_button.html#ae4040080079c0d9bbd7c315b4b7c8d1c',1,'CallButton\\setDirection()'],['../class_elevator_car.html#a93baa99f3dc72552a5e08287f6bdb18e',1,'ElevatorCar\\setDirection()']]],
+  ['setdistance_6',['setDistance',['../class_sensor.html#ad1a5e8db8b60ae790bfc4725dc0dde78',1,'Sensor']]],
+  ['setfloornumber_7',['setFloorNumber',['../class_floor_node.html#a7976f2a235b3fe2d58b8121f9e25d6e9',1,'FloorNode']]],
+  ['setmode_8',['setMode',['../database_functions_8php.html#a57e266a10af2b2e1e691acd35555c326',1,'databaseFunctions.php']]],
+  ['setnodeid_9',['setNodeID',['../class_node.html#afe28e26f36455139cf0305be293fe9fb',1,'Node\\setNodeID($nodeID)'],['../class_node.html#afe28e26f36455139cf0305be293fe9fb',1,'Node\\setNodeID($nodeID)']]],
+  ['setotherinfo_10',['setOtherInfo',['../class_node.html#adcfb1504c07121f15265edc95bca12c8',1,'Node']]],
+  ['setrequestedfloor_11',['setRequestedFloor',['../class_node.html#a6846f9935b8dc6694605b7b3c405e1df',1,'Node']]],
+  ['setstatus_12',['setStatus',['../class_node.html#a8661e640ee910fb73c5c4005bcc42ebe',1,'Node\\setStatus($status)'],['../class_node.html#a8661e640ee910fb73c5c4005bcc42ebe',1,'Node\\setStatus($status)']]],
+  ['sharedcanhandle_13',['sharedCANHandle',['../pcan_functions__multithreaded_8cpp.html#a2a967a840f7b4b3ea62fcf9d0860edc0',1,'pcanFunctions_multithreaded.cpp']]],
+  ['showcantable_14',['showCANTable',['../database_functions_8php.html#a7e64058c77aace863e86ab206dda4814',1,'databaseFunctions.php']]],
+  ['showcombinedtable_15',['showCombinedTable',['../database_functions_8php.html#aeba2b94c5da866b1b254ead16a549b61',1,'databaseFunctions.php']]],
+  ['showtable_16',['showTable',['../database_functions_8php.html#a3143e0e10284dd6954b3470c6758eefe',1,'databaseFunctions.php']]],
+  ['signalhandler_17',['signalHandler',['../pcan_functions__multithreaded_8cpp.html#af7cb763a339a6219a80607a4947b9f5f',1,'pcanFunctions_multithreaded.cpp']]],
+  ['state_18',['state',['../machine_functions_8cpp.html#af4feb7bd1d05a1c20cf9350fc90f92ee',1,'machineFunctions.cpp']]],
+  ['status_19',['status',['../pcan_functions_8cpp.html#af78ce6e98cc8c58250be7729a52c5ea4',1,'status:&#160;pcanFunctions.cpp'],['../pcan_functions__multithreaded_8cpp.html#af78ce6e98cc8c58250be7729a52c5ea4',1,'status:&#160;pcanFunctions_multithreaded.cpp']]],
+  ['stoppcanmultithreaded_20',['stopPcanMultithreaded',['../pcan_functions__multithreaded_8h.html#a2b3ecb61e357d57adb32a44964f6ac09',1,'stopPcanMultithreaded():&#160;pcanFunctions_multithreaded.cpp'],['../pcan_functions__multithreaded_8cpp.html#a2b3ecb61e357d57adb32a44964f6ac09',1,'stopPcanMultithreaded():&#160;pcanFunctions_multithreaded.cpp']]],
+  ['stoppcanrxthreads_21',['stopPcanRxThreads',['../pcan_functions__multithreaded_8h.html#af63ae20fef6a09166efbf810c4777eab',1,'pcanFunctions_multithreaded.h']]],
+  ['stoprequested_22',['stopRequested',['../pcan_functions__multithreaded_8cpp.html#aa42abdbd3a87f209fdb14cc986912d4f',1,'pcanFunctions_multithreaded.cpp']]],
+  ['systempaused_23',['systemPaused',['../pcan_functions__multithreaded_8cpp.html#ade8093089a8d50ab181b2b466f243b3f',1,'pcanFunctions_multithreaded.cpp']]]
+];

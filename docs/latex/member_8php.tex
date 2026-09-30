@@ -1,0 +1,375 @@
+\doxysection{php/\+member.php File Reference}
+\hypertarget{member_8php}{}\label{member_8php}\index{php/member.php@{php/member.php}}
+
+
+Provides the main K-\/\+Globe Elevator Network Dashboard.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{member_8php_a529a45ccf5ab75b4ef1db515cf9048f7}{update\+\_\+elevator\+Network}} (int \$node\+\_\+\+ID, int \$new\+\_\+floor, int \$request\+Type)
+\begin{DoxyCompactList}\small\item\em Updates an elevator network floor request. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{member_8php_a1c5ba7192d699618a18cd52f13e777ec}{get\+\_\+database}} ()
+\begin{DoxyCompactList}\small\item\em Creates a connection to the Elevator database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(!isset( \$\+\_\+\+SESSION\+[ \textquotesingle{}mode\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(!isset(\$\+\_\+\+SESSION\+[\textquotesingle{}username\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_ae055b2ff9267d3d9f6dc3c80cbdcffb3}{\$host}} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a7691c0162d89de0b6ba47edcd8ba8878}{\$database}} = \textquotesingle{}Elevator\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_ab55152af3e5453213c2891ba55a0c6d5}{\$tablename}} = \textquotesingle{}CANLogs\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}} = "{}mysql:\+host=\$host;dbname=\$database"{}
+\item 
+\doxymbox{\hyperlink{member_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}} = \textquotesingle{}myphpadmin\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \textquotesingle{}ese1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a46f291fdd42fd571fd628dd5738fb2da}{\$current\+Mode}} = "{}Normal"{}
+\item 
+\doxymbox{\hyperlink{member_8php_a1fa3127fc82f96b1436d871ef02be319}{\$db}}
+\item 
+\doxymbox{\hyperlink{member_8php_a8bd186860dc9bb1e94880555a7a2379a}{\$log\+Count}}
+\item 
+\doxymbox{\hyperlink{member_8php_a2287996fd48a48152dad088ad2aebd34}{\$maintenance\+State}}
+\item 
+\doxymbox{\hyperlink{member_8php_a03495df3726ae73a3f739cdf2463bc82}{\$current\+\_\+date}}
+\item 
+\doxymbox{\hyperlink{member_8php_a63faaf6695dbb6b199cd3fc5a5de124f}{\$current\+\_\+time}}
+\item 
+\doxymbox{\hyperlink{member_8php_a58d88e45591bfdb56a69ba42cc45ca36}{\$node\+ID}} = \$\+\_\+\+POST\+[\textquotesingle{}node\+ID\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a58391ea75f2d29d5d708d7050b641c33}{\$status}} = \$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a1bddaeac782a4ef8d692fff1ee2d2ab6}{\$current\+Floor}} = \$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{machine_functions_8cpp_af2ae3c80eff5c67623f0511ce43b3c90}{current\+Floor}}\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a3e2c47a98a306a75a193f631b47fecd9}{\$requested\+Floor}} = \$\+\_\+\+POST\+[\textquotesingle{}requested\+Floor\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_a4c0067e3a1b2af716140875537595a2d}{\$other\+Info}} = \$\+\_\+\+POST\+[\textquotesingle{}other\+Info\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_af754fd821a9ef9e09f898a6724a3b689}{\$can\+ID}} = \$\+\_\+\+POST\+[\textquotesingle{}can\+ID\textquotesingle{}]\+ ?? 0
+\item 
+\doxymbox{\hyperlink{member_8php_a337ddde3361f7efef931e136c0a33f78}{\$can\+Node\+ID}} = \$\+\_\+\+POST\+[\textquotesingle{}can\+\_\+node\+ID\textquotesingle{}]\+ ?? 0
+\item 
+\doxymbox{\hyperlink{member_8php_a5c507155944f7032089f120efa5f8f36}{\$message\+ID}} = \$\+\_\+\+POST\+[\textquotesingle{}message\+ID\textquotesingle{}]\+ ?? 0
+\item 
+\doxymbox{\hyperlink{member_8php_a326d4cfafdc79a5cc70ccf2709f8fe7a}{\$baud\+Rate}} = \$\+\_\+\+POST\+[\textquotesingle{}baud\+Rate\textquotesingle{}]\+ ?? 0
+\item 
+\doxymbox{\hyperlink{member_8php_a5c1e691eb44adf1d34ead36688c5abbc}{\$last\+Message}} = \$\+\_\+\+POST\+[\textquotesingle{}last\+Message\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{member_8php_abf17cb2dba2ed17cb28aa5f37deb5293}{\$message}} = "{}"{}
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} (isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a8d15b6f0f3e32e8de1bcf0289d6fe4cd}{insert}}\textquotesingle{}]\+)) = \$\+\_\+\+SESSION\+[\textquotesingle{}mode\textquotesingle{}]
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a978cbcd695233468cc87c54f8dc16a48}{insert\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_ad5405147f2ae9888b891d56fccd1478c}{update\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a4640c74a76188c90a9b41e9eeeb890a5}{delete\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a8fbe6f83dbb28d310fb79883cc5f6a91}{update}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a078ea9155b01332486951592c8d29dca}{delete}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}( \$\+\_\+\+SERVER \doxymbox{\hyperlink{member_8php_aab2ff47202166504ad7bb13debf954e5}{try}} \+[\textquotesingle{}REQUEST\+\_\+\+METHOD\textquotesingle{}]\+===\textquotesingle{}POST\textquotesingle{} \&\&isset(\$\+\_\+\+POST\+[\textquotesingle{}floor\textquotesingle{}]\+))
+\item 
+\doxymbox{\hyperlink{member_8php_a1554d05c057115d4c9fe54d4d3144e80}{catch}} (Throwable \$error) = \$message
+\item 
+switch(\$current\+Mode) \doxymbox{\hyperlink{member_8php_a05a1cf9c3f5324b58767efe3a04b9f75}{\$cur\+Flr}}
+\item 
+for(\$i=1; \$i$<$=3; \$i++) style \doxymbox{\hyperlink{member_8php_a6953e8435e7629e49692afcfa5f37f13}{endfor}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides the main K-\/\+Globe Elevator Network Dashboard. 
+
+This page provides an authenticated dashboard for monitoring and controlling the K-\/\+Globe elevator system.
+
+The dashboard provides database record management, CAN network information, elevator position monitoring, door status monitoring, operating mode control, maintenance monitoring, and manual floor requests from the floor and car controllers.
+
+Several dashboard components are refreshed automatically using Java\+Script fetch requests without requiring the entire page to reload. 
+
+\label{member_8php_doc-func-members}
+\Hypertarget{member_8php_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{member_8php_a1c5ba7192d699618a18cd52f13e777ec}\index{member.php@{member.php}!get\_database@{get\_database}}
+\index{get\_database@{get\_database}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{get\_database()}{get\_database()}}
+{\footnotesize\ttfamily \label{member_8php_a1c5ba7192d699618a18cd52f13e777ec} 
+get\+\_\+database (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Creates a connection to the Elevator database. 
+
+Creates a PDO connection to the Elevator My\+SQL database. PDO is configured to throw exceptions when database operations fail and return query results as associative arrays.
+
+\begin{DoxyReturn}{Returns}
+PDO Connection to the Elevator database. 
+\end{DoxyReturn}
+\Hypertarget{member_8php_a529a45ccf5ab75b4ef1db515cf9048f7}\index{member.php@{member.php}!update\_elevatorNetwork@{update\_elevatorNetwork}}
+\index{update\_elevatorNetwork@{update\_elevatorNetwork}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{update\_elevatorNetwork()}{update\_elevatorNetwork()}}
+{\footnotesize\ttfamily \label{member_8php_a529a45ccf5ab75b4ef1db515cf9048f7} 
+update\+\_\+elevator\+Network (\begin{DoxyParamCaption}\item[{int}]{\$node\+\_\+\+ID}{, }\item[{int}]{\$new\+\_\+floor}{, }\item[{int}]{\$request\+Type}{}\end{DoxyParamCaption})}
+
+
+
+Updates an elevator network floor request. 
+
+Updates the requested floor and request type for a specified node in the elevator\+Network table.
+
+The request type identifies whether the request originated from the floor controller or the elevator car controller.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$node\+\_\+\+ID} & ID of the elevator network node to update. \\
+\hline
+int & {\em \$new\+\_\+floor} & Requested elevator floor. \\
+\hline
+int & {\em \$request\+Type} & Type of floor request.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The requested floor that was stored in the database. 
+\end{DoxyReturn}
+
+
+\label{member_8php_doc-var-members}
+\Hypertarget{member_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{member_8php_a326d4cfafdc79a5cc70ccf2709f8fe7a}\index{member.php@{member.php}!\$baudRate@{\$baudRate}}
+\index{\$baudRate@{\$baudRate}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$baudRate}{\$baudRate}}
+{\footnotesize\ttfamily \label{member_8php_a326d4cfafdc79a5cc70ccf2709f8fe7a} 
+\$baud\+Rate = \$\+\_\+\+POST\+[\textquotesingle{}baud\+Rate\textquotesingle{}]\+ ?? 0}
+
+\Hypertarget{member_8php_af754fd821a9ef9e09f898a6724a3b689}\index{member.php@{member.php}!\$canID@{\$canID}}
+\index{\$canID@{\$canID}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$canID}{\$canID}}
+{\footnotesize\ttfamily \label{member_8php_af754fd821a9ef9e09f898a6724a3b689} 
+\$can\+ID = \$\+\_\+\+POST\+[\textquotesingle{}can\+ID\textquotesingle{}]\+ ?? 0}
+
+\Hypertarget{member_8php_a337ddde3361f7efef931e136c0a33f78}\index{member.php@{member.php}!\$canNodeID@{\$canNodeID}}
+\index{\$canNodeID@{\$canNodeID}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$canNodeID}{\$canNodeID}}
+{\footnotesize\ttfamily \label{member_8php_a337ddde3361f7efef931e136c0a33f78} 
+\$can\+Node\+ID = \$\+\_\+\+POST\+[\textquotesingle{}can\+\_\+node\+ID\textquotesingle{}]\+ ?? 0}
+
+\Hypertarget{member_8php_a05a1cf9c3f5324b58767efe3a04b9f75}\index{member.php@{member.php}!\$curFlr@{\$curFlr}}
+\index{\$curFlr@{\$curFlr}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$curFlr}{\$curFlr}}
+{\footnotesize\ttfamily \label{member_8php_a05a1cf9c3f5324b58767efe3a04b9f75} 
+switch ( \$current\+Mode) \$cur\+Flr}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\_currentFloor}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_a03495df3726ae73a3f739cdf2463bc82}\index{member.php@{member.php}!\$current\_date@{\$current\_date}}
+\index{\$current\_date@{\$current\_date}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$current\_date}{\$current\_date}}
+{\footnotesize\ttfamily \label{member_8php_a03495df3726ae73a3f739cdf2463bc82} 
+\$current\+\_\+date}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_8php_abbc1af6d68a2b84bb78fddde3790ef45}{\$db}}}
+\DoxyCodeLine{-\/>query(\textcolor{stringliteral}{'SELECT\ CURRENT\_DATE()'})}
+\DoxyCodeLine{-\/>fetchColumn()}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_a63faaf6695dbb6b199cd3fc5a5de124f}\index{member.php@{member.php}!\$current\_time@{\$current\_time}}
+\index{\$current\_time@{\$current\_time}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$current\_time}{\$current\_time}}
+{\footnotesize\ttfamily \label{member_8php_a63faaf6695dbb6b199cd3fc5a5de124f} 
+\$current\+\_\+time}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_8php_abbc1af6d68a2b84bb78fddde3790ef45}{\$db}}}
+\DoxyCodeLine{-\/>query(\textcolor{stringliteral}{'SELECT\ CURRENT\_TIME()'})}
+\DoxyCodeLine{-\/>fetchColumn()}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_a1bddaeac782a4ef8d692fff1ee2d2ab6}\index{member.php@{member.php}!\$currentFloor@{\$currentFloor}}
+\index{\$currentFloor@{\$currentFloor}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$currentFloor}{\$currentFloor}}
+{\footnotesize\ttfamily \label{member_8php_a1bddaeac782a4ef8d692fff1ee2d2ab6} 
+\$\doxymbox{\hyperlink{machine_functions_8cpp_af2ae3c80eff5c67623f0511ce43b3c90}{current\+Floor}} = \$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{machine_functions_8cpp_af2ae3c80eff5c67623f0511ce43b3c90}{current\+Floor}}\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_a46f291fdd42fd571fd628dd5738fb2da}\index{member.php@{member.php}!\$currentMode@{\$currentMode}}
+\index{\$currentMode@{\$currentMode}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$currentMode}{\$currentMode}}
+{\footnotesize\ttfamily \label{member_8php_a46f291fdd42fd571fd628dd5738fb2da} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}mode\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} ( \$maintenance\+State\+[ \textquotesingle{}maintenance\textquotesingle{}]\+) \$current\+Mode = "{}Normal"{}}
+
+\Hypertarget{member_8php_a7691c0162d89de0b6ba47edcd8ba8878}\index{member.php@{member.php}!\$database@{\$database}}
+\index{\$database@{\$database}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$database}{\$database}}
+{\footnotesize\ttfamily \label{member_8php_a7691c0162d89de0b6ba47edcd8ba8878} 
+\$database = \textquotesingle{}Elevator\textquotesingle{}}
+
+\Hypertarget{member_8php_a1fa3127fc82f96b1436d871ef02be319}\index{member.php@{member.php}!\$db@{\$db}}
+\index{\$db@{\$db}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$db}{\$db}}
+{\footnotesize\ttfamily \label{member_8php_a1fa3127fc82f96b1436d871ef02be319} 
+\$db}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_ae690a75222343af1db226684868cf254}{connect}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_ae055b2ff9267d3d9f6dc3c80cbdcffb3}\index{member.php@{member.php}!\$host@{\$host}}
+\index{\$host@{\$host}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{member_8php_ae055b2ff9267d3d9f6dc3c80cbdcffb3} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(!isset(\$\+\_\+\+SESSION\+[\textquotesingle{}mode\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} (!isset( \$\+\_\+\+SESSION\+[ \textquotesingle{}username\textquotesingle{}]\+)) \$host = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+\Hypertarget{member_8php_a5c1e691eb44adf1d34ead36688c5abbc}\index{member.php@{member.php}!\$lastMessage@{\$lastMessage}}
+\index{\$lastMessage@{\$lastMessage}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$lastMessage}{\$lastMessage}}
+{\footnotesize\ttfamily \label{member_8php_a5c1e691eb44adf1d34ead36688c5abbc} 
+\$last\+Message = \$\+\_\+\+POST\+[\textquotesingle{}last\+Message\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_a8bd186860dc9bb1e94880555a7a2379a}\index{member.php@{member.php}!\$logCount@{\$logCount}}
+\index{\$logCount@{\$logCount}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$logCount}{\$logCount}}
+{\footnotesize\ttfamily \label{member_8php_a8bd186860dc9bb1e94880555a7a2379a} 
+\$log\+Count}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_a46ebcd6112e53c4a0fa7b79c99aab22e}{getLogCount}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_a2287996fd48a48152dad088ad2aebd34}\index{member.php@{member.php}!\$maintenanceState@{\$maintenanceState}}
+\index{\$maintenanceState@{\$maintenanceState}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$maintenanceState}{\$maintenanceState}}
+{\footnotesize\ttfamily \label{member_8php_a2287996fd48a48152dad088ad2aebd34} 
+\$maintenance\+State}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{database_functions_8php_a652db6816542eae0e8a5cd1ec6e409b4}{getMaintenanceStatus}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__log__count_8php_a8bd186860dc9bb1e94880555a7a2379a}{\$logCount}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_abf17cb2dba2ed17cb28aa5f37deb5293}\index{member.php@{member.php}!\$message@{\$message}}
+\index{\$message@{\$message}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$message}{\$message}}
+{\footnotesize\ttfamily \label{member_8php_abf17cb2dba2ed17cb28aa5f37deb5293} 
+\$message = "{}"{}}
+
+\Hypertarget{member_8php_a5c507155944f7032089f120efa5f8f36}\index{member.php@{member.php}!\$messageID@{\$messageID}}
+\index{\$messageID@{\$messageID}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$messageID}{\$messageID}}
+{\footnotesize\ttfamily \label{member_8php_a5c507155944f7032089f120efa5f8f36} 
+\$message\+ID = \$\+\_\+\+POST\+[\textquotesingle{}message\+ID\textquotesingle{}]\+ ?? 0}
+
+\Hypertarget{member_8php_a58d88e45591bfdb56a69ba42cc45ca36}\index{member.php@{member.php}!\$nodeID@{\$nodeID}}
+\index{\$nodeID@{\$nodeID}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$nodeID}{\$nodeID}}
+{\footnotesize\ttfamily \label{member_8php_a58d88e45591bfdb56a69ba42cc45ca36} 
+\$node\+ID = \$\+\_\+\+POST\+[\textquotesingle{}node\+ID\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_a4c0067e3a1b2af716140875537595a2d}\index{member.php@{member.php}!\$otherInfo@{\$otherInfo}}
+\index{\$otherInfo@{\$otherInfo}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$otherInfo}{\$otherInfo}}
+{\footnotesize\ttfamily \label{member_8php_a4c0067e3a1b2af716140875537595a2d} 
+\$other\+Info = \$\+\_\+\+POST\+[\textquotesingle{}other\+Info\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{member.php@{member.php}!\$password@{\$password}}
+\index{\$password@{\$password}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{member_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \textquotesingle{}ese1\textquotesingle{}}
+
+\Hypertarget{member_8php_a0a4baf0b22973c07685c3981f0d17fc4}\index{member.php@{member.php}!\$path@{\$path}}
+\index{\$path@{\$path}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$path}{\$path}}
+{\footnotesize\ttfamily \label{member_8php_a0a4baf0b22973c07685c3981f0d17fc4} 
+\$path = "{}mysql:\+host=\$host;dbname=\$database"{}}
+
+\Hypertarget{member_8php_a3e2c47a98a306a75a193f631b47fecd9}\index{member.php@{member.php}!\$requestedFloor@{\$requestedFloor}}
+\index{\$requestedFloor@{\$requestedFloor}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$requestedFloor}{\$requestedFloor}}
+{\footnotesize\ttfamily \label{member_8php_a3e2c47a98a306a75a193f631b47fecd9} 
+\$requested\+Floor = \$\+\_\+\+POST\+[\textquotesingle{}requested\+Floor\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_a58391ea75f2d29d5d708d7050b641c33}\index{member.php@{member.php}!\$status@{\$status}}
+\index{\$status@{\$status}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$status}{\$status}}
+{\footnotesize\ttfamily \label{member_8php_a58391ea75f2d29d5d708d7050b641c33} 
+\$\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}} = \$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{pcan_functions_8cpp_af78ce6e98cc8c58250be7729a52c5ea4}{status}}\textquotesingle{}]\+ ?? \textquotesingle{}\textquotesingle{}}
+
+\Hypertarget{member_8php_ab55152af3e5453213c2891ba55a0c6d5}\index{member.php@{member.php}!\$tablename@{\$tablename}}
+\index{\$tablename@{\$tablename}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$tablename}{\$tablename}}
+{\footnotesize\ttfamily \label{member_8php_ab55152af3e5453213c2891ba55a0c6d5} 
+\$tablename = \textquotesingle{}CANLogs\textquotesingle{}}
+
+\Hypertarget{member_8php_a598ca4e71b15a1313ec95f0df1027ca5}\index{member.php@{member.php}!\$user@{\$user}}
+\index{\$user@{\$user}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{\$user}{\$user}}
+{\footnotesize\ttfamily \label{member_8php_a598ca4e71b15a1313ec95f0df1027ca5} 
+\$user = \textquotesingle{}myphpadmin\textquotesingle{}}
+
+\Hypertarget{member_8php_a1554d05c057115d4c9fe54d4d3144e80}\index{member.php@{member.php}!catch@{catch}}
+\index{catch@{catch}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{catch}{catch}}
+{\footnotesize\ttfamily \label{member_8php_a1554d05c057115d4c9fe54d4d3144e80} 
+catch(Throwable \$error) (\begin{DoxyParamCaption}\item[{Throwable}]{\$error}{}\end{DoxyParamCaption}) = \$message}
+
+\Hypertarget{member_8php_a6953e8435e7629e49692afcfa5f37f13}\index{member.php@{member.php}!endfor@{endfor}}
+\index{endfor@{endfor}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{endfor}{endfor}}
+{\footnotesize\ttfamily \label{member_8php_a6953e8435e7629e49692afcfa5f37f13} 
+for ( \$i=1;\$i$<$=3;\$i++) style endfor}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ =\textcolor{stringliteral}{"{}}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ width:80px;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ height:80px;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ background:}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ <?=\ (\$i\ ==\ \$curFlr)}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ ?\ '\#198754'}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ :\ '\#dc3545'\ ?>;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ "{}}>}
+\DoxyCodeLine{</div>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<strong>}
+\DoxyCodeLine{\ \ \ \ Floor\ <?=\ \$i}
+
+\end{DoxyCode}
+\Hypertarget{member_8php_a7a0b53e9e5a696e29e763b562281442f}\index{member.php@{member.php}!if@{if}}
+\index{if@{if}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{if}{if}}
+{\footnotesize\ttfamily \label{member_8php_a7a0b53e9e5a696e29e763b562281442f} 
+if (\begin{DoxyParamCaption}\item[{isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a8d15b6f0f3e32e8de1bcf0289d6fe4cd}{insert}}\textquotesingle{}]\+)}]{}{}\end{DoxyParamCaption}) = \$\+\_\+\+SESSION\+[\textquotesingle{}mode\textquotesingle{}]}
+
+\Hypertarget{member_8php_aab2ff47202166504ad7bb13debf954e5}\index{member.php@{member.php}!try@{try}}
+\index{try@{try}!member.php@{member.php}}
+\doxysubsubsection{\texorpdfstring{try}{try}}
+{\footnotesize\ttfamily \label{member_8php_aab2ff47202166504ad7bb13debf954e5} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a978cbcd695233468cc87c54f8dc16a48}{insert\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_ad5405147f2ae9888b891d56fccd1478c}{update\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a4640c74a76188c90a9b41e9eeeb890a5}{delete\+CAN}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset( \$\+\_\+\+POST\+[ \textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a8fbe6f83dbb28d310fb79883cc5f6a91}{update}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(isset(\$\+\_\+\+POST\+[\textquotesingle{}\doxymbox{\hyperlink{database_functions_8php_a078ea9155b01332486951592c8d29dca}{delete}}\textquotesingle{}]\+)) \doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} (\$\+\_\+\+SERVER try\+[ \textquotesingle{}REQUEST\+\_\+\+METHOD\textquotesingle{}]\+===\textquotesingle{}POST\textquotesingle{} \&\&isset( \$\+\_\+\+POST\+[ \textquotesingle{}floor\textquotesingle{}]\+))}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{_controls_8php_ad6120ebd4c2619563f8dff1b6bcfb8df}{\$curFlr}}\ =\ \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\_currentFloor}}(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}

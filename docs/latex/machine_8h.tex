@@ -1,0 +1,89 @@
+\doxysection{Finite\+State\+Machine/\+machine.h File Reference}
+\hypertarget{machine_8h}{}\label{machine_8h}\index{FiniteStateMachine/machine.h@{FiniteStateMachine/machine.h}}
+{\ttfamily \+\#include $<$iostream$>$}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{Machine\+State}} \{ \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eba8a96c79239779f2c16dcea7e9a269685}{Doors\+Closed}}
+, \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eba7a6b51800380398de732a5d278b2795f}{Doors\+Opened}}
+, \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9ebaaf927282809663e74c878f067c83f140}{Car\+Moving}}
+, \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9ebae5748b00bc4bb138f82ec9d427dbbcca}{Car\+Stopped}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{machine_8h_afdf1ca9e7afc3e7ec41b47fea4b3d80d}{Menu}} ()
+\item 
+void \doxymbox{\hyperlink{machine_8h_ab87869216c2250ea9620cdd2dc9b9cab}{Floor\+Req}} ()
+\item 
+void \doxymbox{\hyperlink{machine_8h_afbc2bda809db2ba16bf62e567e210823}{Inside\+Req}} ()
+\item 
+void \doxymbox{\hyperlink{machine_8h_a1ab03d38b9bbf9bd596f274c261f7a29}{Print\+State}} (\doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{Machine\+State}} state)
+\end{DoxyCompactItemize}
+
+
+\label{machine_8h_doc-enum-members}
+\Hypertarget{machine_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{machine_8h_a80b08f71210afe16038e904a656ed9eb}\index{machine.h@{machine.h}!MachineState@{MachineState}}
+\index{MachineState@{MachineState}!machine.h@{machine.h}}
+\doxysubsubsection{\texorpdfstring{MachineState}{MachineState}}
+{\footnotesize\ttfamily \label{machine_8h_a80b08f71210afe16038e904a656ed9eb} 
+enum \doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{Machine\+State}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DoorsClosed@{DoorsClosed}!machine.h@{machine.h}}
+\index{machine.h@{machine.h}!DoorsClosed@{DoorsClosed}}
+}\Hypertarget{machine_8h_a80b08f71210afe16038e904a656ed9eba8a96c79239779f2c16dcea7e9a269685}\label{machine_8h_a80b08f71210afe16038e904a656ed9eba8a96c79239779f2c16dcea7e9a269685} 
+Doors\+Closed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DoorsOpened@{DoorsOpened}!machine.h@{machine.h}}
+\index{machine.h@{machine.h}!DoorsOpened@{DoorsOpened}}
+}\Hypertarget{machine_8h_a80b08f71210afe16038e904a656ed9eba7a6b51800380398de732a5d278b2795f}\label{machine_8h_a80b08f71210afe16038e904a656ed9eba7a6b51800380398de732a5d278b2795f} 
+Doors\+Opened&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CarMoving@{CarMoving}!machine.h@{machine.h}}
+\index{machine.h@{machine.h}!CarMoving@{CarMoving}}
+}\Hypertarget{machine_8h_a80b08f71210afe16038e904a656ed9ebaaf927282809663e74c878f067c83f140}\label{machine_8h_a80b08f71210afe16038e904a656ed9ebaaf927282809663e74c878f067c83f140} 
+Car\+Moving&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CarStopped@{CarStopped}!machine.h@{machine.h}}
+\index{machine.h@{machine.h}!CarStopped@{CarStopped}}
+}\Hypertarget{machine_8h_a80b08f71210afe16038e904a656ed9ebae5748b00bc4bb138f82ec9d427dbbcca}\label{machine_8h_a80b08f71210afe16038e904a656ed9ebae5748b00bc4bb138f82ec9d427dbbcca} 
+Car\+Stopped&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{machine_8h_doc-func-members}
+\Hypertarget{machine_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{machine_8h_ab87869216c2250ea9620cdd2dc9b9cab}\index{machine.h@{machine.h}!FloorReq@{FloorReq}}
+\index{FloorReq@{FloorReq}!machine.h@{machine.h}}
+\doxysubsubsection{\texorpdfstring{FloorReq()}{FloorReq()}}
+{\footnotesize\ttfamily \label{machine_8h_ab87869216c2250ea9620cdd2dc9b9cab} 
+void Floor\+Req (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{machine_8h_afbc2bda809db2ba16bf62e567e210823}\index{machine.h@{machine.h}!InsideReq@{InsideReq}}
+\index{InsideReq@{InsideReq}!machine.h@{machine.h}}
+\doxysubsubsection{\texorpdfstring{InsideReq()}{InsideReq()}}
+{\footnotesize\ttfamily \label{machine_8h_afbc2bda809db2ba16bf62e567e210823} 
+void Inside\+Req (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{machine_8h_afdf1ca9e7afc3e7ec41b47fea4b3d80d}\index{machine.h@{machine.h}!Menu@{Menu}}
+\index{Menu@{Menu}!machine.h@{machine.h}}
+\doxysubsubsection{\texorpdfstring{Menu()}{Menu()}}
+{\footnotesize\ttfamily \label{machine_8h_afdf1ca9e7afc3e7ec41b47fea4b3d80d} 
+void Menu (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{machine_8h_a1ab03d38b9bbf9bd596f274c261f7a29}\index{machine.h@{machine.h}!PrintState@{PrintState}}
+\index{PrintState@{PrintState}!machine.h@{machine.h}}
+\doxysubsubsection{\texorpdfstring{PrintState()}{PrintState()}}
+{\footnotesize\ttfamily \label{machine_8h_a1ab03d38b9bbf9bd596f274c261f7a29} 
+void Print\+State (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{machine_8h_a80b08f71210afe16038e904a656ed9eb}{Machine\+State}}}]{state}{}\end{DoxyParamCaption})}
+

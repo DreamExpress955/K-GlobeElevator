@@ -1,0 +1,33 @@
+\doxysection{CANMessage\+Compare Struct Reference}
+\hypertarget{struct_c_a_n_message_compare}{}\label{struct_c_a_n_message_compare}\index{CANMessageCompare@{CANMessageCompare}}
+
+
+Defines ordering for CAN messages in the priority queue.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{struct_c_a_n_message_compare_ab3e091c36654827dd448054db340b2e7}{operator()}} (const \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}} \&left, const \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}} \&right) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines ordering for CAN messages in the priority queue. 
+
+Messages are primarily ordered using their CAN message ID. When two messages have the same ID, their sequence numbers are used to maintain their arrival order. 
+
+\label{struct_c_a_n_message_compare_doc-func-members}
+\Hypertarget{struct_c_a_n_message_compare_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_c_a_n_message_compare_ab3e091c36654827dd448054db340b2e7}\index{CANMessageCompare@{CANMessageCompare}!operator()@{operator()}}
+\index{operator()@{operator()}!CANMessageCompare@{CANMessageCompare}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{struct_c_a_n_message_compare_ab3e091c36654827dd448054db340b2e7} 
+bool CANMessage\+Compare::\+operator() (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}} \&}]{left}{, }\item[{const \doxymbox{\hyperlink{struct_queued_c_a_n_message}{Queued\+CANMessage}} \&}]{right}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+Service Controller/\+src/\doxymbox{\hyperlink{pcan_functions__multithreaded_8cpp}{pcan\+Functions\+\_\+multithreaded.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,68 @@
+\doxysection{pcan\+Functions\+\_\+multithreaded.\+h}
+\hypertarget{pcan_functions__multithreaded_8h_source}{}\label{pcan_functions__multithreaded_8h_source}\index{Service Controller/include/pcanFunctions\_multithreaded.h@{Service Controller/include/pcanFunctions\_multithreaded.h}}
+\doxymbox{\hyperlink{pcan_functions__multithreaded_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ PCAN\_FUNCTIONS\_MULTITHREADED\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ PCAN\_FUNCTIONS\_MULTITHREADED\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <libpcan.h>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ PCAN\_RECEIVE\_QUEUE\_EMPTY\ 0x00020U}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ PCAN\_NO\_ERROR\ 0x00000U}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{/*\ ============================================================}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ CAN\ Message\ IDs}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ ============================================================\ */}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ ID\_SC\_TO\_EC\ 0x100}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ ID\_EC\_TO\_ALL\ 0x101}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ ID\_CC\_TO\_SC\ 0x200}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ ID\_F1\_TO\_SC\ 0x201}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ ID\_F2\_TO\_SC\ 0x202}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ ID\_F3\_TO\_SC\ 0x203}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ ID\_WEBSITE\ 0x300}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{/*\ ============================================================}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ Elevator\ Floor\ Commands}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ *\ ============================================================\ */}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ GO\_TO\_FLOOR1\ 0x05}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ GO\_TO\_FLOOR2\ 0x06}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ GO\_TO\_FLOOR3\ 0x07}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{/*\ ============================================================}}
+\DoxyCodeLine{00096\ \textcolor{comment}{\ *\ PCAN\ Communication\ Functions}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ *\ ============================================================\ */}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00112\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{pcan_functions_8h_a2480a29dc57bbd2513bfa50c7098dc68}{pcanTx}}(}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{int}\ data,}
+\DoxyCodeLine{00115\ \ \ \ \ std::string\ description}
+\DoxyCodeLine{00116\ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00126\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_ade5413c6c1a3bb84349d5d4e25ba604b}{pcanRxWithDetailsMultithreaded}}();}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00136\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_af63ae20fef6a09166efbf810c4777eab}{stopPcanRxThreads}}();}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00146\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a2b3ecb61e357d57adb32a44964f6ac09}{stopPcanMultithreaded}}();}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00154\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{pcan_functions__multithreaded_8h_a68a1764f886ecf1f092cf2aff2902f34}{isPCANBusy}}();}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,95 @@
+\doxysection{php/\+get\+\_\+elevator\+\_\+position.php File Reference}
+\hypertarget{get__elevator__position_8php}{}\label{get__elevator__position_8php}\index{php/get\_elevator\_position.php@{php/get\_elevator\_position.php}}
+
+
+Displays the current elevator floor using visual status indicators.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_a711797613cb863ca0756df789c396bf2}{\$host}} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_a7691c0162d89de0b6ba47edcd8ba8878}{\$database}} = \textquotesingle{}Elevator\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}} = "{}mysql:\+host=\$host;dbname=\$database"{}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}} = \textquotesingle{}phpmyadmin\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}} = \textquotesingle{}ese1\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{get__elevator__position_8php_acec703ff86271f8ea00f76989f13e613}{\$cur\+Flr}}
+\item 
+height \doxymbox{\hyperlink{get__elevator__position_8php_a7809934cb5d11843e72e449ee4a27d7c}{\+\_\+\+\_\+pad0\+\_\+\_}}
+\item 
+background \doxymbox{\hyperlink{get__elevator__position_8php_a52de45474fa9dddf7a42b56531cea7ee}{\+\_\+\+\_\+pad1\+\_\+\_}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Displays the current elevator floor using visual status indicators. 
+
+Connects to the Elevator database using the functions provided by \doxylink{database_functions_8php}{database\+Functions.\+php} and retrieves the elevator\textquotesingle{}s current floor.
+
+Three floor indicators are displayed on the page. The indicator for the elevator\textquotesingle{}s current floor is shown in green, while the indicators for the other floors are shown in red. 
+
+\label{get__elevator__position_8php_doc-var-members}
+\Hypertarget{get__elevator__position_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{get__elevator__position_8php_acec703ff86271f8ea00f76989f13e613}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$curFlr@{\$curFlr}}
+\index{\$curFlr@{\$curFlr}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$curFlr}{\$curFlr}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_acec703ff86271f8ea00f76989f13e613} 
+\$cur\+Flr}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{_controls_8php_abf25367947b6c1e8fd37e00c748b8e0a}{get\_currentFloor}}(}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{get__can__table_8php_a598ca4e71b15a1313ec95f0df1027ca5}{\$user}},}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{authentication_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}{\$password}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{get__elevator__position_8php_a7691c0162d89de0b6ba47edcd8ba8878}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$database@{\$database}}
+\index{\$database@{\$database}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$database}{\$database}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a7691c0162d89de0b6ba47edcd8ba8878} 
+\$database = \textquotesingle{}Elevator\textquotesingle{}}
+
+\Hypertarget{get__elevator__position_8php_a711797613cb863ca0756df789c396bf2}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$host@{\$host}}
+\index{\$host@{\$host}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$host}{\$host}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a711797613cb863ca0756df789c396bf2} 
+\$host = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+\Hypertarget{get__elevator__position_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$password@{\$password}}
+\index{\$password@{\$password}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$password}{\$password}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a607686ef9f99ea7c42f4f3dd3dbb2b0d} 
+\$password = \textquotesingle{}ese1\textquotesingle{}}
+
+\Hypertarget{get__elevator__position_8php_a0a4baf0b22973c07685c3981f0d17fc4}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$path@{\$path}}
+\index{\$path@{\$path}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$path}{\$path}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a0a4baf0b22973c07685c3981f0d17fc4} 
+\$path = "{}mysql:\+host=\$host;dbname=\$database"{}}
+
+\Hypertarget{get__elevator__position_8php_a598ca4e71b15a1313ec95f0df1027ca5}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\$user@{\$user}}
+\index{\$user@{\$user}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\$user}{\$user}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a598ca4e71b15a1313ec95f0df1027ca5} 
+\$user = \textquotesingle{}phpmyadmin\textquotesingle{}}
+
+\Hypertarget{get__elevator__position_8php_a7809934cb5d11843e72e449ee4a27d7c}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\_\_pad0\_\_@{\_\_pad0\_\_}}
+\index{\_\_pad0\_\_@{\_\_pad0\_\_}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\_\_pad0\_\_}{\_\_pad0\_\_}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a7809934cb5d11843e72e449ee4a27d7c} 
+height \+\_\+\+\_\+pad0\+\_\+\_}
+
+\Hypertarget{get__elevator__position_8php_a52de45474fa9dddf7a42b56531cea7ee}\index{get\_elevator\_position.php@{get\_elevator\_position.php}!\_\_pad1\_\_@{\_\_pad1\_\_}}
+\index{\_\_pad1\_\_@{\_\_pad1\_\_}!get\_elevator\_position.php@{get\_elevator\_position.php}}
+\doxysubsubsection{\texorpdfstring{\_\_pad1\_\_}{\_\_pad1\_\_}}
+{\footnotesize\ttfamily \label{get__elevator__position_8php_a52de45474fa9dddf7a42b56531cea7ee} 
+background \+\_\+\+\_\+pad1\+\_\+\_}
+

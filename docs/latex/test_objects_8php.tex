@@ -1,0 +1,82 @@
+\doxysection{php/\+\+Assignment2\+OOP/\+test\+Objects.php File Reference}
+\hypertarget{test_objects_8php}{}\label{test_objects_8php}\index{php/Assignment2OOP/testObjects.php@{php/Assignment2OOP/testObjects.php}}
+
+
+Tests the basic OOP classes used in the elevator system.  
+
+
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{test_objects_8php_a15955933e72700564e1a76d7f97c1ac7}{\$node}}
+\item 
+\doxymbox{\hyperlink{test_objects_8php_ab1525c8f175cfce97f0b526bb80d6827}{\$elevator}}
+\item 
+\doxymbox{\hyperlink{test_objects_8php_a0e66c55dca985e22c07439c16ae8935b}{\$floor\+Node}} = new \doxymbox{\hyperlink{class_floor_node}{Floor\+Node}}(2)
+\item 
+\doxymbox{\hyperlink{test_objects_8php_ae86282515933bd363adae1c2fa8dea56}{\$button}} = new \doxymbox{\hyperlink{class_call_button}{Call\+Button}}("{}Up"{})
+\item 
+\doxymbox{\hyperlink{test_objects_8php_a19fa158331985d119cf2fe8a8f05c98a}{\$sensor}} = new \doxymbox{\hyperlink{class_sensor}{Sensor}}(15.\+4)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tests the basic OOP classes used in the elevator system. 
+
+Creates objects from the \doxylink{class_node}{Node}, \doxylink{class_elevator_car}{Elevator\+Car}, \doxylink{class_floor_node}{Floor\+Node}, \doxylink{class_call_button}{Call\+Button}, and \doxylink{class_sensor}{Sensor} classes to demonstrate their basic functionality.
+
+The test displays node information, reads the elevator\textquotesingle{}s current floor, calls the elevator from a floor, presses a call button, reads a sensor distance, and displays the total number of \doxylink{class_node}{Node} objects created. 
+
+\label{test_objects_8php_doc-var-members}
+\Hypertarget{test_objects_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{test_objects_8php_ae86282515933bd363adae1c2fa8dea56}\index{testObjects.php@{testObjects.php}!\$button@{\$button}}
+\index{\$button@{\$button}!testObjects.php@{testObjects.php}}
+\doxysubsubsection{\texorpdfstring{\$button}{\$button}}
+{\footnotesize\ttfamily \label{test_objects_8php_ae86282515933bd363adae1c2fa8dea56} 
+\$button = new \doxymbox{\hyperlink{class_call_button}{Call\+Button}}("{}Up"{})}
+
+\Hypertarget{test_objects_8php_ab1525c8f175cfce97f0b526bb80d6827}\index{testObjects.php@{testObjects.php}!\$elevator@{\$elevator}}
+\index{\$elevator@{\$elevator}!testObjects.php@{testObjects.php}}
+\doxysubsubsection{\texorpdfstring{\$elevator}{\$elevator}}
+{\footnotesize\ttfamily \label{test_objects_8php_ab1525c8f175cfce97f0b526bb80d6827} 
+\$elevator}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_elevator_car}{ElevatorCar}}(}
+\DoxyCodeLine{\ \ \ \ 1,}
+\DoxyCodeLine{\ \ \ \ 2,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Up"{}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{test_objects_8php_a0e66c55dca985e22c07439c16ae8935b}\index{testObjects.php@{testObjects.php}!\$floorNode@{\$floorNode}}
+\index{\$floorNode@{\$floorNode}!testObjects.php@{testObjects.php}}
+\doxysubsubsection{\texorpdfstring{\$floorNode}{\$floorNode}}
+{\footnotesize\ttfamily \label{test_objects_8php_a0e66c55dca985e22c07439c16ae8935b} 
+\$floor\+Node = new \doxymbox{\hyperlink{class_floor_node}{Floor\+Node}}(2)}
+
+\Hypertarget{test_objects_8php_a15955933e72700564e1a76d7f97c1ac7}\index{testObjects.php@{testObjects.php}!\$node@{\$node}}
+\index{\$node@{\$node}!testObjects.php@{testObjects.php}}
+\doxysubsubsection{\texorpdfstring{\$node}{\$node}}
+{\footnotesize\ttfamily \label{test_objects_8php_a15955933e72700564e1a76d7f97c1ac7} 
+\$node}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{class_node}{Node}}(}
+\DoxyCodeLine{\ \ \ \ 1,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Active"{}},}
+\DoxyCodeLine{\ \ \ \ 2,}
+\DoxyCodeLine{\ \ \ \ 3,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Normal\ Operation"{}}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{test_objects_8php_a19fa158331985d119cf2fe8a8f05c98a}\index{testObjects.php@{testObjects.php}!\$sensor@{\$sensor}}
+\index{\$sensor@{\$sensor}!testObjects.php@{testObjects.php}}
+\doxysubsubsection{\texorpdfstring{\$sensor}{\$sensor}}
+{\footnotesize\ttfamily \label{test_objects_8php_a19fa158331985d119cf2fe8a8f05c98a} 
+\$sensor = new \doxymbox{\hyperlink{class_sensor}{Sensor}}(15.\+4)}
+

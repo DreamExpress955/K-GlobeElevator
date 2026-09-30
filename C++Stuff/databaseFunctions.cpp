@@ -1,97 +1,174 @@
-// Includes required (headers located in /usr/include) 
-#include "include/databaseFunctions.h"
+/**
+ * @file databaseFunctions.cpp
+ * @brief Implements database functions used by the elevator system.
+ *
+ * This file contains functions for communicating with the MySQL Elevator
+ * database. The functions allow the application to read and update elevator
+ * data and record CAN network messages.
+ */
+
+#include "include/databaseFunct*ons.h"
 #include <stdlib.h>
-#include <iostream>
-#include <mysql_connection.h>
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
+#includ* <iostream>
+#include <mysql_connec*ion.h>
+#include <cppconn/driver.h>*#include <cppconn/exception.h>
+#in*lude <cppconn/resultset.h>
+#includ* <cppconn/statement.h>
+#include <c*pconn/prepared_statement.h>
 #include <cstdint>
- 
-using namespace std; 
- 
-int db_getFloorNum() {
-	sql::Driver *driver; 			// Create a pointer to a MySQL driver object
-	sql::Connection *con; 			// Create a pointer to a database connection object
-	sql::Statement *stmt;			// Crealte a pointer to a Statement object to hold statements 
-	sql::ResultSet *res;			// Create a pointer to a ResultSet object to hold results 
-	int floorNum = 1;				// Floor number 
-	
-	// Create a connection 
-	driver = get_driver_instance();
-	con = driver->connect("tcp://127.0.0.1:3306", "root", "");	// Will need to edit this location and credentials to connect to RPi/Remote database and edit from this program
-	con->setSchema("Elevator");		
-	
-	// Query database
-	// ***************************** 
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1");	// message query
-	while(res->next()){
-		floorNum = res->getInt("currentFloor");
-	}
-	
-	// Clean up pointers 
-	delete res;
-	delete stmt;
-	delete con;
-	
-	return floorNum;
+
+using namespace std;
+
+/**
+ * @brief Gets the current floor of the elevator from the database.
+ *
+ * Connects to the local MySQL server and queries the Elevator database.
+ * The currentFloor value is retrieved from the elevatorNetwork record
+ * where nodeID is 1.
+ *
+ * @return The current floor number stored in the database.
+ *
+ * @note The function currently connects to MySQL at 127.0.0.1:3306
+ * using the root account.
+ */
+int db_getFloorNum()
+{
+    sql::Driver* driver;       // MySQL driver
+    sql::Connection* con;      // Database connection
+    sql::Statement* stmt;      // SQL statement
+    sql::ResultSet* res;       // Query result
+    int floorNum = 1;          // Default floor number
+
+    // Connect to the MySQL server.
+    driver = get_driver_instance();
+    con = driver->connect("tcp://127.0.0.1:3306", "root", "");
+
+    // Select the elevator database.
+    con->setSchema("Elevator");
+
+    // Retrieve the current floor for elevator node 1.
+    stmt = con->createStatement();
+
+    res = stmt->executeQuery(
+        "SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1"
+    );
+
+    while (res->next())
+    {
+        floorNum = res->getInt("currentFloor");
+    }
+
+    // Release database objects.
+    delete res;
+    delete stmt;
+    delete con;
+
+    return floorNum;
 }
- 
-void db_setFloorNum(int floorNum) {
-	sql::Driver *driver; 				// Create a pointer to a MySQL driver object
-	sql::Connection *con; 				// Create a pointer to a database connection object
-	sql::Statement *stmt;				// Crealte a pointer to a Statement object to hold statements 
-	sql::ResultSet *res;				// Create a pointer to a ResultSet object to hold results 
-	sql::PreparedStatement *pstmt; 		// Create a pointer to a prepared statement	
-	
-	// Create a connection 
-	driver = get_driver_instance();
-	con = driver->connect("tcp://127.0.0.1:3306", "root", "");	// Will need to edit this location and credentials to connect to RPi/Remote database and edit from this program
-	con->setSchema("Elevator");										
-	
-	// Query database (possibly not necessary)
-	// ***************************** 
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1");	// message query
-	while(res->next()){
-		res->getInt("currentFloor");
-	}
-		
-	// Update database
-	// *****************************
-	pstmt = con->prepareStatement("UPDATE elevatorNetwork SET currentFloor = ? WHERE nodeID = 1");
-	pstmt->setInt(1, floorNum);
-	pstmt->executeUpdate();
-		
-	// Clean up pointers 
-	delete res;
-	delete pstmt;
-	delete stmt;
-	delete con;
-} 
- 
-void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
-    const char* description)
+
+/**
+ * @brief Updates the elevator's current floor in the database.
+ *
+ * Connects to the Elevator database and updates the currentFloor field
+ * for the elevator with nodeID 1.
+ *
+ * A prepared statement is used to pass the new floor number to the
+ * UPDATE query.
+ *
+ * @param floorNum The new floor number to store in the database.
+ *
+ * @note The function currently connects to MySQL at 127.0.0.1:3306
+ * using the root account.
+ */
+void db_setFloorNum(int floorNum)
+{
+    sql::Driver* driver;                 // MySQL driver
+    sql::Connection* con;                // Database connection
+    sql::Statement* stmt;                // SQL statement
+    sql::ResultSet* res;                 // Query result
+    sql::PreparedStatement* pstmt;       // Prepared SQL statement
+
+    // Connect to the MySQL server.
+    driver = get_driver_instance();
+    con = driver->connect("tcp://127.0.0.1:3306", "root", "");
+
+    // Select the elevator database.
+    con->setSchema("Elevator");
+
+    // Retrieve the existing floor value.
+    stmt = con->createStatement();
+
+    res = stmt->executeQuery(
+        "SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1"
+    );
+
+    while (res->next())
+    {
+        res->getInt("currentFloor");
+    }
+
+    // Update the current floor for elevator node 1.
+    pstmt = con->prepareStatement(
+        "UPDATE elevatorNetwork SET currentFloor = ? WHERE nodeID = 1"
+    );
+
+    pstmt->setInt(1, floorNum);
+    pstmt->executeUpdate();
+
+    // Release database objects.
+    delete res;
+    delete pstmt;
+    delete stmt;
+    delete con;
+}
+
+/**
+ * @brief Logs a CAN network message in the Elevator database.
+ *
+ * Converts an 8-byte CAN payload into a hexadecimal string and inserts
+ * the CAN message information into the CANNetwork database table.
+ *
+ * The database entry contains the transmitting node, CAN message ID,
+ * data length, message payload, and a description of the message.
+ *
+ * @param nodeID ID of the node associated with the CAN message.
+ * @param messageID CAN message identifier.
+ * @param dataLength Number of bytes contained in the CAN message.
+ * @param data Pointer to the CAN message data.
+ * @param description Text description associated with the CAN message.
+ *
+ * @note The current implementation formats eight bytes from the data array.
+ * The data pointer should therefore reference an array containing at least
+ * eight bytes.
+ */
+void db_logCANMessage(
+    int nodeID,
+    int messageID,
+    int dataLength,
+    uint8_t* data,
+    const char* description
+)
 {
     sql::Driver* driver;
     sql::Connection* con;
     sql::Statement* stmt;
 
+    // Get the MySQL driver.
     driver = get_driver_instance();
 
+    // Connect to the local MySQL server.
     con = driver->connect(
         "tcp://127.0.0.1:3306",
         "root",
         ""
     );
 
+    // Select the elevator database.
     con->setSchema("Elevator");
 
     stmt = con->createStatement();
 
+    // Convert the CAN data bytes into a hexadecimal string.
     char payload[50];
 
     sprintf(
@@ -107,6 +184,7 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         data[7]
     );
 
+    // Build the SQL INSERT query.
     char query[512];
 
     sprintf(
@@ -122,8 +200,10 @@ void db_logCANMessage(int nodeID, int messageID, int dataLength, uint8_t* data,
         description
     );
 
+    // Insert the CAN message into the database.
     stmt->execute(query);
 
+    // Release database objects.
     delete stmt;
     delete con;
 }

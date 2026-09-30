@@ -1,0 +1,65 @@
+\doxysection{Service Controller/\+include/\+audio.h File Reference}
+\hypertarget{audio_8h}{}\label{audio_8h}\index{Service Controller/include/audio.h@{Service Controller/include/audio.h}}
+
+
+Declares audio functions used by the elevator Service Controller.  
+
+
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$cstdlib$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{audio_8h_a7128831d69e28646a7ca9ec88ea9dc55}{play\+Floor}} (int floornumber)
+\begin{DoxyCompactList}\small\item\em Plays the audio associated with an elevator floor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declares audio functions used by the elevator Service Controller. 
+
+Provides the function used by the Service Controller to play floor-\/related audio based on the supplied floor number. 
+
+\label{audio_8h_doc-func-members}
+\Hypertarget{audio_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{audio_8h_a7128831d69e28646a7ca9ec88ea9dc55}\index{audio.h@{audio.h}!playFloor@{playFloor}}
+\index{playFloor@{playFloor}!audio.h@{audio.h}}
+\doxysubsubsection{\texorpdfstring{playFloor()}{playFloor()}}
+{\footnotesize\ttfamily \label{audio_8h_a7128831d69e28646a7ca9ec88ea9dc55} 
+void play\+Floor (\begin{DoxyParamCaption}\item[{int}]{floornumber}{}\end{DoxyParamCaption})}
+
+
+
+Plays the audio associated with an elevator floor. 
+
+Plays the audio announcement for a specified elevator floor.
+
+Uses the supplied floor number to determine which floor audio should be played by the Service Controller.
+
+
+\begin{DoxyParams}{Parameters}
+{\em floornumber} & The elevator floor number to announce.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+Plays the audio associated with an elevator floor.
+
+Selects and plays the WAV file associated with the supplied floor number. The Linux aplay command is used to play the audio file.
+
+Supported floors:
+\begin{DoxyItemize}
+\item Floor 1 plays Funny\+\_\+\+Floor\+\_\+1.\+wav
+\item Floor 2 plays Funny\+\_\+\+Floor\+\_\+2.\+wav
+\item Floor 3 plays Funny\+\_\+\+Floor\+\_\+3.\+wav
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em floornumber} & Elevator floor number to announce.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}

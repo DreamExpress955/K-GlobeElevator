@@ -1,0 +1,36 @@
+\doxysection{database\+Functions.\+h}
+\hypertarget{_service_01_controller_2include_2database_functions_8h_source}{}\label{_service_01_controller_2include_2database_functions_8h_source}\index{Service Controller/include/databaseFunctions.h@{Service Controller/include/databaseFunctions.h}}
+\doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ DB\_FUNCTIONS}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ DB\_FUNCTIONS}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00022\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a412e1204f623266be66e71a3c11d2084}{db\_getFloorNum}}();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a0396916fa7558206cfcd1fe45c1a2d51}{db\_setFloorNum}}(\textcolor{keywordtype}{int}\ floorNum);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_c_09_09_stuff_2database_functions_8cpp_a8e2dcf88b2f880c08cd1b6074c3c3896}{db\_logCANMessage}}(}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ nodeID,}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{int}\ messageID,}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{int}\ dataLength,}
+\DoxyCodeLine{00051\ \ \ \ \ uint8\_t*\ data,}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ description}
+\DoxyCodeLine{00053\ );}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h_a32372bc5673953a1f46db0e88ec7dc5f}{db\_getRequestedFloor}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00069\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h_a1effe965a09f9865b6184ead6e523417}{db\_getRequestType}}();}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h_a2b0d41161a746c018e0273b65838ad5e}{db\_clearWebsiteRequest}}();}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00088\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h_a14a7c7ae613f4dfb13a3c79730b3352a}{db\_updateDoor}}(\textcolor{keywordtype}{int}\ door);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00098\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{_service_01_controller_2include_2database_functions_8h_a20ea3824a9ca02e19693fd777f00b88a}{db\_getStopFlag}}();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

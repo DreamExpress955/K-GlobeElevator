@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['get_5fcan_5ftable_2ephp_0',['get_can_table.php',['../get__can__table_8php.html',1,'']]],
+  ['get_5fcurrentfloor_1',['get_currentFloor',['../_controls_8php.html#abf25367947b6c1e8fd37e00c748b8e0a',1,'get_currentFloor():&#160;Controls.php'],['../database_functions_8php.html#a028201cc2bb975010801c5822812c6a6',1,'get_currentFloor(string $path, string $user, string $password):&#160;databaseFunctions.php']]],
+  ['get_5fdatabase_2',['get_database',['../_controls_8php.html#a1c5ba7192d699618a18cd52f13e777ec',1,'get_database():&#160;Controls.php'],['../member_8php.html#a1c5ba7192d699618a18cd52f13e777ec',1,'get_database():&#160;member.php']]],
+  ['get_5fdoor_5fstatus_2ephp_3',['get_door_status.php',['../get__door__status_8php.html',1,'']]],
+  ['get_5felevator_5fposition_2ephp_4',['get_elevator_position.php',['../get__elevator__position_8php.html',1,'']]],
+  ['get_5flog_5fcount_2ephp_5',['get_log_count.php',['../get__log__count_8php.html',1,'']]],
+  ['getcurrentfloor_6',['getCurrentFloor',['../class_elevator_car.html#a62ab511000e983636dc8f67576ac4e93',1,'ElevatorCar\\getCurrentFloor()'],['../class_elevator_car.html#a62ab511000e983636dc8f67576ac4e93',1,'ElevatorCar\\getCurrentFloor()'],['../class_node.html#ae45b59a383ab0b0623e13c36b91b3813',1,'Node\\getCurrentFloor()']]],
+  ['getdirection_7',['getDirection',['../class_call_button.html#a4d30e212781990ef52de01def190046b',1,'CallButton\\getDirection()'],['../class_elevator_car.html#ad7c5e766c8c8af2cdccc8b9edf2a8441',1,'ElevatorCar\\getDirection()']]],
+  ['getdoorstatus_8',['getDoorStatus',['../database_functions_8php.html#a002fe92810c0d092048835fcf8a5d74f',1,'databaseFunctions.php']]],
+  ['getfloorfrommessagedata_9',['getFloorFromMessageData',['../pcan_functions__multithreaded_8cpp.html#a07678cb6a732edd988edf6625667dd8e',1,'pcanFunctions_multithreaded.cpp']]],
+  ['getfloormessagedata_10',['getFloorMessageData',['../pcan_functions__multithreaded_8cpp.html#a47e68a7bd29bad55149475a3555a1388',1,'pcanFunctions_multithreaded.cpp']]],
+  ['getfloornumber_11',['getFloorNumber',['../class_floor_node.html#a1a517419fee2ff864b5572ccff1fc02b',1,'FloorNode']]],
+  ['getlogcount_12',['getLogCount',['../database_functions_8php.html#a46ebcd6112e53c4a0fa7b79c99aab22e',1,'databaseFunctions.php']]],
+  ['getmaintenancestatus_13',['getMaintenanceStatus',['../database_functions_8php.html#a652db6816542eae0e8a5cd1ec6e409b4',1,'databaseFunctions.php']]],
+  ['getmode_14',['getMode',['../database_functions_8php.html#a5b4b806f98e9cb735947f7139bf2f98f',1,'databaseFunctions.php']]],
+  ['getnodecount_15',['getNodeCount',['../class_node.html#a1d99a6b63c92277521eedcf4e80c0a35',1,'Node']]],
+  ['getnodeid_16',['getNodeID',['../class_node.html#aabcc8e52f1b6dd0034514a468d4b1185',1,'Node\\getNodeID()'],['../class_node.html#aabcc8e52f1b6dd0034514a468d4b1185',1,'Node\\getNodeID()']]],
+  ['getotherinfo_17',['getOtherInfo',['../class_node.html#a95531ad98542fd9a76ab8f82d42a335b',1,'Node']]],
+  ['getrequestedfloor_18',['getRequestedFloor',['../class_node.html#ac84c5b04f2ebd6c0595641b6c16dce5a',1,'Node']]],
+  ['getstatus_19',['getStatus',['../class_node.html#a3e39969c5da9cb2746f5e7e6c1a61ea8',1,'Node\\getStatus()'],['../class_node.html#a3e39969c5da9cb2746f5e7e6c1a61ea8',1,'Node\\getStatus()']]],
+  ['go_5fto_5ffloor1_20',['GO_TO_FLOOR1',['../pcan_functions_8h.html#a5d676fde3f790a065cd14a70dadeeabe',1,'GO_TO_FLOOR1:&#160;pcanFunctions.h'],['../pcan_functions__multithreaded_8h.html#a5d676fde3f790a065cd14a70dadeeabe',1,'GO_TO_FLOOR1:&#160;pcanFunctions_multithreaded.h']]],
+  ['go_5fto_5ffloor2_21',['GO_TO_FLOOR2',['../pcan_functions_8h.html#a32a2456d3ec94d7694948dcc28531994',1,'GO_TO_FLOOR2:&#160;pcanFunctions.h'],['../pcan_functions__multithreaded_8h.html#a32a2456d3ec94d7694948dcc28531994',1,'GO_TO_FLOOR2:&#160;pcanFunctions_multithreaded.h']]],
+  ['go_5fto_5ffloor3_22',['GO_TO_FLOOR3',['../pcan_functions_8h.html#a291f7771e1489c585ca28ed46671ecb2',1,'GO_TO_FLOOR3:&#160;pcanFunctions.h'],['../pcan_functions__multithreaded_8h.html#a291f7771e1489c585ca28ed46671ecb2',1,'GO_TO_FLOOR3:&#160;pcanFunctions_multithreaded.h']]]
+];

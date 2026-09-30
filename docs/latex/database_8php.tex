@@ -1,0 +1,159 @@
+\doxysection{database.\+php File Reference}
+\hypertarget{database_8php}{}\label{database_8php}\index{database.php@{database.php}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{database_8php_abbc1af6d68a2b84bb78fddde3790ef45}{\$db}}
+\item 
+\doxymbox{\hyperlink{database_8php_ace2ec39e7df3899fa8df9640ec274b03}{\$rows}} = \$db-\/$>$query(\textquotesingle{}SELECT \texorpdfstring{$\ast$}{*} FROM elevator\+Network ORDER BY node\+IT\textquotesingle{})
+\item 
+\doxymbox{\hyperlink{database_8php_af59a5f7cd609e592c41dc3643efd3c98}{\$query}} = \textquotesingle{}SELECT \texorpdfstring{$\ast$}{*} FROM elevator\+Network WHERE node\+ID = :node\+ID\textquotesingle{}
+\item 
+\doxymbox{\hyperlink{database_8php_a776dc234d8e2b257550d9444ddf5d399}{\$statement}} = \$db-\/$>$prepare(\$query)
+\item 
+\doxymbox{\hyperlink{database_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\$result}} = \$statement-\/$>$execute()
+\item 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}}(\$result===false) \doxymbox{\hyperlink{database_8php_a19ec60deda53aa1c22846372b038c972}{else}}
+\item 
+\doxymbox{\hyperlink{database_8php_a128c26ef99eaddd9ce9821c71d3b920c}{\$querytime}} = "{}SELECT CURRENT\+\_\+\+TIME()"{}
+\item 
+\doxymbox{\hyperlink{database_8php_aea536fa28421c5bc49249804b4f89a27}{\$time\+Result}} = \$db-\/$>$query(\$querytime)
+\item 
+\doxymbox{\hyperlink{database_8php_a93049137e201f92ddd59be4b52c11f04}{\$current\+Time}} = \$time\+Result-\/$>$fetch()\+[\textquotesingle{}CURRENT\+\_\+\+TIME()\textquotesingle{}]
+\item 
+\doxymbox{\hyperlink{database_8php_a62b55c6e72f963836981c6fdbdf9d412}{\$querydate}} = "{}SELECT CURRENT\+\_\+\+DATE()"{}
+\item 
+\doxymbox{\hyperlink{database_8php_ae145278fbe17646543be5be7ae7c9555}{\$date\+Result}} = \$db-\/$>$query(\$querydate)
+\item 
+\doxymbox{\hyperlink{database_8php_a71b0d4434a284e136badb5b9a37f38bb}{\$current\+Date}} = \$date\+Result-\/$>$fetch()\+[\textquotesingle{}CURRENT\+\_\+\+DATE()\textquotesingle{}]
+\item 
+\doxymbox{\hyperlink{database_8php_ab79d246480c4ac3a0db6bbceca92ad32}{\$parameters}}
+\item 
+\doxymbox{\hyperlink{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0}{foreach}} ( \$rows as \$row)
+\end{DoxyCompactItemize}
+
+
+\label{database_8php_doc-var-members}
+\Hypertarget{database_8php_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{database_8php_a71b0d4434a284e136badb5b9a37f38bb}\index{database.php@{database.php}!\$currentDate@{\$currentDate}}
+\index{\$currentDate@{\$currentDate}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$currentDate}{\$currentDate}}
+{\footnotesize\ttfamily \label{database_8php_a71b0d4434a284e136badb5b9a37f38bb} 
+\$current\+Date = \$date\+Result-\/$>$fetch()\+[\textquotesingle{}CURRENT\+\_\+\+DATE()\textquotesingle{}]}
+
+\Hypertarget{database_8php_a93049137e201f92ddd59be4b52c11f04}\index{database.php@{database.php}!\$currentTime@{\$currentTime}}
+\index{\$currentTime@{\$currentTime}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$currentTime}{\$currentTime}}
+{\footnotesize\ttfamily \label{database_8php_a93049137e201f92ddd59be4b52c11f04} 
+\$current\+Time = \$time\+Result-\/$>$fetch()\+[\textquotesingle{}CURRENT\+\_\+\+TIME()\textquotesingle{}]}
+
+\Hypertarget{database_8php_ae145278fbe17646543be5be7ae7c9555}\index{database.php@{database.php}!\$dateResult@{\$dateResult}}
+\index{\$dateResult@{\$dateResult}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$dateResult}{\$dateResult}}
+{\footnotesize\ttfamily \label{database_8php_ae145278fbe17646543be5be7ae7c9555} 
+\$date\+Result = \$db-\/$>$query(\$querydate)}
+
+\Hypertarget{database_8php_abbc1af6d68a2b84bb78fddde3790ef45}\index{database.php@{database.php}!\$db@{\$db}}
+\index{\$db@{\$db}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$db}{\$db}}
+{\footnotesize\ttfamily \label{database_8php_abbc1af6d68a2b84bb78fddde3790ef45} 
+\doxymbox{\hyperlink{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0}{foreach}} ( \$rows as \$row) \$db}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ =\ \textcolor{keyword}{new}\ pdo(}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'mysql:host=127.0.0.1;dbname=Elevator'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'root'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'ese'}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\Hypertarget{database_8php_ab79d246480c4ac3a0db6bbceca92ad32}\index{database.php@{database.php}!\$parameters@{\$parameters}}
+\index{\$parameters@{\$parameters}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$parameters}{\$parameters}}
+{\footnotesize\ttfamily \label{database_8php_ab79d246480c4ac3a0db6bbceca92ad32} 
+\$parameters}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ =\ [}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'date'}\ =>\ \doxymbox{\hyperlink{database_8php_a71b0d4434a284e136badb5b9a37f38bb}{\$currentDate}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'time'}\ =>\ \doxymbox{\hyperlink{database_8php_a93049137e201f92ddd59be4b52c11f04}{\$currentTime}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'nodeID'}\ =>\ 5,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'status'}\ =>\ 1,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'currentFloor'}\ =>\ 1,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'requestedFloor'}\ =>\ 1,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'OtherInfo'}\ =>\ \textcolor{stringliteral}{'Test\ Insert'}}
+\DoxyCodeLine{]}
+
+\end{DoxyCode}
+\Hypertarget{database_8php_af59a5f7cd609e592c41dc3643efd3c98}\index{database.php@{database.php}!\$query@{\$query}}
+\index{\$query@{\$query}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$query}{\$query}}
+{\footnotesize\ttfamily \label{database_8php_af59a5f7cd609e592c41dc3643efd3c98} 
+\$query = \textquotesingle{}SELECT \texorpdfstring{$\ast$}{*} FROM elevator\+Network WHERE node\+ID = :node\+ID\textquotesingle{}}
+
+\Hypertarget{database_8php_a62b55c6e72f963836981c6fdbdf9d412}\index{database.php@{database.php}!\$querydate@{\$querydate}}
+\index{\$querydate@{\$querydate}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$querydate}{\$querydate}}
+{\footnotesize\ttfamily \label{database_8php_a62b55c6e72f963836981c6fdbdf9d412} 
+\$querydate = "{}SELECT CURRENT\+\_\+\+DATE()"{}}
+
+\Hypertarget{database_8php_a128c26ef99eaddd9ce9821c71d3b920c}\index{database.php@{database.php}!\$querytime@{\$querytime}}
+\index{\$querytime@{\$querytime}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$querytime}{\$querytime}}
+{\footnotesize\ttfamily \label{database_8php_a128c26ef99eaddd9ce9821c71d3b920c} 
+\$querytime = "{}SELECT CURRENT\+\_\+\+TIME()"{}}
+
+\Hypertarget{database_8php_a112ef069ddc0454086e3d1e6d8d55d07}\index{database.php@{database.php}!\$result@{\$result}}
+\index{\$result@{\$result}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$result}{\$result}}
+{\footnotesize\ttfamily \label{database_8php_a112ef069ddc0454086e3d1e6d8d55d07} 
+\$result = \$statement-\/$>$execute()}
+
+\Hypertarget{database_8php_ace2ec39e7df3899fa8df9640ec274b03}\index{database.php@{database.php}!\$rows@{\$rows}}
+\index{\$rows@{\$rows}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$rows}{\$rows}}
+{\footnotesize\ttfamily \label{database_8php_ace2ec39e7df3899fa8df9640ec274b03} 
+\$rows = \$db-\/$>$query(\textquotesingle{}SELECT \texorpdfstring{$\ast$}{*} FROM elevator\+Network ORDER BY node\+IT\textquotesingle{})}
+
+\Hypertarget{database_8php_a776dc234d8e2b257550d9444ddf5d399}\index{database.php@{database.php}!\$statement@{\$statement}}
+\index{\$statement@{\$statement}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$statement}{\$statement}}
+{\footnotesize\ttfamily \label{database_8php_a776dc234d8e2b257550d9444ddf5d399} 
+\$statement = \$db-\/$>$prepare(\$query)}
+
+\Hypertarget{database_8php_aea536fa28421c5bc49249804b4f89a27}\index{database.php@{database.php}!\$timeResult@{\$timeResult}}
+\index{\$timeResult@{\$timeResult}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{\$timeResult}{\$timeResult}}
+{\footnotesize\ttfamily \label{database_8php_aea536fa28421c5bc49249804b4f89a27} 
+\$time\+Result = \$db-\/$>$query(\$querytime)}
+
+\Hypertarget{database_8php_a19ec60deda53aa1c22846372b038c972}\index{database.php@{database.php}!else@{else}}
+\index{else@{else}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{else}{else}}
+{\footnotesize\ttfamily \label{database_8php_a19ec60deda53aa1c22846372b038c972} 
+\doxymbox{\hyperlink{member_8php_a7a0b53e9e5a696e29e763b562281442f}{if}} ( \$result===false) else}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ echo\ \textcolor{stringliteral}{"{}Inserted\ \$result\ rows"{}}}
+
+\end{DoxyCode}
+\Hypertarget{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0}\index{database.php@{database.php}!foreach@{foreach}}
+\index{foreach@{foreach}!database.php@{database.php}}
+\doxysubsubsection{\texorpdfstring{foreach}{foreach}}
+{\footnotesize\ttfamily \label{database_8php_a5a96bb56f9bb4a68ec67edf17cd7c3f0} 
+foreach (\begin{DoxyParamCaption}\item[{}]{\$rows as}{}\end{DoxyParamCaption})}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ =\ \textcolor{keyword}{new}\ pdo(}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'mysql:host=127.0.0.1;dbname=Elevator'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'root'},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{'ese'}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
